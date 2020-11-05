@@ -1,0 +1,20 @@
+@font-face {
+   font-family: 'CaviarDreams';
+   src: url('../assets/fonts/CaviarDreams.ttf');
+   font-weight: 200;
+   font-style: normal;
+ }
+ …
+ @font-face {
+   font-family: 'CaviarDreams';
+   src: url('../assets/fonts/CaviarDreams_Italic.ttf');
+   font-weight: 400;
+   font-style: normal;
+ }
+ …
+ @font-face {
+   font-family: 'CaviarDreams';
+   src: url('../assets/fonts/CaviarDreams_Bold.ttf');
+   font-weight: 900;
+   font-style: normal;
+ }

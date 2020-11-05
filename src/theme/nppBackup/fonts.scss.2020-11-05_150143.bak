@@ -1,0 +1,20 @@
+@font-face {
+   font-family: 'Source Code Pro';
+   src: url('../assets/fonts/SourceCodePro-ExtraLight.ttf');
+   font-weight: 200;
+   font-style: normal;
+ }
+ …
+ @font-face {
+   font-family: 'Source Code Pro';
+   src: url('../assets/fonts/SourceCodePro-Regular.ttf');
+   font-weight: 400;
+   font-style: normal;
+ }
+ …
+ @font-face {
+   font-family: 'Source Code Pro';
+   src: url('../assets/fonts/SourceCodePro-Black.ttf');
+   font-weight: 900;
+   font-style: normal;
+ }

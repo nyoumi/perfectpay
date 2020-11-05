@@ -14,3 +14,38 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+@import '../theme/fonts';
+
+ion-icon {
+  &[class*="custom-"] {
+    mask-size: contain;
+    mask-position: 50% 50%;
+    mask-repeat: no-repeat;
+    background: currentColor;
+    width: 2em;
+    height: 2em;
+
+  }
+
+ 
+  &[class*="custom-transfert"] {
+    mask-image: url(../assets/icon/transfert.svg);
+  }
+  &[class*="custom-payment"] {
+    mask-image: url(../assets/icon/payment.svg);
+  }
+  &[class*="custom-help"] {
+    mask-image: url(../assets/icon/help.svg);
+  }
+  &[class*="custom-topup"] {
+    mask-image: url(../assets/icon/topup.svg);
+  }
+  &[class*="custom-history"] {
+    mask-image: url(../assets/icon/history.svg);
+  }
+  &[class*="custom-settings"] {
+    mask-image: url(../assets/icon/settings-api.svg);
+  }
+
+
+}

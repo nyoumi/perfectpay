@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Historique</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+      <div class="form-content">
+      <ion-grid>
+          <ion-row class="header-row">
+  <ion-col >
+                  Date 
+              </ion-col>
+              <ion-col>
+                montant
+              </ion-col>           
+               <ion-col>
+                frais
+              </ion-col>
+                <ion-col>
+                  Destinataire
+              </ion-col>
+          </ion-row>
+
+ 
+          <ion-row *ngFor="let entry of history" class="entry" (tap)="showEntry(entry)">
+            <ion-col>
+              {{ entry.DateTransaction}} {{ entry.HeureTransaction}} 
+            </ion-col>
+            <ion-col>
+              {{ entry.Montant}} FCFA
+
+            </ion-col>
+            <ion-col>
+              {{ entry.Frais}} FCFA 
+
+            </ion-col>
+            <ion-col>
+              {{ entry.ReferenceArticle}}
+
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    
+  </div>
+
+  
+
+  
+  <div  text-center class="message-error-text">     
+         
+    <p >{{ message }} </p>
+ 
+</div>
+</ion-content>  

@@ -1,0 +1,32 @@
+<!--
+  Generated template for the ExchangeRatePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Taux de change</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Cout d'un(e) :  </ion-label>
+      <ion-select [(ngModel)]="d" (ionChange)="countryChange()" multiple="false"> 
+        <ion-option *ngFor="let d of devises" [value]="d" [selected]="d?.statu" >{{d?.devise}}</ion-option> 
+      </ion-select>
+    </ion-list-header>
+    <ion-item *ngFor="let d of devisesCopy" > 
+      <h2 *ngIf="devise?.devise != d.devise">{{d?.devise}}</h2>
+      <p *ngIf="devise?.devise != d.devise">{{(d?.statu - (d?.statu * marge_devise?.marge_devise)/100)  | number : '1.5-5' }}</p> 
+    </ion-item> 
+  </ion-list>
+</ion-content>
+
+

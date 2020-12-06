@@ -49,3 +49,65 @@ ion-icon {
 
 
 }
+.menu-inner > .ion-content.content.content-md {
+  background: bisque;
+  
+      color: #fff;
+      background-image: url('../assets/imgs/fond.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+}
+.menu-inner > ion-content{
+  background-image: url('../assets/imgs/fond.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;}
+.header-row.row {
+  border-bottom: solid 1px white;
+}
+.menu-inner  .scroll-content {
+  
+  color: #fff;
+  background-image: url('../assets/imgs/fond.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.menu-inner  .scroll-content {
+  background-image: url('../assets/imgs/fond.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.menu-inner  button.item.item-block.item-md {
+  background: transparent;
+  color: white;
+}
+.menu-inner  ion-list.list.list-md {
+  background: transparent;
+}.menu-inner  button.item.item-block.item-ios {
+  background: transparent;
+  color: white;
+}
+.menu-inner  ion-list.list.list-ios {
+  background: transparent;
+}
+.toolbar-background-md {
+  background: #000000ad;
+}
+.toolbar-background-ios {
+  background: #000000ad;
+}
+
+img.header-img {
+  max-width: 60%; 
+}
+.alert-ios .alert-message, .alert-ios .alert-input-group {
+  text-align: left;
+ 
+}
+.toolbar-content-md {
+
+  text-align: end;
+}
+.toolbar-content-ios {
+
+  text-align: end;
+}

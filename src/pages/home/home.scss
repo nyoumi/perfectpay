@@ -10,14 +10,14 @@ page-home {
     }
     .content-md {
         color: #000;
-        background-image: url('../../assets/imgs/fond.jpg');
+        background-image: url('../assets/imgs/fond.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         
     }
     .content-ios {
         color: #000;
-        background-image: url('../../assets/imgs/fond.jpg');
+        background-image: url('../assets/imgs/fond.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         
@@ -61,7 +61,7 @@ page-home {
     margin-left: -5%;
     margin-top: -16px;
     margin-bottom: 12%;
-    background-image: url('../../assets/imgs/appImage.jpg');
+    background-image: url('../assets/imgs/appImage.jpg');
     background-size: cover;
 
 }
@@ -91,5 +91,27 @@ ion-img.appImage.img-loaded {
 }
 .bar-button-default-ios, .bar-button-clear-ios-default, .bar-button-ios-default {
     color: #b31c23;
+}
+.toast-success {
+    > div{
+         background-color:#86f3b3!important;
+     }
+  }
+  .toast-error{
+    > div{
+         background-color:#ec8181!important;
+     }
+  }
+  .header-img{
+      max-width: 40%;
+  }
+  .frontImage {
+    color: #fff;
+    background-image: url(../assets/imgs/perfectpay.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 30%;
+    margin-left: 10%;
 }
 }

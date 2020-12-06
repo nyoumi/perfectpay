@@ -3,73 +3,59 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Perfect Transfert</ion-title>
+    <ion-title>Transfert perfectPay</ion-title>
+    <div class="frontImage"> 
+
+    </div>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  
+    <form   [formGroup]="formgroup">
+      <div class="form-content">
+      <div  text-center >
+        <h6>Transfert vers compte PerfectPay </h6>
+      </div>
+      <ion-list>
+  
+        <ion-item class="form-item">
+          <ion-input class="text-input" formControlName="montant" type="number"  autocorrect="off" autocapitalize="none" name="montant" placeholder="montant du transfert"></ion-input>
+        </ion-item>
+        <ion-item class="form-item">
+          <ion-input formControlName="raison"  class="text-input" type="text" autocorrect="off" autocapitalize="none" name="raison" placeholder="raison du transfert"></ion-input>
+        </ion-item>
+      </ion-list>
+    
+  </div>
   <div class="form-content">
+    
+
+      
+      <ion-list>
+  
+        <div  text-center >
+          <h6>Destinataire </h6>
+        </div>
+
+        <ion-item class="form-item">
+          <ion-input class="text-input" formControlName="account" type="text" autocorrect="off" autocapitalize="none" name="account" placeholder="numéro de téléphone"></ion-input>
+        </ion-item>
+
+      </ion-list>
+    </div>
+    </form>
+      
+  <div  text-center>
+    <button ion-button  block class="login-button" [disabled]="!formgroup.valid" (tap)="checkTransfert()">Transferer</button>
 
   </div>
-  <div class="applications">
-
-     <ion-row text-center>
-
-      <ion-col col-6> 
-        <button ion-button color="light" outline>
-
-        <div><ion-icon name="custom-transfert"></ion-icon></div>
-        Transfert d'argent
-        
-      </button>
-    </ion-col>
-      <ion-col col-6>
-         <button ion-button color="light" outline class="prior">
-
-        <div><ion-icon name="custom-payment"></ion-icon></div>
-        PAIEMENT
-        
-      </button>
-    </ion-col>
  
-     </ion-row>
-     <ion-row text-center>
-
-      <ion-col col-6> <button ion-button color="light" outline>
-
-        <div><ion-icon name="custom-topup"></ion-icon></div>
-        RECHARGER MON COMPTE
-        
-      </button>
-    </ion-col>
-      <ion-col col-6> <button ion-button color="light" outline>
-
-        <div><ion-icon name="custom-settings"></ion-icon></div>
-        Intégrations DES API 
-        
-      </button>
-    </ion-col>
-    
-     </ion-row>
-     <ion-row text-center>
-
-      <ion-col col-6> <button ion-button color="light" outline>
-
-        <div><ion-icon name="custom-history"></ion-icon></div>
-        HISTORIQUE
-        
-      </button>
-    </ion-col>
-      <ion-col col-6> <button ion-button color="light" outline>
-
-        <div><ion-icon name="custom-help"></ion-icon></div>
-        AIDE
-        
-      </button>
-    </ion-col>
-    
-     </ion-row>
-
-
+  <div  text-center class="message-error-text">
+          
+         
+    <p >{{ message }} </p>
+ 
 </div>
+  
 </ion-content>  

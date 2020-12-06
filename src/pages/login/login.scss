@@ -1,0 +1,217 @@
+page-login {
+    .scroll-content {
+        background: #ffe4c400;
+    }
+    .fixed-content {
+        background: #f0f8ff05;
+    }
+    .ion-page {
+        background: blue;
+        font-family: CaviarDreams;
+        
+    }
+    .content-md {
+        color: #fff;
+        background-image: url('../assets/imgs/fond.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        
+    }
+    
+    .content-ios {
+        color: #fff;
+        background-image: url('../assets/imgs/fond.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        
+    } 
+    .top-image{
+        text-align: center;
+        height: 40px;
+        border-bottom: #b31c23 1px solid;
+        border-top: #b31c23 1px solid;
+        width: 150%;
+        margin-bottom: 30px;
+        margin-left: -20%;
+        background: #f9f9f942;
+    }
+    ion-img.img-loaded {
+        background: transparent;
+        height: 100%;
+        width: 100%;
+    }
+    ion-img.img-loaded img {
+        display: block;
+        /* width: 100%; */
+        height: 40px;
+        margin-left: 20px;
+        max-height: 40px;
+    }
+
+    form{
+        color:#fff;
+        margin-top: 60px;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    .button-inner {
+
+    display: block;
+    font-family: CaviarDreams;
+    align-items: center;
+    align-items: center;
+    align-self: center;
+    display: contents;
+    font-size: medium;
+    letter-spacing: 2px;
+}
+.button-md {
+    padding: 0 1.1em;
+    width: 70%;
+    margin-left: 15%;
+    height: 2.4em;
+}
+
+.button-ios {
+    height: 1.8em;
+    padding: 0 1.1em;
+    width: 70%;
+    margin-left: 15%;
+}
+.login-button{
+    background-color:#CF4046 ;
+    border: 1px white solid;
+    border-radius: 5px;
+    margin-bottom: 30px;
+
+}
+.frontImage {
+    color: #fff;
+    background-image: url(../assets/imgs/perfectpay.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 30%;
+    margin-left: 10%;
+}
+
+.header-img{
+    max-width: 40%;
+}
+.info-text{
+    font-size: smaller;
+}
+
+.scroll-content{
+    padding-bottom: 0 !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+
+}
+.item-input ion-input{
+    color: white;
+    font-family: CaviarDreams;
+    letter-spacing: 2px;
+}
+
+.applications{
+    width: 100%;
+    /* display: block; */
+    text-align: center;
+}
+.text-input::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.76);
+  }
+  
+  .text-input:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.788);
+  }
+  
+  .text-input::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.815);
+  }
+  .item-block {
+      min-height: 30px;
+  }
+  .item-md {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+.col{
+    padding: 0;
+}
+
+ion-img.appImage.img-loaded {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+.prior{
+    background: #CF4046;
+}
+
+.toolbar-background-md {
+ 
+    background: transparent;
+}
+.toolbar-background-ios {
+ 
+    background: transparent;
+}
+.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
+    color: #b31c23;
+}
+.bar-button-default-ios, .bar-button-clear-ios-default, .bar-button-ios-default {
+    color: #b31c23;
+}
+.form-content{
+    border: 1px solid #fff;
+    padding: 16px;
+    margin-bottom: 26px;
+
+}
+.form-item{
+    background: transparent;
+    border: 1px solid #fff !important;
+    background: #f1f1f138;
+    margin-bottom: 16px;
+    height: 30px; 
+    border-radius: 5px;
+}
+
+.toolbar-title-md {
+    padding: 0 12px;
+    font-size: 2rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.input::placeholder{
+    color:white;
+}
+ input:focus{
+    outline: none;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;   
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: white;
+  }
+  .list-md .item-input.item-input-has-focus:last-child, .list-md .item-input.input-has-focus:last-child {
+    border-bottom-color: white;
+    -webkit-box-shadow:unset;
+    box-shadow: white;
+}
+.list-md .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child, .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
+    border-bottom-color: #ffffff;
+    -webkit-box-shadow: inset 0 -1px 0 0 #ffffff;
+    box-shadow: inset 0 -1px 0 0 #ffffff;
+}
+}

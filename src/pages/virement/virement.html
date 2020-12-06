@@ -1,0 +1,77 @@
+<!--
+  Generated template for the VirementPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar style="background:#208ced"  color="navbarColor">
+    <ion-title>Virement</ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only *ngIf="selection==true">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card *ngIf="mainPanel">
+      <ion-card-header>
+          <p>{{'Virement.msg1' | translate}}</p>
+          <p>{{'Virement.msg2' | translate}}</p>
+          <p>{{'Virement.msg3' | translate}}</p>
+     </ion-card-header>
+  
+    <ion-list>
+        <ion-item (click)="communateur()">
+            <ion-icon name="logo-bitcoin" item-start></ion-icon>
+            <h2>{{'Virement.VCB' | translate}}</h2> 
+            <button ion-button clear item-end>
+            <ion-icon ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
+            </button>
+        </ion-item> 
+        <ion-item>
+            <ion-icon name="logo-bitcoin" item-start></ion-icon>
+            <h2>{{'Virement.VCompte' | translate}}</h2> 
+            <button ion-button clear item-end>
+            <ion-icon ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
+            </button>
+        </ion-item> 
+    </ion-list>  
+    </ion-card>
+   
+    <ion-card *ngIf="cPanel">
+        <ion-card-header>
+            <h2>{{'Virement.VcarteBancaire' | translate}}</h2>
+            <p>{{'Virement.enterInfos' | translate}}</p> 
+       </ion-card-header>
+       <form [formGroup]="formgroup">
+      <ion-list>
+            <ion-item>
+              <ion-label floating>{{'Virement.customerId' | translate}}</ion-label>
+              <ion-input type="tel" formControlName="customerId" name="customerId"></ion-input>
+            </ion-item>
+          
+            <ion-item>
+              <ion-label floating>{{'Virement.Last4Digits' | translate}}</ion-label>
+              <ion-input type="tel" maxlength="4" formControlName="last4Digits" name="last4Digits"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>{{'Virement.montantAVirer' | translate}}</ion-label>
+                <ion-input type="tel" maxlength="7" formControlName="amount" name="amount"></ion-input>
+              </ion-item>
+      </ion-list>  
+        <div *ngIf="cPanel" style="text-align: center; font-weight: bold;font-size: 50px;color: silver;">
+          <span style="color:#208ced;">.</span> 
+          <button type="submit"  style="height: 90px;" (tap)="virement()" [disabled]="!formgroup.valid" ion-button block>
+              {{'Virement.transferer' | translate}}
+          </button>  
+          <button (click)="communateur()"  style="height: 90px;" ion-button block>
+              {{'Virement.cancel' | translate}}
+            </button>  
+        </div>
+      </form>
+      </ion-card> 
+</ion-content>

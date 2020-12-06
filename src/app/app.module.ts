@@ -4,36 +4,83 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { PerfectTransfertPage } from '../pages/pertfect-transfert/perfect-transfert';
+import { HistoryPage } from '../pages/history/history';
 
+import { LoginPage } from '../pages/login/login';
+
+import { RegisterPage } from '../pages/register/register';
+import { ExchangeRatePage } from '../pages/exchange-rate/exchange-rate';
+import { PerfectTransfertPage } from '../pages/pertfect-transfert/perfect-transfert';
+import { PerfectPaymentPage } from '../pages/pertfect-payment/perfect-payment'
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
+import { Services } from '../services/services';
+import { ParametreService } from '../services/parametre.service';
+import { HTTP } from '@ionic-native/http';
+
+import { HttpModule } from '@angular/http';
+
+import { Stripe } from '@ionic-native/stripe';
+
+///////
+  
+ 
+import { PayementService } from '../services/payement.service';
+
+import { PayPal } from '@ionic-native/paypal';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
+
+/**
+ * import de carlos
+ */
+
+
+
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
-    PerfectTransfertPage 
+    HistoryPage,
+    LoginPage,
+    RegisterPage,
+    PerfectTransfertPage ,
+    ExchangeRatePage,
+    PerfectPaymentPage
 
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    HttpModule,
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
-    PerfectTransfertPage 
+    LoginPage,
+    RegisterPage,
+    PerfectTransfertPage,
+    PerfectPaymentPage ,
+    ExchangeRatePage,
+    HistoryPage
 
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    PayPal,
+    Stripe,
+    HTTP,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Services,
+    ParametreService,
+    PayementService,
+    InAppBrowser
+
   ]
 })
 export class AppModule {}

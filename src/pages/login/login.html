@@ -1,0 +1,42 @@
+
+
+<ion-content padding>
+  <div class="top-image">
+    <div class="frontImage"> 
+
+    </div>
+
+  </div>
+
+    <form  [formGroup]="formgroup">
+
+      
+      <ion-list>
+  
+        
+
+        <ion-item class="form-item">
+          <ion-input class="text-input" formControlName="email"  type="text" autocorrect="off" autocapitalize="none" name="login" placeholder="adresse email"></ion-input>
+        </ion-item>
+        
+        <ion-item class="form-item">
+          <ion-input class="text-input" formControlName="password"  type="password" autocorrect="off" autocapitalize="none" name="password" placeholder="mot de passe"></ion-input>
+        </ion-item>
+  
+
+  
+        
+  
+      </ion-list>
+    </form>
+ 
+  <div  text-center>
+    <button ion-button  block class="login-button" [disabled]="!formgroup.valid" (tap)="login()">CONNEXION</button>
+  </div>
+  <div  text-center>
+    <p class="info-text"> n'avez pas de compte? <a (tap)="gotoRegister()">Créez-en un</a></p>
+    <p class="info-text">Mot de Passe oublié? <a href="#">Réinitialisez</a> </p>
+  </div>
+  
+  
+</ion-content>  

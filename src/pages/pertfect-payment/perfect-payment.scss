@@ -1,0 +1,179 @@
+page-perfect-payment {
+    .scroll-content {
+        background: #ffe4c400;
+    }
+    .fixed-content {
+        background: #f0f8ff05;
+    }
+    .ion-page {
+        background: rgba(237, 237, 240, 0);
+        font-family: CaviarDreams;
+        
+    }
+    .content-md {
+        color: #fff;
+        background-image: url('../assets/imgs/fond.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        
+    }
+    .frontImage {
+        color: #fff;
+        background-image: url(../assets/imgs/perfectpay.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 30%;
+        margin-left: 10%;
+    }
+    .content-ios {
+        color: #fff;
+        background-image: url('../assets/imgs/fond.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        
+    } 
+    form{
+        color:#fff;
+    }
+    .button-inner {
+
+    display: block;
+    font-family: CaviarDreams;
+    align-items: center;
+    align-items: center;
+    align-self: center;
+    display: contents;
+    font-size: medium;
+    letter-spacing: 2px;
+}
+.button-md {
+    padding: 0 1.1em;
+    width: 70%;
+    margin-left: 15%;
+    height: 2.4em;
+}
+
+.button-ios {
+    height: 2.4em;
+    padding: 0 1.1em;
+    width: 70%;
+    margin-left: 15%;
+}
+.login-button{
+    background-color:#CF4046 ;
+    border: 1px white solid;
+    border-radius: 8px;
+
+}
+.scroll-content{
+    padding-bottom: 0 !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+
+}
+.item-input ion-input{
+    color: white;
+    font-family: CaviarDreams;
+    letter-spacing: 2px;
+}
+
+.applications{
+    width: 100%;
+    /* display: block; */
+    text-align: center;
+}
+.text-input::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.76);
+  }
+  
+  .text-input:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.788);
+  }
+  
+  .text-input::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.815);
+  }
+  .item-block {
+      min-height: 30px;
+  }
+  .item-md {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+.col{
+    padding: 0;
+}
+
+ion-img.appImage.img-loaded {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+.prior{
+    background: #CF4046;
+}
+
+.toolbar-background-md {
+ 
+    background: transparent;
+}
+.toolbar-background-ios {
+ 
+    background: transparent;
+}
+.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
+    color: #b31c23;
+}
+.bar-button-default-ios, .bar-button-clear-ios-default, .bar-button-ios-default {
+    color: #b31c23;
+}
+.form-content{
+    border: 1px solid #fff;
+    padding: 16px;
+    margin-bottom: 26px;
+
+}
+.form-item{
+    background: transparent;
+    border: 1px solid #fff;
+    margin-bottom: 16px;
+    height: 30px;
+}
+.header-img{
+    max-width: 40%;
+}
+
+.toolbar-title-md {
+    padding: 0 12px;
+    font-size: 2rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.input::placeholder{
+    color:white;
+}
+ input:focus{
+    outline: none;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;   
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: white;
+  }
+  .list-md .item-input.item-input-has-focus:last-child, .list-md .item-input.input-has-focus:last-child {
+    border-bottom-color: white;
+    -webkit-box-shadow:unset;
+    box-shadow: white;
+}
+.message-error-text{
+    color: #e8aaad;}
+}

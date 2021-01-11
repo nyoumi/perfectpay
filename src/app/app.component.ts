@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { AlertController, LoadingController, Nav, Platform, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -10,6 +10,8 @@ import { PerfectPaymentPage } from '../pages/pertfect-payment/perfect-payment';
 import { Services } from '../services/services'; 
 import { HistoryPage } from '../pages/history/history';
 import { ExchangeRatePage } from '../pages/exchange-rate/exchange-rate';
+import { FormBuilder } from '@angular/forms';
+import { PayementService } from '../services/payement.service';
 
 
 
@@ -28,7 +30,12 @@ export class MyApp {
   secretStatus: boolean=false;
 
   constructor(public platform: Platform,
-    private  services:Services, 
+      public alerCtrl: AlertController,
+    public formbuilder: FormBuilder,
+    public services: Services, 
+    private toastCtrl: ToastController,
+    private payementService:PayementService,
+    public loadingController: LoadingController,
      public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
@@ -100,5 +107,60 @@ export class MyApp {
   }
   verifySecret(){
 
+  }
+  changeSecret(){
+    let alert = this.alerCtrl.create({
+      mode:"ios",
+      title: 'Authentification',
+      message: 'Veuillez entrer votre code secret pour continuer',
+      inputs: [
+        {
+          name: 'secret_code',
+          placeholder: '123456',
+          type:"password"
+        }
+      ],
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          
+        },
+        {
+          text: 'Valider',
+          handler: data => {
+            if(!data.secret_code) return
+            let loading = this.loadingController.create({ content: "chargement..."});
+            loading.present();
+            console.log(data.secret_code)
+            this.services.getSoldeClient(this.user[0].Indexe,data.secret_code).then((solde:any)=>{
+              loading.dismiss();
+              if(solde.succes==-1){
+               
+              }
+                if(solde.succes==1){
+                  let alert = this.alerCtrl.create();
+                  alert.setTitle("Solde Actuel" );
+                  alert.setMode("ios");
+                  alert.setMessage(solde.resultat[0].Solde+ " FCFA");
+                  alert.addButton("OK")
+                  alert.present();
+                  alert.setMode("ios")
+
+                  return ;
+                }
+
+
+            })
+          }
+        }
+      ]
+    });
+
+    
+    alert.present();
+    alert.setMode("ios")
+
+    
   }
 }

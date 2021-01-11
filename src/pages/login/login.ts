@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, LoadingController, NavController } from 'ionic-angular';
+import { AlertController, LoadingController, MenuController, NavController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Services } from '../../services/services';
 import { HomePage } from '../home/home';
@@ -15,7 +15,7 @@ export class LoginPage {
   private email: AbstractControl;
   private password: AbstractControl;
 
-  constructor(public navCtrl: NavController,
+  constructor(public navCtrl: NavController,public menuCtrl: MenuController,
     public alerCtrl: AlertController,
     public formbuilder: FormBuilder,public services: Services, 
     public loadingController: LoadingController) {
@@ -31,6 +31,7 @@ export class LoginPage {
       }
 
      });
+     this.menuCtrl.get().enable(false);
   }
 
   login() {

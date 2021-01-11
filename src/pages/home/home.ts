@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Services } from '../../services/services';
 import { FormBuilder } from '@angular/forms';
-import { AlertController, LoadingController, NavController, ToastController } from 'ionic-angular';
+import { AlertController, LoadingController, MenuController, NavController, ToastController } from 'ionic-angular';
 import { PerfectTransfertPage } from '../pertfect-transfert/perfect-transfert';
 import { PerfectPaymentPage } from '../pertfect-payment/perfect-payment';
 import { PayementService } from '../../services/payement.service';
@@ -18,7 +18,7 @@ export class HomePage {
   private testRadioOpen;
   private testRadioResult;
 
-  constructor(public navCtrl: NavController,
+  constructor(public navCtrl: NavController,public menuCtrl: MenuController,
     public alerCtrl: AlertController,
     public formbuilder: FormBuilder,
     public services: Services, 
@@ -35,7 +35,7 @@ export class HomePage {
       }
 
      });
-
+     this.menuCtrl.get().enable(true);
 
   }
   getSolde(){
@@ -317,6 +317,7 @@ export class HomePage {
             this.payementService.makemtnpayment(datas,codeClient);
           }
           if(data == "omCredit"){
+             -
             this.payementService.makeOMPayment(datas,codeClient,this.user[0].Telephone);
           }
         }

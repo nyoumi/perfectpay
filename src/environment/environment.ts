@@ -1,8 +1,8 @@
 export const environment = {
 
   //joel 
-  //server:"154.72.148.105"
-  server:"kmertv.iplans.cm",
+  server:"154.72.148.105",
+  //server:"kmertv.iplans.cm",
   apilink:"/apipayment/api-perfectpay.php?",
   codeApi:"326029964",
   projetPerfectPay:"PERFECTPAY",

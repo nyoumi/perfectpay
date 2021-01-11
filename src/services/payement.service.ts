@@ -97,6 +97,7 @@ export class PayementService{
         makemtnpayment(datas,codeClient) {
           console.log(datas)
           let alert = this.alerCtrl.create();
+          alert.setMode('ios')
           alert.setTitle("Paiement mobile MTN");
           //alert.setSubTitle("sous titre");
           alert.addInput({
@@ -104,15 +105,22 @@ export class PayementService{
             type: 'number',
             placeholder:"Numero de télephone"
           });
+          alert.addButton({
+            text: "Annuler",
+            role: "cancel",
+            
+          })
       
           alert.addButton({
             text: "Payer",
             handler: data => {
               let alert2 = this.alerCtrl.create();
+              alert.setMode('ios')
+              alert.showBackButton(false)
               alert2.setMessage("Opération en cours...");
               alert2.setTitle("Payement");
               alert2.present();
-              let link="https://" +environment.server+"/Perfectpay/rest/api/paiement/mtn-money-recharge/"+data.telephone +"/" +
+              let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/mtn-money-recharge/"+data.telephone +"/" +
                datas.lemontant+ "/" +
                environment.perfectPhone+ "/" +
                environment.codeApi+ "/" +
@@ -144,13 +152,14 @@ export class PayementService{
                   break;
                 }
               }, err => {
-                console.log("Error"); 
+                console.log("Error");               
                 alert2.setMessage("Echec: erreur rencontrée lors de la connexion avec le serveur. veuillez réessayer");
 
               })
      
             }
           });
+         
           alert.present().then(() => {
             //this.testRadioOpen = true;
           });
@@ -162,7 +171,7 @@ export class PayementService{
                  notif_url:"https://perfectpay.com"
                         };  
                         
-            let link="https://" +environment.server+"/Perfectpay/rest/api/paiement/orange-money-recharge/"+telephone +"/" +
+            let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/orange-money-recharge/"+telephone +"/" +
             datas.lemontant+ "/" +
             environment.perfectPhone+ "/" +
             environment.codeApi+ "/" +
@@ -189,7 +198,7 @@ export class PayementService{
         }  
 
       verifyCreditPaymentStatus(pay_token:string,datas,codeClient){
-        let link="https://" +environment.server+"/Perfectpay/rest/api/paiement/getStatusRecharge/"+pay_token+"/" +codeClient
+        let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/getStatusRecharge/"+pay_token+"/" +codeClient
 
             
           this.h.post(link, datas, {}).map(resp => resp.json()).subscribe(resp=>{

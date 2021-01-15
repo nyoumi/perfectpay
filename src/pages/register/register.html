@@ -15,23 +15,30 @@
           <ion-slide >
             <h2 class="slide-title" >Identification</h2>
             <ion-item class="form-item">
-              <ion-input class="text-input" formControlName="nom"  type="text" autocorrect="off" autocapitalize="none" name="nom" placeholder="nom"></ion-input>
+              <ion-input class="text-input" formControlName="nom"  type="text" autocorrect="off" autocapitalize="none"
+               name="nom" placeholder="nom"></ion-input>
             </ion-item> 
             <ion-item class="form-item">
-              <ion-input class="text-input" formControlName="Prenom"  type="text" autocorrect="off" autocapitalize="none" name="Prenom" placeholder="Prenom"></ion-input>
+              <ion-input class="text-input" formControlName="Prenom"  type="text" autocorrect="off" autocapitalize="none"
+               name="Prenom" placeholder="Prenom"></ion-input>
             </ion-item> 
             <ion-item class="country">
-              <ion-select [(ngModel)]="country" [ngModelOptions]="{standalone: true}" placeholder="Cameroon" (ionChange)="countryChange()" multiple="false">
-                <ion-option *ngFor="let ctry of countries" [value]="ctry" [selected]="ctry.dial_code == country.dial_code">{{ctry.name}}</ion-option>
+              <ion-select [(ngModel)]="country" [ngModelOptions]="{standalone: true}" placeholder="Cameroon"
+               (ionChange)="countryChange()" multiple="false">
+                <ion-option *ngFor="let ctry of countries" [value]="ctry" [selected]="ctry.dial_code == country.dial_code">
+                  {{ctry.name}}</ion-option>
               </ion-select>
             </ion-item>
                 <ion-item class="form-item">
-                  <ion-input class="side-i" [disabled]="true"  placeholder="Indicatif" formControlName="dial_code" type="text"></ion-input>
+                  <ion-input class="side-i" [disabled]="true"  placeholder="Indicatif"
+                   formControlName="dial_code" value="{{this.country.dial_code}}" type="text"></ion-input>
         
-                  <ion-input class="text-input" formControlName="Telephone"  type="number" autocorrect="off" autocapitalize="none" name="Telephone" placeholder="Telephone"></ion-input>
+                  <ion-input class="text-input" formControlName="Telephone"  type="number" autocorrect="off"
+                   autocapitalize="none" name="Telephone" placeholder="Telephone"></ion-input>
                 </ion-item> 
                 <ion-item class="form-item">
-                  <ion-input class="text-input" formControlName="email"  type="email" autocorrect="off" autocapitalize="none" name="login" placeholder="adresse email"></ion-input>
+                  <ion-input class="text-input" formControlName="email"  type="email" autocorrect="off" 
+                  autocapitalize="none" name="login" placeholder="adresse email"></ion-input>
                 </ion-item>
                 <div  text-center>
                   <button ion-button  block class="login-button"
@@ -54,10 +61,12 @@
             </ion-select>   
           </ion-item>     
           <ion-item class="form-item">
-            <ion-input class="text-input" formControlName="Ville"  type="text" autocorrect="off" autocapitalize="none" name="Ville" placeholder="Ville"></ion-input>
+            <ion-input class="text-input" formControlName="Ville"  type="text" autocorrect="off" autocapitalize="none" 
+            name="Ville" placeholder="Ville"></ion-input>
           </ion-item>
           <ion-item class="form-item">
-            <ion-datetime displayFormat="DD/MM/YYYY"  max="2020" placeholder="Date de Naissance"  formControlName="DateNaissance"></ion-datetime>
+            <ion-datetime displayFormat="DD/MM/YYYY"  max="2020" placeholder="Date de Naissance"
+              formControlName="DateNaissance"></ion-datetime>
 
           </ion-item> 
           <div  text-center>
@@ -71,7 +80,8 @@
 
      
     <!--       <ion-item class="form-item">
-          <ion-input class="text-input" formControlName="Civilite"  type="text" autocorrect="off" autocapitalize="none" name="Civilite" placeholder="Civilite"></ion-input>
+          <ion-input class="text-input" formControlName="Civilite"  type="text" autocorrect="off"
+           autocapitalize="none" name="Civilite" placeholder="Civilite"></ion-input>
         </ion-item>   -->    
 
       </ion-list>

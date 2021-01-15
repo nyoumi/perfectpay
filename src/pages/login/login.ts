@@ -47,6 +47,7 @@ export class LoginPage {
         loading.dismiss();
         //console.log(result);
         if(result.succes==1){
+          this.user=result.resultat
           this.services.daoSetStatus(true);
           this.services.daoSetUser(result.resultat)
           this.services.getSecretStatus(result.resultat[0].Indexe).then((status:any)=>{
@@ -85,11 +86,15 @@ export class LoginPage {
   }
 
   createSecret(){
-    let alert = this.alerCtrl.create();
+    let alert = this.alerCtrl.create({
+
+      enableBackdropDismiss:false
+    });
     alert.setTitle("Code secret");
     alert.setSubTitle("Veuillez définir votre code secret")
     alert.setMessage("votre code secret vous permet de sécuriser vos opération PerfectPay. Vous devez donc le conserver de manière confidentielle!")
     alert.setMode("ios")
+
 
 
     alert.addInput({
@@ -127,7 +132,10 @@ export class LoginPage {
         alert2.present()
     
       } else {
-        let alert2= this.alerCtrl.create();
+        let alert2= this.alerCtrl.create({
+
+          enableBackdropDismiss:false
+        });
         alert2.setTitle("Echec de l'enregistrement");
         alert2.setSubTitle("Code secret non défini!")
         alert2.setMessage("Une erreur s'est produite lors de l'enregistrement de votre code secret ")
@@ -141,6 +149,7 @@ export class LoginPage {
 
     });
     alert.present()
+
   
 
 

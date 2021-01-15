@@ -55,8 +55,7 @@ export class MyApp {
    await this.initializeApp(); 
 
    
-   this.services.daoGetUser().then(infos=>{
-     console.log(infos)
+   this.services.daoGetgetUserInfo().then(infos=>{
      this.user=infos; });   
      this.services.daoGetHaveUsed().then(infos=>{
        console.log(infos)
@@ -103,113 +102,8 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.push(page.component);
   }
-
   secretUpdate(){
-    let alert = this.alerCtrl.create();
-    alert.setTitle("Code secret");
-    alert.setSubTitle("Veuillez définir votre code secret")
-    alert.setMessage("votre code secret vous permet de sécuriser vos opération PerfectPay. Vous devez donc le conserver de manière confidentielle!")
-    alert.setMode("ios")
 
-
-    alert.addInput({
-      type:'password',
-      name:'secret',
-      placeholder:"nouveau code secret (123456)"
-    });
-    alert.addInput({
-      type:'password',
-      name:'secretConfirm',
-      placeholder:"Confirmer"
-    });
-    alert.addInput({
-      type:'password',
-      name:'oldSecret',
-      placeholder:"ancien code secret"
-    });
-    alert.addButton({
-      text:'ok',
-      handler:datas=>{
-        let codeClient;
-        if(this.user){
-          codeClient=this.user[0].Indexe;
-        }else{
-           this.services.daoGetUser().then(user=>{
-             this.user=user;
-            this.secretUpdate()
-          })
-        }
-       
-        if(datas.secret == ""){
-          this.showErrorToast("Veuillez saisir Votre code secret");
-          
-          return ;
-        }
-        if(datas.oldSecret == ""){
-          this.showErrorToast("Veuillez saisir Votre ancien code secret");
-          this.secretUpdate()
-          return ;
-        }
-        if(datas.secret != datas.secretConfirm ){
-          this.showErrorToast("Les codes que vous avez saisi ne sont pas identiques");
-          this.secretUpdate()
-          return;
-        }
-        
-    this.services.updateSecret(codeClient,datas.secret,datas.oldSecret).then((result:any)=>{
-      if (result.succes==1) {
-        let alert2= this.alerCtrl.create();
-        alert2.setTitle("Succès de l'opération");
-        alert2.setSubTitle("Code secret Modifié avec succès")
-        alert2.setMessage("Ce code secret vous sera demandé lors de vos opérations PerfectPay. ")
-        alert2.setMode("ios")
-        alert2.present()
-    
-      } else {
-        if(result.succes==-3){
-          let alert2= this.alerCtrl.create();
-          alert2.setTitle("Echec de l'opération");
-          alert2.setSubTitle("Code secret non modifié!")
-          alert2.setMessage("Desoler votre Ancien code ping est incorrect veuillez contacter le support au numero +237 2 33 47 28 66")
-          alert2.setMode("ios")
-          alert2.present()
-        }else{
-        let alert2= this.alerCtrl.create();
-        alert2.setTitle("Echec de l'enregistrement");
-        alert2.setSubTitle("Code secret non modifié!")
-        alert2.setMessage("Une erreur s'est produite lors de l'enregistrement de votre code secret ")
-        alert2.setMode("ios")
-        alert2.present()
-      }
-    }
-    })
-
-      
-      }
-
-    });
-    alert.present()
-  
-
-
-  }
-
-  showErrorToast(data: any) {
-    let toast = this.toastCtrl.create({
-      message: data,
-      duration: 3000,
-      dismissOnPageChange:true,
-      cssClass:"toast-error",
-      position: 'top',
-    
-    });
-    
- 
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-
-    toast.present();
   }
   verifySecret(){
 

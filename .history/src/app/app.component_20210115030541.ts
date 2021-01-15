@@ -115,7 +115,7 @@ export class MyApp {
     alert.addInput({
       type:'password',
       name:'secret',
-      placeholder:"nouveau code secret (123456)"
+      placeholder:"code secret (123456)"
     });
     alert.addInput({
       type:'password',
@@ -130,16 +130,7 @@ export class MyApp {
     alert.addButton({
       text:'ok',
       handler:datas=>{
-        let codeClient;
-        if(this.user){
-          codeClient=this.user[0].Indexe;
-        }else{
-           this.services.daoGetUser().then(user=>{
-             this.user=user;
-            this.secretUpdate()
-          })
-        }
-       
+        let codeClient=this.user[0].Indexe;
         if(datas.secret == ""){
           this.showErrorToast("Veuillez saisir Votre code secret");
           
@@ -166,14 +157,6 @@ export class MyApp {
         alert2.present()
     
       } else {
-        if(result.succes==-3){
-          let alert2= this.alerCtrl.create();
-          alert2.setTitle("Echec de l'opération");
-          alert2.setSubTitle("Code secret non modifié!")
-          alert2.setMessage("Desoler votre Ancien code ping est incorrect veuillez contacter le support au numero +237 2 33 47 28 66")
-          alert2.setMode("ios")
-          alert2.present()
-        }else{
         let alert2= this.alerCtrl.create();
         alert2.setTitle("Echec de l'enregistrement");
         alert2.setSubTitle("Code secret non modifié!")
@@ -181,7 +164,6 @@ export class MyApp {
         alert2.setMode("ios")
         alert2.present()
       }
-    }
     })
 
       

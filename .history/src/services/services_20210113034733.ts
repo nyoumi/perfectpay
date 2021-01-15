@@ -269,36 +269,11 @@ return new Promise(resolve => {
     })
 });
 }
-updateSecret(idClient,secret,oldSecret) {
-  let link="action=create_code_secret&"
+updateSecret(idClient,secret) {
+  let link="action=New_code_secret&"
   +"&indexe_users="+idClient
   +"&repeat_ping_code="+secret
   +"&ping_code="+secret
-  +"&ancien_ping_code="+oldSecret
-
- 
-
-return new Promise(resolve => {
-  this.http.get("http://" + environment.server + environment.apilink+link)
-  .subscribe(data => {
-      //console.log(data._body);
-      let result=-1000;
-      try {
-        result=data.json()
-      } catch (error) {
-        
-      } 
-      resolve(data.json());
-    }, err => {
-      //console.log("Error"); 
-      resolve(err);
-    })
-});
-}
-getSecretStatus(idClient) {
-
-  let link="action=check_statut_ping&"
-  +"&indexe_users="+idClient
 
 
  
@@ -320,7 +295,6 @@ return new Promise(resolve => {
     })
 });
 }
-
 
 disconnect() {
   return new Promise((resolve :any, reject: any) => resolve(localForage.clear())); 

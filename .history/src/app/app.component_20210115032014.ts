@@ -115,7 +115,7 @@ export class MyApp {
     alert.addInput({
       type:'password',
       name:'secret',
-      placeholder:"nouveau code secret (123456)"
+      placeholder:"code secret (123456)"
     });
     alert.addInput({
       type:'password',

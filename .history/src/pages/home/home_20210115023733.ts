@@ -421,7 +421,6 @@ export class HomePage {
         let codeClient=this.user[0].Indexe;
         if(datas.secret == ""){
           this.showErrorToast("Veuillez saisir Votre code secret");
-          this.createSecret()
           return ;
         }
         if(datas.secret != datas.secretConfirm ){

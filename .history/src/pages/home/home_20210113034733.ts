@@ -27,12 +27,6 @@ export class HomePage {
     public loadingController: LoadingController) {
     this.services.daoGetUser().then(user=>{
       this.user=user;
-      this.services.getSecretStatus(this.user[0].Indexe).then((status:any)=>{
-        console.log(status)
-        if(status.succes==1){
-          this.createSecret()
-         
-        }})
       console.log(user)
     })
     this.services.daoGetStatus().then(status=>{
@@ -421,7 +415,6 @@ export class HomePage {
         let codeClient=this.user[0].Indexe;
         if(datas.secret == ""){
           this.showErrorToast("Veuillez saisir Votre code secret");
-          this.createSecret()
           return ;
         }
         if(datas.secret != datas.secretConfirm ){
@@ -442,7 +435,7 @@ export class HomePage {
       } else {
         let alert2= this.alerCtrl.create();
         alert2.setTitle("Echec de l'enregistrement");
-        alert2.setSubTitle("Code secret non défini!")
+        alert2.setSubTitle("Code secret non définit!")
         alert2.setMessage("Une erreur s'est produite lors de l'enregistrement de votre code secret ")
         alert2.setMode("ios")
         alert2.present()

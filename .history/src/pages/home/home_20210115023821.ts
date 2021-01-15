@@ -381,7 +381,7 @@ export class HomePage {
       if(this.user)
       this.services.checkSecret(this.user[0].Indexe).then((result:any)=>{
         console.log(result)
-        if (result.succes==1) {
+        if (result.succes==2) {
           this.createSecret()
         } else {
           if(result.succes==-1 || result.succes==0){
@@ -421,7 +421,6 @@ export class HomePage {
         let codeClient=this.user[0].Indexe;
         if(datas.secret == ""){
           this.showErrorToast("Veuillez saisir Votre code secret");
-          this.createSecret()
           return ;
         }
         if(datas.secret != datas.secretConfirm ){

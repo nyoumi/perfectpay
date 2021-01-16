@@ -72,11 +72,18 @@ export class LoginPage {
         let alert = this.alerCtrl.create();
         alert.setTitle("Erreur de connexion" );
         alert.setMode("ios");
-        alert.setMessage("Login ou mot de passe incorrect");
+        alert.setMessage(result.msg);
         alert.addButton("OK")
         alert.present();
 
       }}
+    },err=>{
+      let alert = this.alerCtrl.create();
+      alert.setTitle("Erreur de connexion" );
+      alert.setMode("ios");
+      alert.setMessage("erreur de connexion au serveur");
+      alert.addButton("OK")
+      alert.present();
     });
   
   }
@@ -109,9 +116,10 @@ export class LoginPage {
     });
     alert.addButton({
       text:'ok',
+
       handler:datas=>{
         let codeClient=this.user[0].Indexe;
-        if(datas.secret == ""){
+        if(!datas.secret){
           this.showErrorToast("Veuillez saisir Votre code secret");
           this.createSecret()
           return ;

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Commissions</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="total">
+    <span>Total: {{TotalComissions}} FCFA</span>
+  </div>
+      <div class="form-content">
+
+     
+
+       <ion-grid>
+          <ion-row class="header-row">
+  <ion-col >
+                  Date 
+              </ion-col>
+              <ion-col>
+                montant
+              </ion-col>           
+               <ion-col>
+                ID de transaction 
+              </ion-col>
+ 
+          </ion-row>
+
+ 
+          <ion-row *ngFor="let entry of history" class="entry" (tap)="showEntry(entry)">
+            <ion-col>
+              {{ entry.Date}} {{ entry.HeureTransaction}} 
+            </ion-col>
+            <ion-col>
+              {{ entry.Montant}} FCFA
+
+            </ion-col>
+            <ion-col>
+              {{ entry.IDTransaction}}  
+
+            </ion-col>
+   
+          </ion-row>
+        </ion-grid> 
+    
+  </div>
+
+  
+
+  
+  <div  text-center class="message-error-text">     
+         
+    <p >{{ message }} </p>
+ 
+</div>
+</ion-content>  

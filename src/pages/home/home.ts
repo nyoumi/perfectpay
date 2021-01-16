@@ -7,6 +7,9 @@ import { PerfectPaymentPage } from '../pertfect-payment/perfect-payment';
 import { PayementService } from '../../services/payement.service';
 import { HistoryPage } from '../history/history';
 import { LoginPage } from '../login/login';
+import { CommissionsPage } from '../commissions/commissions';
+import { PointVentePage } from '../point-vente/point-vente';
+import { PerfectRechargePage } from '../pertfect-recharge/perfect-recharge';
 
 
 @Component({
@@ -113,11 +116,24 @@ export class HomePage {
   gotoTransfert(){
     this.navCtrl.push(PerfectTransfertPage)
   }
+  gotoChargeAgent(){
+    this.navCtrl.push(PerfectRechargePage)
+  }
   gotoPayment(){
     this.navCtrl.push(PerfectPaymentPage)
   }
   getHistory(){
     this.navCtrl.push(HistoryPage)
+
+
+  }
+  getCommissions(){
+    this.navCtrl.push(CommissionsPage)
+
+
+  }
+  getPointVente(){
+    this.navCtrl.push(PointVentePage)
 
 
   }

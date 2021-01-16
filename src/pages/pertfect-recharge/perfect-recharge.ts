@@ -7,10 +7,10 @@ import { LoginPage } from '../login/login';
 
 
 @Component({
-  selector: 'page-perfect-transfert',
-  templateUrl: 'perfect-transfert.html'
+  selector: 'page-perfect-recharge',
+  templateUrl: 'perfect-recharge.html'
 })
-export class PerfectTransfertPage {
+export class PerfectRechargePage {
   formgroup: FormGroup; 
   private account: AbstractControl;
   private montant: AbstractControl;
@@ -55,7 +55,7 @@ export class PerfectTransfertPage {
       CodeClientExpediteur:this.user[0].Telephone
     }
     
-      this.services.checkDepotClient(this.transferInfo).then((result: any) => {
+      this.services.checkDepotAgent(this.transferInfo).then((result: any) => {
            console.log(result)
         loading.dismiss();
         //console.log(result);
@@ -143,7 +143,7 @@ export class PerfectTransfertPage {
           handler: data => {
             if(!data.secret_code) return
             console.log(data.secret_code)
-            this.makeDepotClient(this.transferInfo,data.secret_code)
+            this.makeDepotAgent(this.transferInfo,data.secret_code)
           }
         }
       ]
@@ -152,10 +152,10 @@ export class PerfectTransfertPage {
 
     
   }
-  makeDepotClient(transferInfo,secretCode) {
+  makeDepotAgent (transferInfo,secretCode) {
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
-    this.services.makeDepotClient(transferInfo,secretCode).then((result:any)=>{
+    this.services.makeDepotAgent(transferInfo,secretCode).then((result:any)=>{
       loading.dismiss()
       console.log(result.resultat)
       let alert = this.alerCtrl.create();

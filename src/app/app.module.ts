@@ -12,6 +12,8 @@ import { RegisterPage } from '../pages/register/register';
 import { ExchangeRatePage } from '../pages/exchange-rate/exchange-rate';
 import { PerfectTransfertPage } from '../pages/pertfect-transfert/perfect-transfert';
 import { PerfectPaymentPage } from '../pages/pertfect-payment/perfect-payment'
+import { CommissionsPage } from '../pages/commissions/commissions'
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -30,6 +32,8 @@ import { PayementService } from '../services/payement.service';
 
 import { PayPal } from '@ionic-native/paypal';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { PointVentePage } from '../pages/point-vente/point-vente';
+import { PerfectRechargePage } from '../pages/pertfect-recharge/perfect-recharge';
 
 
 /**
@@ -48,9 +52,12 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     RegisterPage,
     PerfectTransfertPage ,
     ExchangeRatePage,
-    PerfectPaymentPage
+    PerfectPaymentPage,
+    CommissionsPage,
+    PointVentePage,
+    PerfectRechargePage
 
-  ],
+  ],  
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
@@ -66,7 +73,10 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     PerfectTransfertPage,
     PerfectPaymentPage ,
     ExchangeRatePage,
-    HistoryPage
+    HistoryPage,
+    CommissionsPage,
+    PointVentePage,
+    PerfectRechargePage
 
   ],
   providers: [

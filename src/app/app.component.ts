@@ -42,10 +42,10 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'historique', component: HistoryPage },
-      { title: 'transfert', component: PerfectTransfertPage },
-      { title: "paiement", component: PerfectPaymentPage, },
-      { title: "Taux de change", component: ExchangeRatePage },
-
+      { title: 'dépot client', component: PerfectTransfertPage },
+      { title: "retrait client", component: PerfectPaymentPage, },
+/*       { title: "Taux de change", component: ExchangeRatePage },
+ */
 
     ];
 

@@ -1,4 +1,4 @@
-page-history {
+commissions {
     .scroll-content {
         background: #ffe4c400;
     }
@@ -16,6 +16,11 @@ page-history {
         background-size: cover;
         background-repeat: no-repeat;
         
+    }
+    .total {
+        font-size: x-large;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
     .content-ios {
         color: #fff;

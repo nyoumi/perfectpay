@@ -12,10 +12,10 @@
 
 <ion-content padding>
   
-    <form (submit)="login()"  [formGroup]="formgroup">
+    <form  [formGroup]="formgroup">
       <div class="form-content">
       <div  text-center >
-        <h6>Paiement </h6>
+        <h6>Retrait </h6>
       </div>
       <ion-list>
   
@@ -23,8 +23,9 @@
           <ion-input class="text-input" formControlName="montant" type="number"  autocorrect="off" autocapitalize="none" name="montant" placeholder="montant"></ion-input>
         </ion-item>
         <ion-item class="form-item">
-          <ion-input formControlName="code_marchand" class="text-input" type="text" autocorrect="off" autocapitalize="none" name="raison" placeholder="code du marchand"></ion-input>
+          <ion-input formControlName="phone_dest" class="text-input" type="number" autocorrect="off" autocapitalize="none" name="phone_dest" placeholder="telephone"></ion-input>
         </ion-item>  
+   
   
       </ion-list>
     

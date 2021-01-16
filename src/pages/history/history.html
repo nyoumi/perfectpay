@@ -10,7 +10,138 @@
 <ion-content padding>
   
       <div class="form-content">
-      <ion-grid>
+
+        <div padding *ngIf="!entry">
+  <ion-segment [(ngModel)]="type">
+    <ion-segment-button value="tout">
+      Tout
+    </ion-segment-button>
+    <ion-segment-button value="agents">
+      Agents
+    </ion-segment-button>
+    <ion-segment-button value="usagers">
+      Usagers
+    </ion-segment-button>
+  </ion-segment>
+</div>
+
+<div [ngSwitch]="type" *ngIf="!entry">
+  <ion-list *ngSwitchCase="'tout'">
+    <ion-grid *ngIf="!entry">
+      <ion-row class="header-row">
+<ion-col >
+              Date 
+          </ion-col>
+          <ion-col>
+            montant
+          </ion-col>           
+           <ion-col>
+            Type de transaction 
+          </ion-col>
+            <ion-col>
+              Usager
+          </ion-col>
+      </ion-row>
+
+
+      <ion-row *ngFor="let entry of history" class="entry" (tap)="showEntry(entry)">
+        <ion-col>
+          {{ entry.Date}} {{ entry.HeureTransaction}} 
+        </ion-col>
+        <ion-col>
+          {{ entry.Montant}} FCFA
+
+        </ion-col>
+        <ion-col>
+          {{ entry.TypeTrasaction}}  
+
+        </ion-col>
+        <ion-col>
+          {{ entry.usager}}
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+  </ion-list>
+
+  <ion-list *ngSwitchCase="'agents'">
+    <ion-grid *ngIf="!entry">
+      <ion-row class="header-row">
+<ion-col >
+              Date 
+          </ion-col>
+          <ion-col>
+            montant
+          </ion-col>           
+           <ion-col>
+            Type de transaction 
+          </ion-col>
+            <ion-col>
+              Usager
+          </ion-col>
+      </ion-row>
+
+
+      <ion-row *ngFor="let entry of agentHistory" class="entry" (tap)="showEntry(entry)">
+        <ion-col>
+          {{ entry.Date}} {{ entry.HeureTransaction}} 
+        </ion-col>
+        <ion-col>
+          {{ entry.Montant}} FCFA
+
+        </ion-col>
+        <ion-col>
+          {{ entry.TypeTrasaction}}  
+
+        </ion-col>
+        <ion-col>
+          {{ entry.usager}}
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+
+  <ion-list *ngSwitchCase="'usagers'">
+    <ion-grid>
+      <ion-row class="header-row">
+<ion-col >
+              Date 
+          </ion-col>
+          <ion-col>
+            montant
+          </ion-col>           
+           <ion-col>
+            Type de transaction 
+          </ion-col>
+            <ion-col>
+              Usager
+          </ion-col>
+      </ion-row>
+
+
+      <ion-row *ngFor="let entry of perfectPayHistory" class="entry" (tap)="showEntry(entry)">
+        <ion-col>
+          {{ entry.Date}} {{ entry.HeureTransaction}} 
+        </ion-col>
+        <ion-col>
+          {{ entry.Montant}} FCFA
+
+        </ion-col>
+        <ion-col>
+          {{ entry.TypeTrasaction}}  
+
+        </ion-col>
+        <ion-col>
+          {{ entry.usager}}
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+</div>
+      <ion-grid *ngIf="entry">
           <ion-row class="header-row">
   <ion-col >
                   Date 
@@ -19,32 +150,32 @@
                 montant
               </ion-col>           
                <ion-col>
-                frais
+                Type de transaction 
               </ion-col>
                 <ion-col>
-                  Destinataire
+                  Usager
               </ion-col>
           </ion-row>
 
  
           <ion-row *ngFor="let entry of history" class="entry" (tap)="showEntry(entry)">
             <ion-col>
-              {{ entry.DateTransaction}} {{ entry.HeureTransaction}} 
+              {{ entry.Date}} {{ entry.HeureTransaction}} 
             </ion-col>
             <ion-col>
               {{ entry.Montant}} FCFA
 
             </ion-col>
             <ion-col>
-              {{ entry.Frais}} FCFA 
+              {{ entry.TypeTrasaction}}  
 
             </ion-col>
             <ion-col>
-              {{ entry.ReferenceArticle}}
+              {{ entry.usager}}
 
             </ion-col>
           </ion-row>
-        </ion-grid>
+        </ion-grid> 
     
   </div>
 

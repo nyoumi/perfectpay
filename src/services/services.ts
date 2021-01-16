@@ -45,7 +45,7 @@ export class Services {
 
   authentification(email, password) {
     //var xml2js = require('xml2js');
-    let params="action=login_account&login="+email+"&password="+password;
+    let params="action=login_account_buisness&login="+email+"&password="+password;
     return new Promise(resolve => {
       this.http.get("http://" + environment.server + environment.apilink + params)
         .subscribe(data => {
@@ -116,18 +116,125 @@ export class Services {
     });
   }
   getHistory(idClient) {
-    let action="action=check_transaction";
+    let action="action=View_liste_all_transactions_revendeur";
 
   return new Promise(resolve => {
     this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
       .subscribe(data => {
         //console.log(data._body); 
-        resolve(data.json());
+        resolve(data._body);
       }, err => {
         //console.log("Error"); 
         resolve(err);
       })
   });
+}
+getHistoryPerfectPay(idClient) {
+  let action="action=View_liste_all_transactions_clientsPerfectPay";
+
+return new Promise(resolve => {
+  this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
+    .subscribe(data => {
+      console.log(data._body); 
+      resolve(data._body);
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+
+getHistoryPointVente(idClient) {
+  let action="action=View_liste_all_transactions_revendeur_pointVente";
+
+return new Promise(resolve => {
+  this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
+    .subscribe(data => {
+      //console.log(data._body); 
+      resolve(data._body);
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+
+
+getPointVente(idClient) {
+  let action="action=View_liste_sale_point";
+
+return new Promise(resolve => {
+  this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
+    .subscribe(data => {
+      //console.log(data._body); 
+      resolve(data._body);
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+
+getTransactionsPointVente(idClient,idPointvente) {
+  let action="action=View_liste_all_transactions_point_vente";
+
+return new Promise(resolve => {
+  this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient+"&Indexe_pointvente="+idPointvente)
+    .subscribe(data => {
+      //console.log(data._body); 
+      resolve(data._body);
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+
+getTransactionspPersoPerfectPay(idClient) {
+  let action="action=View_liste_all_transactions_revendeur_ClientPerfectPay";
+
+return new Promise(resolve => {
+  this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
+    .subscribe(data => {
+      //console.log(data._body); 
+      resolve(data._body);
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+
+getTransactionspPersoCommissions(idClient) {
+  let action="action=View_liste_all_comissions_revendeurs";
+
+return new Promise(resolve => {
+  this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
+    .subscribe(data => {
+      //console.log(data._body); 
+      resolve(data._body);
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+
+
+getTransactionspPersoCommissionsdates(idClient,dateDebut,dateFin) {
+  let action="action=View_liste_all_comissions_revendeurs_two_dates";
+
+return new Promise(resolve => {
+  this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient
+  +"&date_debut="+dateDebut+"&date_fin="+dateFin)
+    .subscribe(data => {
+      //console.log(data._body); 
+      resolve(data.json());
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
 }
   checkTransfert(transferInfos) {
     this.transferInfos=transferInfos;
@@ -172,6 +279,100 @@ return new Promise(resolve => {
 }
 
 
+
+
+/**
+ * 
+ * @param transferInfos 
+ */
+
+
+  checkDepotAgent(transferInfos) {
+    this.transferInfos=transferInfos;
+    let link="action=Verification_Checking_agent"+
+   "&Code_clientExpediteur="+transferInfos.CodeClientExpediteur
+    +"&Code_clientDestinataire="+transferInfos.account+"&Montant="+transferInfos.montant;
+
+  return new Promise(resolve => {
+    this.http.get("http://" + environment.server + environment.apilink+link)
+      .subscribe(data => {
+        //console.log(data._body); 
+        let result=-1;
+        try {
+          result=data.json()
+        } catch (error) {
+          
+        }
+        resolve(result);
+      }, err => {
+        //console.log("Error"); 
+        resolve(err);
+      })
+  });
+}
+
+
+
+  checkDepotClient(transferInfos) {
+    this.transferInfos=transferInfos;
+    let link="action=Verification_Checking_depotCllient"+
+   "&Code_clientExpediteur="+transferInfos.CodeClientExpediteur
+    +"&Code_clientDestinataire="+transferInfos.account+"&Montant="+transferInfos.montant;
+
+  return new Promise(resolve => {
+    this.http.get("http://" + environment.server + environment.apilink+link)
+      .subscribe(data => {
+        //console.log(data._body); 
+        let result=-1;
+        try {
+          result=data.json()
+        } catch (error) {
+          
+        }
+        resolve(result);
+      }, err => {
+        //console.log("Error"); 
+        resolve(err);
+      })
+  });
+}
+makeDepotAgent(transferInfos,secretCode) {  
+  let link="action=validation_depot_compte_agent"+
+  "&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&Code_clientDestinataire="+
+  transferInfos.account+"&Montant="+transferInfos.montant+"&CodeSecurite="+secretCode;
+ 
+
+return new Promise(resolve => {
+  this.http.get("http://" + environment.server + environment.apilink+link)
+  .subscribe(data => {
+      //console.log(data._body); 
+      console.log(data.json())
+      resolve(data.json());
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+
+makeDepotClient(transferInfos,secretCode) {  
+  let link="action=validation_depot_compte_PerfectPayClient"+
+  "&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&Code_clientDestinataire="+
+  transferInfos.account+"&Montant="+transferInfos.montant+"&CodeSecurite="+secretCode;
+ 
+
+return new Promise(resolve => {
+  this.http.get("http://" + environment.server + environment.apilink+link)
+  .subscribe(data => {
+      //console.log(data._body); 
+      console.log(data.json())
+      resolve(data.json());
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
 
    
 
@@ -228,6 +429,27 @@ checkSecret(idClient) {
 
 return new Promise(resolve => {
   this.http.get("http://" + environment.server + environment.apilink+link)
+  .subscribe(data => {
+      //console.log(data._body);
+      let result=-1000;
+      try {
+        result=data.json()
+      } catch (error) {
+        
+      } 
+      resolve(data.json());
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+
+makeRetrait(retraitInfo) {
+ 
+
+return new Promise(resolve => {
+  this.http.post("http://192.168.40.113:8081/Perfectpay/rest/api/paiement/initDebitClientPefectPay" ,retraitInfo)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1000;

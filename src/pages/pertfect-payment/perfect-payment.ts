@@ -11,7 +11,7 @@ import { LoginPage } from '../login/login';
 })
 export class PerfectPaymentPage {
   formgroup: FormGroup; 
-  private code_marchand: AbstractControl;
+  private phone_dest: AbstractControl;
   private montant: AbstractControl;
   private message="";
   private user:any;
@@ -30,10 +30,10 @@ export class PerfectPaymentPage {
   
        });
       this.formgroup = formbuilder.group({
-        code_marchand: ['', Validators.required],
+        phone_dest: ['', Validators.required],
         montant: ['', Validators.required],
       });
-      this.code_marchand = this.formgroup.controls['code_marchand'];
+      this.phone_dest = this.formgroup.controls['phone_dest'];
       this.montant = this.formgroup.controls['montant'];
       this.services.daoGetUser().then(user=>{
         this.user=user;
@@ -43,84 +43,16 @@ export class PerfectPaymentPage {
 
   checkPayment() {
 
-    this.message=""
-    let loading = this.loadingController.create({ content: "Traitement..."});
-    loading.present();
-    this.transferInfo={
-      Code_marchand: this.code_marchand.value,
-      Montant:this.montant.value,   
-      CodeClientExpediteur:this.user[0].Telephone
-    }
-    
-      this.services.checkPayment(this.transferInfo).then((result: any) => {
-           console.log(result)
-        loading.dismiss();
-        //console.log(result);
-        switch (result.succes) {
-          case 1:
-            console.log(result.resultat)
-            this.handle(result.resultat[0])
-            break;
-          case -1:
-            this.message=result.msg
-            
-            break;
-          case -2:
-            this.message=result.msg
-
-            break;
-          case -3:
-            this.message=result.msg
-
-            break;
-          case -4:
-            this.message=result.msg
-
-            break;
-          case -5:
-            
-            this.message=result.msg
-
-            break;
-          case -6:
-            this.message=result.msg
-
-            break;
-
-          case -7:
-            this.message=result.msg
-
-            break;
-          case -8:
-            this.message=result.msg
-
-            break;
-          case -9:
-            this.message=result.msg
-
-            break;
-          case 0:
-            this.message=result.msg
-
-            break;
-
-                                  
-          default:
-            break;
-        }
-
-    });
+    this.handle( this.phone_dest,this.montant)
   
   }
-  handle( response){
+  handle( phone_dest,montant){
     let alert = this.alerCtrl.create({
       title: 'Confirmation',
-      message: 'Vous êtes sur le point d\'effectuer le paiement suivant:<br/>'+
-      'Marchand:<b>'+response.NomMarchand+'</b><br/>'+ 
-      'Montant:<b>'+response.Montant+' FCFA</b><br/>'+
-      'Frais:<b>'+response.Frais+' FCFA</b><br/>'+ 
-      'Montant Total:<b>'+response.MonantNet+' FCFA</b><br/>'+ 
-      '<b>Veuillez entrer votre code secret pour confirmer</b>',
+      message: 'Vous êtes sur le point d\'effectuer le retrait :<br/>'+
+      'Montant:<b>'+montant+' FCFA</b><br/>'+
+      'telephone:<b>'+phone_dest+' FCFA</b><br/>',
+      
       inputs: [
         {
           name: 'secret_code',
@@ -139,7 +71,7 @@ export class PerfectPaymentPage {
           handler: data => {
             if(!data.secret_code) return
             console.log(data.secret_code)
-            this.makePayment(this.transferInfo,data.secret_code)
+            this.makePayment(montant,phone_dest,data.secret_code)
           }
         }
       ]
@@ -148,10 +80,16 @@ export class PerfectPaymentPage {
 
     
   }
-  makePayment(transferInfo,secretCode) {
+  makePayment(montant,phone_dest,secret_code) {
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
-    this.services.makePayment(transferInfo,secretCode).then((result:any)=>{
+    let transfertInfo={
+      "phoneagent":this.user[0].Telephone,
+      "phonedestinataire":phone_dest,
+      "montant":montant,
+      "codesecret":secret_code
+    }
+    this.services.makeRetrait(transfertInfo).then((result:any)=>{
       loading.dismiss()
       console.log(result.resultat)
       let alert = this.alerCtrl.create();

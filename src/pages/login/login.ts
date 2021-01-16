@@ -37,8 +37,9 @@ export class LoginPage {
   }
 
   login() {
-    let loading = this.loadingController.create({ content: "Connexion"});
+    let loading = this.loadingController.create({ content: "Connexion",enableBackdropDismiss:false,dismissOnPageChange:false});
     loading.present();
+    
     
       this.services.authentification( 
         this.email.value,
@@ -72,7 +73,7 @@ export class LoginPage {
         let alert = this.alerCtrl.create();
         alert.setTitle("Erreur de connexion" );
         alert.setMode("ios");
-        alert.setMessage("Login ou mot de passe incorrect");
+        alert.setMessage(result.msg);
         alert.addButton("OK")
         alert.present();
 

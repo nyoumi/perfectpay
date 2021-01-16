@@ -6,24 +6,20 @@ import { LoginPage } from '../login/login';
 
 
 @Component({
-  selector: 'page-history',
-  templateUrl: 'history.html'
+  selector: 'commissions',
+  templateUrl: 'commissions.html'
 })
-export class HistoryPage {
+export class CommissionsPage {
   private user:any;
   history: any=[];
   agentHistory: any=[];
   perfectPayHistory: any=[];
-  type="tout"
+  TotalComissions:""
   entry: any;
- ;
   constructor(public navCtrl: NavController,
-    public alerCtrl: AlertController, navParams: NavParams,
+    public alerCtrl: AlertController,public navParams: NavParams,
     public formbuilder: FormBuilder,public services: Services, 
     public loadingController: LoadingController) {
-      this.entry=navParams.get('entry');
-      console.log(this.entry)
-
       this.services.daoGetStatus().then(status=>{
         if(status!=true){
           this.navCtrl.setRoot(LoginPage)
@@ -34,15 +30,8 @@ export class HistoryPage {
 
       this.services.daoGetUser().then(user=>{
         this.user=user;
-        if(this.entry){
-          this.getpointVenteHistory(this.entry)
+        this.getCommissions()
 
-        }else{
-          this.getHistory()
-          this.getAgentHistory()
-          this.getPerfectPayHistory()
-        }
-   
      
 
       })
@@ -50,10 +39,10 @@ export class HistoryPage {
 
  
   }
-getHistory(){
+getCommissions(){
   let loading = this.loadingController.create({ content: "Chargement de l'historique"});
   loading.present();
-  this.services.getHistory(this.user[0].Indexe).then((res:any)=>{
+  this.services.getTransactionspPersoCommissions(this.user[0].Indexe).then((res:any)=>{
     console.log(res)
     loading.dismiss()
     if(typeof res === 'string'){
@@ -64,6 +53,7 @@ getHistory(){
     if(res.succes==1){
       if(res.resultat)
       this.history=res.resultat
+      this.TotalComissions=res.TotalComissions
       for (let index = 0; index < this.history.length; index++) {
         const element = this.history[index];
         if(element.TelephoneExpediteur){
@@ -76,46 +66,6 @@ getHistory(){
           element.nomUsager=element.NomExpediteur
         }else{
           element.nomUsager=element.NomDesinataire
-        }
-
-      }
-
-    }
-    
-    console.log(res)
-  })
-}
-
-getpointVenteHistory(indexpdv){
-  let loading = this.loadingController.create({ content: "Chargement de l'historique"});
-  loading.present();
-  this.services.getTransactionsPointVente(this.user[0].Indexe,indexpdv.Indexe).then((res:any)=>{
-    console.log(res)
-    loading.dismiss()
-    if(typeof res === 'string'){
-      console.log(res)
-      res=this.setCharAt(res,res.length-3,"")
-      res=JSON.parse(res)
-    }
-    if(res.succes==1){
-      if(res.resultat)
-      this.history=res.resultat
-      for (let index = 0; index < this.history.length; index++) {
-        const element = this.history[index];
-        if(element.TelephoneExpediteur){
-          element.usager=element.TelephoneExpediteur
-        }else{
-          if(element.TelephoneDesinataire)element.usager=element.TelephoneDesinataire
-          
-          if(element.Telephone)element.usager=element.Telephone
-
-        }
-
-        if(element.NomExpediteur){
-          element.nomUsager=element.NomExpediteur
-        }else{
-          element.nomUsager=element.NomDesinataire
-          if(element.nomUsager)element.Provenance
         }
 
       }
@@ -211,9 +161,8 @@ alert.setMessage(
   "Reference de l'opération: "+entry.IDTransaction+"<br/>"+
       "Date et heure: "+entry.Date+"<br/>"+
       "Montant: <b>"+entry.Montant+" FCFA</b><br/>"+
-      "Type de transaction : "+entry.TypeTrasaction+"<br/>"+
-      "Nom de l'expéditeur : "+entry.nomUsager+"<br/>"+
-      "Telephone Expédieteur: "+entry.usager +"<br/>"
+      "Détails : "+entry.Origine+"<br/>"
+     
     );
 
     alert.present();

@@ -45,7 +45,7 @@ export class Services {
 
   authentification(email, password) {
     //var xml2js = require('xml2js');
-    let params="action=login_account_buisness&login="+email+"&password="+password;
+    let params="action=login_account_agent&login="+email+"&password="+password;
     return new Promise(resolve => {
       this.http.get("http://" + environment.server + environment.apilink + params)
         .subscribe(data => {
@@ -116,7 +116,7 @@ export class Services {
     });
   }
   getHistory(idClient) {
-    let action="action=View_liste_all_transactions_revendeur";
+    let action="action=View_liste_all_transactions_clientsPerfectPayAgent";
 
   return new Promise(resolve => {
     this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)

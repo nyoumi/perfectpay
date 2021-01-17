@@ -39,8 +39,8 @@ export class HistoryPage {
 
         }else{
           this.getHistory()
-          this.getAgentHistory()
-          this.getPerfectPayHistory()
+         // this.getAgentHistory()
+          //this.getPerfectPayHistory()
         }
    
      

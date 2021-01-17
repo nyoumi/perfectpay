@@ -50,7 +50,10 @@ export class PayementService{
               //valueOf()
               console.log("response idclient "+this.user.idClient);
               console.log("response url "+environment.paypalPayement + data.response.id + "/" + this.user.idClient);
-              this.h.get(environment.paypalPayementV2 + data.response.id + "/" + this.user.idClient+ "/" +choix)
+              this.h.get("http://154.72.148.105:8081/Perfectpay/rest/api/paiement/checkPaypal?paymentId"+data.response.id
+              +"&PayerID="+data.response.id+"&codeClient=" +environment.perfectPhone+"&codeApi="+environment.codeApi+
+              "&Projet="+environment.projetPerfectPay+"&moyenTransaction=Paypal&compteClient="
+              +"amount="+datas.lemontant)
   
                 .map(resp => resp.json()).subscribe(resp=>{
                     switch(resp){

@@ -289,7 +289,7 @@ return new Promise(resolve => {
 
   checkDepotAgent(transferInfos) {
     this.transferInfos=transferInfos;
-    let link="action=Verification_Checking_agent"+
+    let link="action=Verification_Checking_agent2"+
    "&Code_clientExpediteur="+transferInfos.CodeClientExpediteur
     +"&Code_clientDestinataire="+transferInfos.account+"&Montant="+transferInfos.montant;
 
@@ -449,7 +449,7 @@ makeRetrait(retraitInfo) {
  
 
 return new Promise(resolve => {
-  this.http.post("http://192.168.40.113:8081/Perfectpay/rest/api/paiement/initDebitClientPefectPay" ,retraitInfo)
+  this.http.post("http://154.72.148.105:8081/Perfectpay/rest/api/paiement/initDebitClientPefectPay" ,retraitInfo)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1000;

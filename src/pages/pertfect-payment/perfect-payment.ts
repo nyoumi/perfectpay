@@ -33,8 +33,7 @@ export class PerfectPaymentPage {
         phone_dest: ['', Validators.required],
         montant: ['', Validators.required],
       });
-      this.phone_dest = this.formgroup.controls['phone_dest'];
-      this.montant = this.formgroup.controls['montant'];
+    
       this.services.daoGetUser().then(user=>{
         this.user=user;
         console.log(user)
@@ -42,6 +41,8 @@ export class PerfectPaymentPage {
   }
 
   checkPayment() {
+    this.phone_dest = this.formgroup.controls['phone_dest'].value;
+    this.montant = this.formgroup.controls['montant'].value;
 
     this.handle( this.phone_dest,this.montant)
   
@@ -84,7 +85,7 @@ export class PerfectPaymentPage {
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
     let transfertInfo={
-      "phoneagent":this.user[0].Telephone,
+      "phoneagent":"237"+this.user[0].Telephone,
       "phonedestinataire":phone_dest,
       "montant":montant,
       "codesecret":secret_code
@@ -100,7 +101,7 @@ export class PerfectPaymentPage {
 
           alert.setTitle("Opération effectuée avec succès" );
           alert.setMode("ios");
-          alert.setMessage("Votre opération s'est déroulée avec sussès! Vous recevrez un message d'information.");
+          alert.setMessage(result.msg);
       
           break;
         case -1:

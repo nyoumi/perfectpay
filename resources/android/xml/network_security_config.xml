@@ -4,6 +4,12 @@
         <domain includeSubdomains="true">localhost</domain>
     </domain-config>
     <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">www.api.kakotel.com</domain>
+    </domain-config>  
+      <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">192.168.40.113</domain>
+    </domain-config>
+      <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">154.72.148.105</domain>
     </domain-config>
 </network-security-config>

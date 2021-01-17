@@ -166,9 +166,9 @@ export class PayementService{
         }
         makeOMPayment(datas,codeClient,telephone){
               let data= {
-                return_url:"https://perfectpay.com",
-                 cancel_url:"https://perfectpay.com", 
-                 notif_url:"https://perfectpay.com"
+                return_url:"https://perfectpay.cm",
+                 cancel_url:"https://perfectpay.cm", 
+                 notif_url:"https://perfectpay.cm"
                         };  
                         
             let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/orange-money-recharge/"+telephone +"/" +

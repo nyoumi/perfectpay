@@ -63,52 +63,9 @@ export class PerfectRechargePage {
           case 1:
             console.log(result.resultat)
             this.handle(result.resultat[0])
-            break;
-          case -1:
-            this.message=result.msg
-            
-            break;
-          case -2:
-            this.message=result.msg
-
-            break;
-          case -3:
-            this.message=result.msg
-
-            break;
-          case -4:
-            this.message=result.msg
-
-            break;
-          case -5:
-            
-            this.message=result.msg
-
-            break;
-          case -6:
-            this.message=result.msg
-
-            break;
-
-          case -7:
-            this.message=result.msg
-
-            break;
-          case -8:
-            this.message=result.msg
-
-            break;
-          case -9:
-            this.message=result.msg
-
-            break;
-          case -10:
-            this.message=result.msg
-
-            break;
-
-                                  
+            break;                                  
           default:
+            this.message=result.msg
             break;
         }
 

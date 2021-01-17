@@ -44,8 +44,8 @@ export class MyApp {
       { title: 'historique', component: HistoryPage },
       { title: 'transfert', component: PerfectTransfertPage },
       { title: "paiement", component: PerfectPaymentPage, },
-      { title: "Taux de change", component: ExchangeRatePage },
-
+/*       { title: "Taux de change", component: ExchangeRatePage },
+ */
 
     ];
 

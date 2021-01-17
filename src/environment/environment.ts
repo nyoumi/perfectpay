@@ -30,7 +30,7 @@ export const environment = {
     pk_stripe:"pk_live_WMbUGdkTHDbcAbYhkUhAJZPd",
     //pk_stripe:"pk_live_r1P5QXiVbPIiAlq5gUwOzeCv00HRtftzJx",
     clientidPaypalSandbox:"AfdZ-AgDqqq4nJwvkxAW9qPbCocA7P7LPFdJlR2ouMp7LZK9vnPtXunMChpcqQQo9O7y9URd8k1bvTVm",
-    clientidPaypalProduction:"Aabe0zGTYHek6qoJZeur5wl1mSbSkMBeNCOcWahwum5dZa0_2kzXOs1p_6SjTo02754YQsDqVXWeII2x",
+    clientidPaypalProduction:"AROyfruqD-wi-XIaJFaam7DZHrl-AgUABEICwaj107yHB97jU_boULPFdwWoNEPCSNz8G8ZSbI3WBcSF",
     clientpaypal:"AS3FU5KqbPUXgjwFbC2aMTu3oQA8XfH7qoq6ThL81DwkeOL_z0V6G9VcRKNLjBrClfkWAd-TdR3Oj1mT",
     //clientidPaypalProduction:"AbxF_2WReHhxnNt7AxyOvb1kAYNHABFYcqCR7gHZawYtAQB50eRp5xtadU9YSIbfT5J_c5w1ifkdJ3Wp",
     //idClient:"22",
@@ -44,6 +44,7 @@ export const environment = {
 
     //testInitializeOM:'http://sms.iplans.cm/rest/api/omTransactionInitialize/',
     //testTrStatusOM:'http://sms.iplans.cm/rest/api/getTransactionStatus/',
+    paypalPayementperfectPay:'http://154.72.148.105:8081/Perfectpay/rest/api/paiement/checkPaypal?',
 
     /**
      * google
@@ -67,7 +68,6 @@ export const environment = {
     mtnPayement:'http://sms.iplans.cm/rest/api/creditMobilePaiement',
     paypalPayement:'http://sms.iplans.cm/rest/api/verifyPaymentCredit/',    
     testUrlmtnCredit:'http://sms.iplans.cm/iSMS/rest/api/creditMobilePaiement/',
-    paypalPayementV2:'http://sms.iplans.cm/rest/api/verifyPaymentCreditV2/',  
     stripePayementV2:'http://sms.iplans.cm/rest/api/stripePaymentCreditV2/', 
     mtnPayementV2:'http://sms.iplans.cm/rest/api/creditMobilePaiementV2',
 

@@ -40,7 +40,7 @@ export class PayementService{
             let payment = new PayPalPayment(datas.lemontant, 'USD', 'credit de communication', 'sale', paymentDetails);
             this.payPal.renderSinglePaymentUI(payment).then(data => {
               let alert2 = this.alerCtrl.create();
-              console.log(data.response);
+              console.log(data.response.id);
               alert2.setMessage("Vérification du paiement");
               alert2.setTitle("paypal");
               alert2.present();
@@ -50,8 +50,11 @@ export class PayementService{
               //valueOf()
               console.log("response idclient "+this.user.idClient);
               console.log("response url "+environment.paypalPayement + data.response.id + "/" + this.user.idClient);
-              this.h.get(environment.paypalPayementperfectPay +"paymentId="+ data.response.id + "&PayerID="+data.response.id +"&codeClient="+ this.user.idClient+ "/" +choix)
-              //paymentId=fzfzfzfzffaz&PayerID1234fez&codeClient=691788864&codeApi= 156455&Projet=Paypal&moyenTransaction= Paypal &compteClient=691788864&amount=1000',  
+              this.h.get("http://154.72.148.105:8081/Perfectpay/rest/api/paiement/checkPaypal?paymentId"+data.response.id
+              +"&PayerID="+data.response.id+"&codeClient=" +environment.perfectPhone+"&codeApi="+environment.codeApi+
+              "&Projet="+environment.projetPerfectPay+"&moyenTransaction=Paypal&compteClient="
+              +"amount="+datas.lemontant)
+  
                 .map(resp => resp.json()).subscribe(resp=>{
                     switch(resp){
                       case 1:
@@ -165,8 +168,7 @@ export class PayementService{
           });
         }
         makeOMPayment(datas,codeClient,telephone){
-             
-                                      let data= {
+              let data= {
                 return_url:"https://perfectpay.cm",
                  cancel_url:"https://perfectpay.cm", 
                  notif_url:"https://perfectpay.cm"

@@ -16,7 +16,7 @@
       <button menuClose ion-item (click)="secretUpdate()" *ngIf="secretStatus">
         Modifier code secret
       </button>
-      <button menuClose ion-item (click)="showHelp()">
+            <button menuClose ion-item (click)="showHelp()" *ngIf="secretStatus">
       Aide
       </button>
       <button menuClose ion-item (click)="disconnect()">

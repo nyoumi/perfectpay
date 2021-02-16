@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>PAYEMENT MARCHAND</ion-title>
+    <div class="frontImage"> 
+
+    </div>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+    <form (submit)="login()"  [formGroup]="formgroup">
+      <div class="form-content">
+      <div  text-center >
+        <h6>Paiement </h6>
+      </div>
+      <ion-list>
+  
+        <ion-item class="form-item">
+          <ion-input class="text-input" formControlName="montant" type="number"  autocorrect="off" autocapitalize="none" name="montant" placeholder="montant"></ion-input>
+        </ion-item>
+        <ion-item class="country">
+          <ion-select [(ngModel)]="service" [ngModelOptions]="{standalone: true}" placeholder="selectionnez le service"
+           (ionChange)="countryChange()" multiple="false">
+            <ion-option *ngFor="let svc of services" [value]="ctry" [selected]="svc.id == service.id">
+              {{svc.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+        
+        <ion-item class="form-item">
+          <ion-input formControlName="code_marchand" class="text-input" type="text" autocorrect="off" autocapitalize="none" name="raison" placeholder="code du marchand"></ion-input>
+        </ion-item>  
+  
+      </ion-list>
+    
+  </div>
+
+    </form>
+  
+  <div  text-center>
+    <button ion-button  block class="login-button" [disabled]="!formgroup.valid" (tap)="checkPayment()">Payer</button>
+
+  </div>
+  
+  <div  text-center class="message-error-text">
+          
+         
+    <p >{{ message }} </p>
+ 
+</div>
+</ion-content>  

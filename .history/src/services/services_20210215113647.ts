@@ -42,12 +42,11 @@ export class Services {
     });
   }
  
-
   authentification(email, password) {
     //var xml2js = require('xml2js');
-    let params="action=login_account&login="+email+"&password="+password;
+    let params="action=login_account_marchand&login="+email+"&password="+password;
     return new Promise(resolve => {
-      this.http.get("http://" + environment.server + environment.apilink + params)
+      this.http.get("https://" + environment.server + environment.apilink + params)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -64,7 +63,7 @@ export class Services {
     "&Email="+UserInfo.email+
     "&Region="+UserInfo.Region+"&Telephone="+UserInfo.Telephone+"&Departement="+UserInfo.Departement+"&Pays="+UserInfo.Pays+"&DateNaissance="+UserInfo.DateNaissance+"&Ville="+UserInfo.Ville;
     return new Promise(resolve => {
-      this.http.get("http://" + environment.server + environment.apilink + params)
+      this.http.get("https://" + environment.server + environment.apilink + params)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -77,7 +76,7 @@ export class Services {
    getRegions() {
     let action="action=show_liste_region";
     return new Promise(resolve => {
-      this.http.get("http://" + environment.server + environment.apilink+action)
+      this.http.get("https://" + environment.server + environment.apilink+action)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -90,7 +89,7 @@ export class Services {
   getDepartments() {
     let action="action=show_liste_departement";
     return new Promise(resolve => {
-      this.http.get("http://" + environment.server + environment.apilink+action)
+      this.http.get("https://" + environment.server + environment.apilink+action)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -105,7 +104,7 @@ export class Services {
       let action="action=check_solde";
 
     return new Promise(resolve => {
-      this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient+"&secret_code="+secretCode)
+      this.http.get("https://" + environment.server + environment.apilink+action+"&indexe_users="+idClient+"&secret_code="+secretCode)
         .subscribe(data => {
           //console.log(data._body); 
           resolve(data.json());
@@ -119,7 +118,7 @@ export class Services {
     let action="action=check_transaction";
 
   return new Promise(resolve => {
-    this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
+    this.http.get("https://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
       .subscribe(data => {
         //console.log(data._body); 
         resolve(data.json());
@@ -129,6 +128,20 @@ export class Services {
       })
   });
 }
+getMerchantServices(idClient) {
+  let action="action=View_liste_services";
+
+return new Promise(resolve => {
+  this.http.get("https://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
+    .subscribe(data => {
+      //console.log(data._body); 
+      resolve(data.json());
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
   checkTransfert(transferInfos) {
     this.transferInfos=transferInfos;
     let link="action=check_informations_account_perfect_pay&CodeClient="+environment.perfectPhone+
@@ -136,7 +149,7 @@ export class Services {
     transferInfos.account+"&Montant="+transferInfos.montant+"&Raison_transfert="+transferInfos.raison;
 
   return new Promise(resolve => {
-    this.http.get("http://" + environment.server + environment.apilink+link)
+    this.http.get("https://" + environment.server + environment.apilink+link)
       .subscribe(data => {
         //console.log(data._body); 
         let result=-1;
@@ -159,7 +172,7 @@ makeTransfert(transferInfos,secretCode) {
  
 
 return new Promise(resolve => {
-  this.http.get("http://" + environment.server + environment.apilink+link)
+  this.http.get("https://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body); 
       console.log(data.json())
@@ -183,7 +196,7 @@ checkPayment(transferInfos) {
  
 
 return new Promise(resolve => {
-  this.http.get("http://" + environment.server + environment.apilink+link)
+  this.http.get("https://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1;
@@ -206,7 +219,7 @@ makePayment(transferInfos,codeSecret) {
   "&CodeSecurite="+codeSecret;
 
 return new Promise(resolve => {
-  this.http.get("http://" + environment.server + environment.apilink+link)
+  this.http.get("https://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body); 
       let result=-1;
@@ -227,7 +240,7 @@ checkSecret(idClient) {
  
 
 return new Promise(resolve => {
-  this.http.get("http://" + environment.server + environment.apilink+link)
+  this.http.get("https://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1000;
@@ -253,7 +266,7 @@ createSecret(idClient,secret) {
  
 
 return new Promise(resolve => {
-  this.http.get("http://" + environment.server + environment.apilink+link)
+  this.http.get("https://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1000;
@@ -279,7 +292,7 @@ updateSecret(idClient,secret,oldSecret) {
  
 
 return new Promise(resolve => {
-  this.http.get("http://" + environment.server + environment.apilink+link)
+  this.http.get("https://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1000;
@@ -304,7 +317,7 @@ getSecretStatus(idClient) {
  
 
 return new Promise(resolve => {
-  this.http.get("http://" + environment.server + environment.apilink+link)
+  this.http.get("https://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1000;

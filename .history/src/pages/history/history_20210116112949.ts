@@ -27,7 +27,7 @@ export class HistoryPage {
 
       this.services.daoGetUser().then(user=>{
         this.user=user;
-        this.services.getHistory(this.user[0].Indexe,1).then((res:any)=>{
+        this.services.getHistory(this.user[0].Indexe).then((res:any)=>{
           loading.dismiss()
           if(res.succes=1){
             this.history=res.resultat

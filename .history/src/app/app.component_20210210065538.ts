@@ -82,7 +82,7 @@ export class MyApp {
       this.status=status;
       switch (this.status) {
         case false:
-          this.rootPage=LoginPage;
+          //this.rootPage=LoginPage;
           break;
    
         case true:

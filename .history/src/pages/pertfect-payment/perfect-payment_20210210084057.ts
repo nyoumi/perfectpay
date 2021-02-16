@@ -16,10 +16,8 @@ export class PerfectPaymentPage {
   private message="";
   private user:any;
   transferInfo: any;
-  mServices=[{id:1,nom:"défaut"},{id:2,nom:"bar"},{id:3,nom:"facture erp"}];
-  private testRadioOpen;
-  private testRadioResult;
-  service={id:1,nom:"défaut"};
+  mServices=[{id:1,nom:"restaurant"},{id:2,nom:"bar"},{id:3,nom:"facture erp"}];
+
 
 
   constructor(public navCtrl: NavController,
@@ -33,29 +31,15 @@ export class PerfectPaymentPage {
   
        });
       this.formgroup = formbuilder.group({
-        montant: ['', Validators.required], 
+        code_marchand: ['', Validators.required],
+        montant: ['', Validators.required],
       });
       this.code_marchand = this.formgroup.controls['code_marchand'];
       this.montant = this.formgroup.controls['montant'];
-      let loading = this.loadingController.create({ content: "Chargement ..."});
-      loading.present();
       this.services.daoGetUser().then(user=>{
         this.user=user;
         console.log(user)
-        this.services.getMerchantServices(this.user[0].Indexe).then((res:any)=>{
-          loading.dismiss()
-          if(res.succes=1){
-            this.services=res.resultat
-    
-          }
-          
-          console.log(res)
-        })
       })
-
-
-
-   
   }
 
   checkPayment() {
@@ -265,150 +249,5 @@ export class PerfectPaymentPage {
 
     })
   }
-
-
-  doRadio(datatype) {
-    let alert = this.alerCtrl.create();
-    alert.setTitle("Moyen de paiement");
-    alert.setSubTitle("Choisir le moyen de paiement du client")
-    alert.setMode("ios")
-    alert.addInput({
-      type: 'radio',
-      label: 'PerfectPay',
-      value: 'perfectpayPayment'
-    });
-    alert.addInput({
-      type: 'radio', 
-      label: 'MTN mobile money',
-      value: 'MTNCredit'
-    });
-    alert.addInput({
-      type: 'radio',
-      label: 'Orange money',
-      value: 'omCredit'
-    });
-    alert.addInput({
-      type: 'radio',
-      label: 'Paypal',
-      value: 'paypalPayment'
-    });
-
-    alert.addButton("Annuler");
-    alert.addButton({
-      text: 'Ok',
-      handler: data => {
-       // console.log('Radio data:', data);
-       if (data == "stripeCredit") {
-        //this.navCtrl.push(StripePayment,{
-         // param:datas.lemontant
-        //});
-        this.enterAmountByCard(data,datatype);
-      }
-        this.testRadioOpen = false;
-        this.testRadioResult = data;
-        if (data == "paypalPayment") {
-          //this.payementService.makepaypalpayment(datatype);
-          //this.makepaypalpayment(datas,datatype);
-          this.enterAmountByCard(data,datatype);
-        }
-
-        if (data == "MTNCredit") {
-          //this.makemtnpayment(datas);
-          //this.payementService.makemtnpayment(datas);
-         // this.enterAmountByMobileMoney(data,datatype);
-        }
-
-        if (data == "omCredit") {
-          //this.makeOMpayment();
-          //this.makeOMPayment(datas,datatype);
-          //this.payementService.makeOMPayment(datas,datatype);
-          //this.enterAmountByMobileMoney(data,datatype);
-        }
-        if (data == "perfectpayPayment") {
-          //this.makeOMpayment();
-          //this.makeOMPayment(datas,datatype);
-          //this.payementService.makeOMPayment(datas,datatype);
-         // this.enterAmountByMobileMoney(data,datatype);
-        }
-      }
-    });
-    alert.present().then(() => {
-      this.testRadioOpen = true;
-    });
-  }
-
-  
-  enterAmountByCard(data,choix){
-    let alert = this.alerCtrl.create();
-    alert.setTitle("Montant");
-    alert.setMode("ios")
-
-
-    alert.addInput({
-      type:'number',
-      name:'lemontant',
-      placeholder:"montant"
-    });
-    alert.addButton("Annuler");
-    alert.addButton({
-      text:'ok',
-      handler:datas=>{
-        if(datas.lemontant == ""){
-         // this.showErrorToast("veuillez remplir ce champs");
-        }
-        else{
-          if(data == "stripeCredit"){
-            this.navCtrl.push("StripePayment",{
-              param:datas.lemontant,
-              choix:choix
-            });
-          }
-          if(data == "paypalPayment"){
-           // this.payementService.makepaypalpayment(datas,choix); 
-          }
-        }
-    
-      }
-    });
-    alert.present().then(() => {
-     // this.testRadioOpen = true;
-    });
-  }
-/*   enterAmountByMobileMoney(data,datatype){
-    let alert = this.alerCtrl.create();
-    alert.setTitle("Montant");
-    alert.setMode("ios")
-
-
-    alert.addInput({
-      type:'number',
-      name:'lemontant',
-      placeholder:"Veuillez entrer le montant"
-    });
-    alert.addButton("Annuler");
-    alert.addButton({
-      text:'ok',
-      handler:datas=>{
-        let codeClient=this.user[0].Telephone;
-        if(datas.lemontant == ""){
-         // this.showErrorToast("Veuillez saisir le montant");
-        }
-        else{
-          if(data == "MTNCredit"){
-            //this.payementService.makemtnpayment(datas,codeClient);
-          }
-          if(data == "omCredit"){
-             -
-           // this.payementService.makeOMPayment(datas,codeClient,this.user[0].Telephone);
-          }
-        }
-      
-      }
-
-    });
-    alert.present().then(() => {
-      this.testRadioOpen = true;
-    });
-  } */
 
 }

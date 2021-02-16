@@ -10,7 +10,7 @@ import { Services } from '../services/services';
 
 
 @Injectable()
-export class PayementService{  
+export class PayementService{
     private browser:any;
     private user:any;
     constructor(public alerCtrl: AlertController,

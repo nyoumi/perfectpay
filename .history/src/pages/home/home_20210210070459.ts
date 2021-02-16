@@ -27,19 +27,11 @@ export class HomePage {
     public loadingController: LoadingController) {
     this.services.daoGetUser().then(user=>{
       this.user=user;
-     if(user){
-      this.services.getSecretStatus(this.user[0].Indexe).then((status:any)=>{
-        console.log(status)
-        if(status.succes==1){
-          this.createSecret()
-         
-        }})
-     }
       console.log(user)
     })
     this.services.daoGetStatus().then(status=>{
       if(status!=true){
-        this.navCtrl.setRoot(LoginPage)
+        //this.navCtrl.setRoot(LoginPage)
       }
 
      });
@@ -129,6 +121,8 @@ export class HomePage {
 
 
   }
+
+  
  
   doRadio(datatype) {
     let alert = this.alerCtrl.create();
@@ -195,7 +189,55 @@ export class HomePage {
   }
 
 
+ 
+  makeBanking() {
+    let alert = this.alerCtrl.create();
+    alert.setTitle("Opération");
+    alert.setSubTitle("Quelle opération souhaitez-vous effectuer?")
+    alert.setMode("ios")
 
+
+
+ 
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Transfert vers une carte',
+      value: 'paypalPayment'
+    });
+    alert.addInput({
+      type: 'radio', 
+      label: 'transfert vers compte bancaire',
+      value: 'MTNCredit'
+    });
+    alert.addInput({
+      type: 'radio',
+      label: 'Transfert vers Orange Money',
+      value: 'omCredit'
+    });
+    alert.addInput({
+      type: 'radio',
+      label: 'Transfert vers Mobile Money',
+      value: 'omCredit'
+    });
+
+    alert.addButton("Annuler");
+    alert.addButton({
+      text: 'Ok',
+      handler: data => {
+        let alert = this.alerCtrl.create();
+        alert.setTitle("Coming soon!");
+        alert.setSubTitle("Bientôt disponible")
+        alert.setMessage("Cette fonctionnalité sera bientôt disponible")
+        alert.setMode("ios")
+        alert.present()
+  
+      }
+    });
+    alert.present().then(() => {
+      this.testRadioOpen = true;
+    });
+  }
  /*  payMethod() { 
     let alert = this.alerCtrl.create();
     alert.setTitle("Méthode de paiement");
@@ -399,8 +441,21 @@ export class HomePage {
 
 
   }
-  createSecret(){
+  showHelp(){
     let alert = this.alerCtrl.create();
+    alert.setTitle("Contact");
+    alert.setSubTitle("Besoin d'aide?")
+    alert.setMessage("Contactez-nous par Tel: (Std) +237 (2) 33 52 00 02 / +237 (2) 33 52 00 03 <br>Email: info@kakotel.com")
+    alert.setMode("ios")
+    alert.present()
+
+
+  }
+  createSecret(){
+    let alert = this.alerCtrl.create({
+
+      enableBackdropDismiss:false
+    });
     alert.setTitle("Code secret");
     alert.setSubTitle("Veuillez définir votre code secret")
     alert.setMessage("votre code secret vous permet de sécuriser vos opération PerfectPay. Vous devez donc le conserver de manière confidentielle!")
@@ -421,9 +476,9 @@ export class HomePage {
       text:'ok',
       handler:datas=>{
         let codeClient=this.user[0].Indexe;
-        if(datas.secret == ""){
-          this.showErrorToast("Veuillez saisir Votre code secret");
+        if(!datas.secret){
           this.createSecret()
+          this.showErrorToast("Veuillez saisir Votre code secret");
           return ;
         }
         if(datas.secret != datas.secretConfirm ){
@@ -444,7 +499,7 @@ export class HomePage {
       } else {
         let alert2= this.alerCtrl.create();
         alert2.setTitle("Echec de l'enregistrement");
-        alert2.setSubTitle("Code secret non défini!")
+        alert2.setSubTitle("Code secret non définit!")
         alert2.setMessage("Une erreur s'est produite lors de l'enregistrement de votre code secret ")
         alert2.setMode("ios")
         alert2.present()

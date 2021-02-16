@@ -16,10 +16,10 @@ export class PerfectPaymentPage {
   private message="";
   private user:any;
   transferInfo: any;
-  mServices=[{id:1,nom:"défaut"},{id:2,nom:"bar"},{id:3,nom:"facture erp"}];
+  mServices=[{id:1,nom:"restaurant"},{id:2,nom:"bar"},{id:3,nom:"facture erp"}];
   private testRadioOpen;
   private testRadioResult;
-  service={id:1,nom:"défaut"};
+  service={id:1,nom:"restaurant"};
 
 
   constructor(public navCtrl: NavController,
@@ -37,25 +37,10 @@ export class PerfectPaymentPage {
       });
       this.code_marchand = this.formgroup.controls['code_marchand'];
       this.montant = this.formgroup.controls['montant'];
-      let loading = this.loadingController.create({ content: "Chargement ..."});
-      loading.present();
       this.services.daoGetUser().then(user=>{
         this.user=user;
         console.log(user)
-        this.services.getMerchantServices(this.user[0].Indexe).then((res:any)=>{
-          loading.dismiss()
-          if(res.succes=1){
-            this.services=res.resultat
-    
-          }
-          
-          console.log(res)
-        })
       })
-
-
-
-   
   }
 
   checkPayment() {

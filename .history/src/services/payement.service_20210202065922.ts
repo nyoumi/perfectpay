@@ -10,7 +10,7 @@ import { Services } from '../services/services';
 
 
 @Injectable()
-export class PayementService{  
+export class PayementService{
     private browser:any;
     private user:any;
     constructor(public alerCtrl: AlertController,
@@ -123,7 +123,7 @@ export class PayementService{
               alert2.setMessage("Opération en cours...");
               alert2.setTitle("Payement");
               alert2.present();
-              let link="http://" +"154.72.148.105"+":8081/Perfectpay/rest/api/paiement/mtn-money-recharge/"+data.telephone +"/" +
+              let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/mtn-money-recharge/"+data.telephone +"/" +
                datas.lemontant+ "/" +
                environment.perfectPhone+ "/" +
                environment.codeApi+ "/" +
@@ -174,7 +174,7 @@ export class PayementService{
                  notif_url:"https://perfectpay.cm"
                         };  
                         
-            let link="http://" +"154.72.148.105"+":8081/Perfectpay/rest/api/paiement/orange-money-recharge/"+telephone +"/" +
+            let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/orange-money-recharge/"+telephone +"/" +
             datas.lemontant+ "/" +
             environment.perfectPhone+ "/" +
             environment.codeApi+ "/" +
@@ -201,7 +201,7 @@ export class PayementService{
         }  
 
       verifyCreditPaymentStatus(pay_token:string,datas,codeClient){
-        let link="http://" +"154.72.148.105"+":8081/Perfectpay/rest/api/paiement/getStatusRecharge/"+pay_token+"/" +codeClient
+        let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/getStatusRecharge/"+pay_token+"/" +codeClient
 
             
           this.h.post(link, datas, {}).map(resp => resp.json()).subscribe(resp=>{

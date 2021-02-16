@@ -18,7 +18,6 @@ const  APP_LINK="http://play.google.com/store/apps/details?id=cm.iplans.call";
 
    
 const  MINVERSION="MINVERSION";
-const MERCHANT_SERVICES="MERCHANT_SERVICES";
 
 
 @Injectable()
@@ -136,7 +135,7 @@ return new Promise(resolve => {
   this.http.get("https://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
     .subscribe(data => {
       //console.log(data._body); 
-      resolve(data._body);
+      resolve(data.json());
     }, err => {
       //console.log("Error"); 
       resolve(err);
@@ -452,33 +451,6 @@ daoSetHaveUsed(haveUsed:boolean) {
     error => console.error('Error storing minVersion: '+error, error)
   );
    
-}
-daoSetMerchantServices(services) {
-  console.log("want to save services of merchant");
-  localForage.setItem(MERCHANT_SERVICES,services)
-  .then(
-    () => console.log("services saved"),
-    error => console.error('Error storing minVersion: '+error, error)
-  );
-   
-}
-async daoGetMerchantServices(): Promise<boolean> {
-  let datas;
-  await localForage.getItem(MERCHANT_SERVICES)
-  
-.then(
-  (data:any) => {
-    datas=data;
-    return Promise.resolve(data);
-  }
-  ,
-  error =>{
-    console.error(error)
-    return Promise.resolve(false);
-  } 
-);
-return Promise.resolve(datas);
-
 }
 
   /**

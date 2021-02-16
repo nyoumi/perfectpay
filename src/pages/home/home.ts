@@ -17,6 +17,7 @@ export class HomePage {
   private user: any;
   private testRadioOpen;
   private testRadioResult;
+  merchantServices: any;
 
   constructor(public navCtrl: NavController,public menuCtrl: MenuController,
     public alerCtrl: AlertController,
@@ -28,10 +29,20 @@ export class HomePage {
     this.services.daoGetUser().then(user=>{
       this.user=user;
       console.log(user)
+      this.services.getMerchantServices(this.user[0].Indexe).then((res:any)=>{
+       
+        if(res.succes=1){
+          this.merchantServices=res.resultat
+          this.services.daoSetMerchantServices(this.merchantServices);
+  
+        }
+        
+        console.log(res)
+      })
     })
     this.services.daoGetStatus().then(status=>{
       if(status!=true){
-        this.navCtrl.setRoot(LoginPage)
+        //this.navCtrl.setRoot(LoginPage)
       }
 
      });
@@ -69,7 +80,7 @@ export class HomePage {
                 let alert = this.alerCtrl.create();
                 alert.setTitle("Erreur d'authentifcation" );
                 alert.setMode("ios");
-                alert.setMessage("le code secret que vous avez saisi est incorrecte");
+                alert.setMessage("le code secret que vous avez saisi est incorrect");
                 alert.addButton("OK")
                 alert.present();
                 alert.setMode("ios")
@@ -127,7 +138,7 @@ export class HomePage {
   doRadio(datatype) {
     let alert = this.alerCtrl.create();
     alert.setTitle("Moyen de paiement");
-    alert.setSubTitle("Choisir un moyen de paiement pour recharger votre compte")
+    alert.setSubTitle("Choisir le moyen de paiement du client")
     alert.setMode("ios")
 
 
@@ -136,8 +147,8 @@ export class HomePage {
 
     alert.addInput({
       type: 'radio',
-      label: 'Paypal',
-      value: 'paypalPayment'
+      label: 'PerfectPay',
+      value: 'perfectpayPayment'
     });
     alert.addInput({
       type: 'radio', 
@@ -148,6 +159,11 @@ export class HomePage {
       type: 'radio',
       label: 'Orange money',
       value: 'omCredit'
+    });
+    alert.addInput({
+      type: 'radio',
+      label: 'Paypal',
+      value: 'paypalPayment'
     });
 
     alert.addButton("Annuler");
@@ -176,6 +192,12 @@ export class HomePage {
         }
 
         if (data == "omCredit") {
+          //this.makeOMpayment();
+          //this.makeOMPayment(datas,datatype);
+          //this.payementService.makeOMPayment(datas,datatype);
+          this.enterAmountByMobileMoney(data,datatype);
+        }
+        if (data == "perfectpayPayment") {
           //this.makeOMpayment();
           //this.makeOMPayment(datas,datatype);
           //this.payementService.makeOMPayment(datas,datatype);
@@ -217,7 +239,7 @@ export class HomePage {
     });
     alert.addInput({
       type: 'radio',
-      label: 'ransfert vers Mobile Money',
+      label: 'Transfert vers Mobile Money',
       value: 'omCredit'
     });
 
@@ -441,7 +463,7 @@ export class HomePage {
 
 
   }
-  getHistorique(){
+  showHelp(){
     let alert = this.alerCtrl.create();
     alert.setTitle("Contact");
     alert.setSubTitle("Besoin d'aide?")

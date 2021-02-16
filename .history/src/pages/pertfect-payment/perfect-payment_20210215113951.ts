@@ -16,10 +16,10 @@ export class PerfectPaymentPage {
   private message="";
   private user:any;
   transferInfo: any;
-  mServices=[{id:1,nom:"défaut"},{id:2,nom:"bar"},{id:3,nom:"facture erp"}];
+  mServices=[{id:1,nom:"restaurant"},{id:2,nom:"bar"},{id:3,nom:"facture erp"}];
   private testRadioOpen;
   private testRadioResult;
-  service={id:1,nom:"défaut"};
+  service={id:1,nom:"restaurant"};
 
 
   constructor(public navCtrl: NavController,

@@ -177,37 +177,3 @@ ion-img.appImage.img-loaded {
 .message-error-text{
     color: #e8aaad;}
 }
-
-.select-md .select-icon {
-    position: relative;
-    width: 12px;
-    height: 19px;
-    left: -10px;
-}
-    ion-item.country {
-        font-family: CaviarDreams;
-
-        background: #f1f1f138;
-        height: 16px;
-        margin-bottom: 16px;
-        border: 1px white solid;
-        border-radius: 5px;
-    }
-    ion-input.side-i.input {
-        width: 20%;
-    max-width: 35%;
-    }
-    ion-select.select.select-md {
-        width: 100%;
-        padding: 0;
-        color: white;
-        display: contents;
-        letter-spacing: 2px;
-
-    }
-    .select-icon-inner {
-        color: white !important;
-    }
-    .select-md .select-placeholder {
-        color: rgba(255, 255, 255, 0.788);
-    }

@@ -41,7 +41,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'home', component: HomePage },
+      { title: 'historique', component: HistoryPage },
       { title: 'transfert', component: PerfectTransfertPage },
       { title: "paiement", component: PerfectPaymentPage, },
 /*       { title: "Taux de change", component: ExchangeRatePage },
@@ -82,7 +82,7 @@ export class MyApp {
       this.status=status;
       switch (this.status) {
         case false:
-          this.rootPage=LoginPage;
+          //this.rootPage=LoginPage;
           break;
    
         case true:

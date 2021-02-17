@@ -25,7 +25,7 @@
         <ion-item class="country">
           <ion-select [(ngModel)]="service" [ngModelOptions]="{standalone: true}" placeholder="service"
            multiple="false">
-            <ion-option *ngFor="let svc of mServices" [value]="svc.CodeService" >
+            <ion-option *ngFor="let svc of mServices" [value]="ctry" [selected]="svc.id == service.id">
               {{svc.NomService}}</ion-option>
           </ion-select>
         </ion-item>
@@ -33,7 +33,7 @@
   </div>
     </form>
   <div  text-center>
-    <button ion-button  block class="login-button" [disabled]="!formgroup.valid && service" (tap)="doRadio()">Valider</button>
+    <button ion-button  block class="login-button" [disabled]="!formgroup.valid" (tap)="doRadio()">Valider</button>
   </div>
   <div  text-center class="message-error-text">   
     <p >{{ message }} </p>

@@ -3,7 +3,6 @@ import { AlertController, LoadingController, NavController, NavParams } from 'io
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Services } from '../../services/services';
 import { LoginPage } from '../login/login';
-import { PayementService } from '../../services/payement.service';
 
 
 @Component({
@@ -17,15 +16,15 @@ export class PerfectPaymentPage {
   private message="";
   private user:any;
   transferInfo: any;
-  mServices=[];
+  mServices=[{id:1,nom:"défaut"},{id:2,nom:"bar"},{id:3,nom:"facture erp"}];
   private testRadioOpen;
   private testRadioResult;
-  service;
+  service={id:1,nom:"défaut"};
 
 
   constructor(public navCtrl: NavController,
     public alerCtrl: AlertController,private params: NavParams,
-    public formbuilder: FormBuilder,public services: Services, private payementService:PayementService,
+    public formbuilder: FormBuilder,public services: Services, 
     public loadingController: LoadingController) {
       this.services.daoGetStatus().then(status=>{
         if(status!=true){
@@ -42,7 +41,8 @@ export class PerfectPaymentPage {
       })
       this.code_marchand = this.formgroup.controls['code_marchand'];
       this.montant = this.formgroup.controls['montant'];
-  
+      let loading = this.loadingController.create({ content: "Chargement ..."});
+      loading.present();
       this.services.daoGetUser().then(user=>{
         this.user=user;
         console.log(user)
@@ -294,9 +294,11 @@ export class PerfectPaymentPage {
       text: 'Ok',
       handler: data => {
        // console.log('Radio data:', data);
-       if (data == "perfectpayPayment") {
-        
-        this.enterAmountByMobileMoney(data);
+       if (data == "stripeCredit") {
+        //this.navCtrl.push(StripePayment,{
+         // param:datas.lemontant
+        //});
+        this.enterAmountByCard(data,datatype);
       }
         this.testRadioOpen = false;
         this.testRadioResult = data;
@@ -318,7 +320,12 @@ export class PerfectPaymentPage {
           //this.payementService.makeOMPayment(datas,datatype);
           //this.enterAmountByMobileMoney(data,datatype);
         }
-        
+        if (data == "perfectpayPayment") {
+          //this.makeOMpayment();
+          //this.makeOMPayment(datas,datatype);
+          //this.payementService.makeOMPayment(datas,datatype);
+         // this.enterAmountByMobileMoney(data,datatype);
+        }
       }
     });
     alert.present().then(() => {
@@ -363,34 +370,31 @@ export class PerfectPaymentPage {
      // this.testRadioOpen = true;
     });
   }
-   enterAmountByMobileMoney(data){
+/*   enterAmountByMobileMoney(data,datatype){
     let alert = this.alerCtrl.create();
-    alert.setTitle("Téléphone du client");
+    alert.setTitle("Montant");
     alert.setMode("ios")
 
 
     alert.addInput({
-      type:'string',
-      name:'userAgent',
-      placeholder:"Veuillez entrer le numéro du client"
+      type:'number',
+      name:'lemontant',
+      placeholder:"Veuillez entrer le montant"
     });
     alert.addButton("Annuler");
     alert.addButton({
       text:'ok',
       handler:datas=>{
         let codeClient=this.user[0].Telephone;
-        if(datas.userAgent == ""){
-          alert.setSubTitle("Veuillez entrez un numéro valide")
-          alert.present().then(() => {
-            //this.testRadioOpen = true;
-          });
+        if(datas.lemontant == ""){
+         // this.showErrorToast("Veuillez saisir le montant");
         }
         else{
-          if(data == "perfectpayPayment"){
-            this.payementService.makePPpayment(datas.userAgent,codeClient,this.montant.value,this.service);
+          if(data == "MTNCredit"){
+            //this.payementService.makemtnpayment(datas,codeClient);
           }
           if(data == "omCredit"){
-             
+             -
            // this.payementService.makeOMPayment(datas,codeClient,this.user[0].Telephone);
           }
         }
@@ -401,6 +405,6 @@ export class PerfectPaymentPage {
     alert.present().then(() => {
       this.testRadioOpen = true;
     });
-  } 
+  } */
 
 }

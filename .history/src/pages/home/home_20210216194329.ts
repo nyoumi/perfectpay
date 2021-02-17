@@ -230,32 +230,74 @@ export class HomePage {
       });
     }else{
       this.defautltService=this.merchantServices[0]
-      this.navCtrl.push(HistoryPage,{data: this.defautltService})
     }
    
     alert.setTitle("service");
     alert.setSubTitle("Choisir le service à consulter")
     alert.setMode("ios")
-    for (let index = 0; index < this.merchantServices.length; index++) {
-      const element =  this.merchantServices[index];
-      alert.addInput({
-        type: 'radio',
-        label: element.NomService,
-        value: element
-      });
-
-    }
 
 
 
  
 
+    alert.addInput({
+      type: 'radio',
+      label: 'PerfectPay',
+      value: 'perfectpayPayment'
+    });
+    alert.addInput({
+      type: 'radio', 
+      label: 'MTN mobile money',
+      value: 'MTNCredit'
+    });
+    alert.addInput({
+      type: 'radio',
+      label: 'Orange money',
+      value: 'omCredit'
+    });
+    alert.addInput({
+      type: 'radio',
+      label: 'Paypal',
+      value: 'paypalPayment'
+    });
+
     alert.addButton("Annuler");
     alert.addButton({
       text: 'Ok',
       handler: data => {
-        this.navCtrl.push(HistoryPage,{data:data})
+       // console.log('Radio data:', data);
+       if (data == "stripeCredit") {
+        //this.navCtrl.push(StripePayment,{
+         // param:datas.lemontant
+        //});
+       // this.enterAmountByCard(data);
+      }
+        this.testRadioOpen = false;
+        this.testRadioResult = data;
+        if (data == "paypalPayment") {
+          //this.payementService.makepaypalpayment(datatype);
+          //this.makepaypalpayment(datas,datatype);
+         // this.enterAmountByCard(data);
+        }
 
+        if (data == "MTNCredit") {
+          //this.makemtnpayment(datas);
+          //this.payementService.makemtnpayment(datas);
+          //this.enterAmountByMobileMoney(data);
+        }
+
+        if (data == "omCredit") {
+          //this.makeOMpayment();
+          //this.makeOMPayment(datas,datatype);
+          //this.payementService.makeOMPayment(datas,datatype);
+         // this.enterAmountByMobileMoney(data,datatype);
+        }
+        if (data == "perfectpayPayment") {
+          //this.makeOMpayment();
+          //this.makeOMPayment(datas,datatype);
+          //this.payementService.makeOMPayment(datas,datatype);
+          //this.enterAmountByMobileMoney(data,datatype);
+        }
       }
     });
 

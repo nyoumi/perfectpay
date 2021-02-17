@@ -97,9 +97,7 @@ export class PayementService{
           });
         }
 
-        makePPpayment(userAgent,codeClient,montant,service) {
-          
-        }
+        makePPpayment(datas,codeClient) {}
         makemtnpayment(datas,codeClient) {
         
           console.log(datas)

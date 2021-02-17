@@ -17,10 +17,10 @@ export class PerfectPaymentPage {
   private message="";
   private user:any;
   transferInfo: any;
-  mServices=[];
+  mServices=[{id:1,nom:"défaut"},{id:2,nom:"bar"},{id:3,nom:"facture erp"}];
   private testRadioOpen;
   private testRadioResult;
-  service;
+  service={id:1,nom:"défaut"};
 
 
   constructor(public navCtrl: NavController,
@@ -318,7 +318,12 @@ export class PerfectPaymentPage {
           //this.payementService.makeOMPayment(datas,datatype);
           //this.enterAmountByMobileMoney(data,datatype);
         }
-        
+        if (data == "perfectpayPayment") {
+          //this.makeOMpayment();
+          //this.makeOMPayment(datas,datatype);
+          //this.payementService.makeOMPayment(datas,datatype);
+         // this.enterAmountByMobileMoney(data,datatype);
+        }
       }
     });
     alert.present().then(() => {
@@ -387,7 +392,7 @@ export class PerfectPaymentPage {
         }
         else{
           if(data == "perfectpayPayment"){
-            this.payementService.makePPpayment(datas.userAgent,codeClient,this.montant.value,this.service);
+            this.payementService.makePPpayment(datas,codeClient);
           }
           if(data == "omCredit"){
              

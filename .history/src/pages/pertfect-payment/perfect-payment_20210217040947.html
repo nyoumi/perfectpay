@@ -25,7 +25,7 @@
         <ion-item class="country">
           <ion-select [(ngModel)]="service" [ngModelOptions]="{standalone: true}" placeholder="service"
            multiple="false">
-            <ion-option *ngFor="let svc of mServices" [value]="svc.CodeService" >
+            <ion-option *ngFor="let svc of mServices" [value]="svc.CodeService" [selected]="svc.id == service.id">
               {{svc.NomService}}</ion-option>
           </ion-select>
         </ion-item>

@@ -462,7 +462,7 @@ daoSetMerchantServices(services) {
   );
    
 }
-async daoGetMerchantServices(): Promise<any> {
+async daoGetMerchantServices(): Promise<boolean> {
   let datas;
   await localForage.getItem(MERCHANT_SERVICES)
   

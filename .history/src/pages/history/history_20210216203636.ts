@@ -12,11 +12,11 @@ import { LoginPage } from '../login/login';
 export class HistoryPage {
   private user:any;
   history: any=[];
-  
+  private params: NavParams;
   merchantService: any;
   constructor(public navCtrl: NavController,
     public alerCtrl: AlertController,
-    public formbuilder: FormBuilder,public services: Services, private params: NavParams,
+    public formbuilder: FormBuilder,public services: Services, 
     public loadingController: LoadingController) {
       this.services.daoGetStatus().then(status=>{
         if(status!=true){

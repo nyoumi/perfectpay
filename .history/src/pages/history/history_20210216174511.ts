@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, LoadingController, NavController, NavParams } from 'ionic-angular';
+import { AlertController, LoadingController, NavController } from 'ionic-angular';
 import { FormBuilder} from '@angular/forms';
 import { Services } from '../../services/services';
 import { LoginPage } from '../login/login';
@@ -12,11 +12,9 @@ import { LoginPage } from '../login/login';
 export class HistoryPage {
   private user:any;
   history: any=[];
-  
-  merchantService: any;
   constructor(public navCtrl: NavController,
     public alerCtrl: AlertController,
-    public formbuilder: FormBuilder,public services: Services, private params: NavParams,
+    public formbuilder: FormBuilder,public services: Services, 
     public loadingController: LoadingController) {
       this.services.daoGetStatus().then(status=>{
         if(status!=true){
@@ -26,13 +24,16 @@ export class HistoryPage {
        });
       let loading = this.loadingController.create({ content: "Chargement de l'historique"});
       loading.present();
-      this.merchantService=this.params.get('data');
-      console.log("service" + this.params.get('data'));
+
       this.services.daoGetUser().then(user=>{
         this.user=user;
-        this.services.getHistory(this.user[0].Indexe,this.merchantService.CodeService).then((res:any)=>{
+        this.services.getHistory(this.user[0].Indexe,1).then((res:any)=>{
           loading.dismiss()
-  
+          if(typeof res === 'string'){
+            console.log(res)
+            res=this.setCharAt(res,res.length-3,"")
+            res=JSON.parse(res)
+          }
           if(res.succes=1){
             this.history=res.resultat
     
@@ -47,7 +48,10 @@ export class HistoryPage {
  
   }
 
-
+  setCharAt(str,index,chr) {
+    if(index > str.length-1) return str;
+    return str.substring(0,index) + chr + str.substring(index+1);
+}
   showEntry(entry){
     let alert = this.alerCtrl.create();
     alert.setTitle("Détails de l'opération");

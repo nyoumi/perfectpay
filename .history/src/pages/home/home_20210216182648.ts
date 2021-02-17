@@ -17,8 +17,7 @@ export class HomePage {
   private user: any;
   private testRadioOpen;
   private testRadioResult;
-  merchantServices: any[]=new Array();
-  defautltService: undefined;
+  merchantServices: any;
 
   constructor(public navCtrl: NavController,public menuCtrl: MenuController,
     public alerCtrl: AlertController,
@@ -220,46 +219,7 @@ export class HomePage {
     });
   }
 
- 
-  selectService() {
-    let alert = this.alerCtrl.create();
-    if(this.merchantServices.length>1){
-      
-      alert.present().then(() => {
-       // this.testRadioOpen = true;
-      });
-    }else{
-      this.defautltService=this.merchantServices[0]
-      this.navCtrl.push(HistoryPage,{data: this.defautltService})
-    }
-   
-    alert.setTitle("service");
-    alert.setSubTitle("Choisir le service à consulter")
-    alert.setMode("ios")
-    for (let index = 0; index < this.merchantServices.length; index++) {
-      const element =  this.merchantServices[index];
-      alert.addInput({
-        type: 'radio',
-        label: element.NomService,
-        value: element
-      });
 
-    }
-
-
-
- 
-
-    alert.addButton("Annuler");
-    alert.addButton({
-      text: 'Ok',
-      handler: data => {
-        this.navCtrl.push(HistoryPage,{data:data})
-
-      }
-    });
-
-  }
  
   makeBanking() {
     let alert = this.alerCtrl.create();

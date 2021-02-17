@@ -10,48 +10,7 @@ import { Services } from '../services/services';
 
 
 @Injectable()
-export class PayementService{
-  makeMTNMerchantPayment(userAgent: any, amount: any, Telephone: any, service: any) {
-    let link="http://" +"154.72.148.105"+":8081/Perfectpay/rest/api/paiement/mtn-money/"+userAgent +"/" +
-    amount+ "/" +
-    Telephone+ "/" +
-    service+ "/" +
-    environment.projetPerfectPay+ "/MTN";
-
-   this.h.get(link,{})
-   .subscribe(data => {
-     console.log(data.json()); 
-     let result;
-     try {
-       result=data.json()
-     } catch (error) {
-       
-     }
-     let alert2 = this.alerCtrl.create();
-     alert2.present();
-     switch(result){
-       
-       case 1:
-         alert2.setTitle("Opération effectuée avec succès" );
-         alert2.setMessage("Paiement initialisé vous recevrez un message à la fin de l'opération");
-       break;
-       case -1:
-       alert2.setMessage("Echec de l'opération!");
-       break;
-       case'-2':
-       alert2.setMessage("échec de paiement. Veuillez réessayer");
-       break;
-       default:
-       alert2.setMessage("Echec de l'opération!");
-       break;
-     }
-   }, err => {
-    let alert2 = this.alerCtrl.create();
-     console.log("Error");               
-     alert2.setMessage("Echec: erreur rencontrée lors de la connexion avec le serveur. veuillez réessayer");
-     alert2.present();
-   })
-  }  
+export class PayementService{  
     private browser:any;
     private user:any;
     constructor(public alerCtrl: AlertController,
@@ -162,7 +121,7 @@ export class PayementService{
             switch(result.succes){
               case 1:
                 alert2.setTitle("Opération en cours" );
-                alert2.setMessage("vous êtes sur le point d'initier un paiement PERFECTPAY de "+montant+"FCFA ! telephone: "+userAgent+"  Veuillez entrer votre code secret.");
+                alert2.setMessage("vous êtes sur le point d'initier un paiement de "+montant+"FCFA ! telephone: "+userAgent+"  Veuillez entrer votre code secret.");
                 alert2.addInput({
                   name: 'codeSecret',
                   type: 'password',
@@ -195,8 +154,8 @@ export class PayementService{
                     }
                     this.h.post(link,datas,{}).map(resp => resp.json()).subscribe(resp=>{
                       console.log(resp)
-                    if (resp.succes == 1) {
-                      alert2.setMessage("Paiement initialisé vous recevrez un message à la fin de l'opération" );
+                    if (resp.succes == "1") {
+                      alert2.setMessage("Paiement initialisé vous recevrez un message à la fin de l'opération" + console.error());
                       alert2.present(); 
                       
                     }else{
@@ -235,7 +194,6 @@ export class PayementService{
  
         
         }
-        make
         makemtnpayment(datas,codeClient) {
         
           console.log(datas)

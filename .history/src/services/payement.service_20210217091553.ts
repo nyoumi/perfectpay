@@ -28,7 +28,6 @@ export class PayementService{
        
      }
      let alert2 = this.alerCtrl.create();
-     alert2.present();
      switch(result){
        
        case 1:
@@ -195,7 +194,7 @@ export class PayementService{
                     }
                     this.h.post(link,datas,{}).map(resp => resp.json()).subscribe(resp=>{
                       console.log(resp)
-                    if (resp.succes == 1) {
+                    if (resp.succes == "1") {
                       alert2.setMessage("Paiement initialisé vous recevrez un message à la fin de l'opération" );
                       alert2.present(); 
                       

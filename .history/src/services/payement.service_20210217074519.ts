@@ -10,48 +10,7 @@ import { Services } from '../services/services';
 
 
 @Injectable()
-export class PayementService{
-  makeMTNMerchantPayment(userAgent: any, amount: any, Telephone: any, service: any) {
-    let link="http://" +"154.72.148.105"+":8081/Perfectpay/rest/api/paiement/mtn-money/"+userAgent +"/" +
-    amount+ "/" +
-    Telephone+ "/" +
-    service+ "/" +
-    environment.projetPerfectPay+ "/MTN";
-
-   this.h.get(link,{})
-   .subscribe(data => {
-     console.log(data.json()); 
-     let result;
-     try {
-       result=data.json()
-     } catch (error) {
-       
-     }
-     let alert2 = this.alerCtrl.create();
-     alert2.present();
-     switch(result){
-       
-       case 1:
-         alert2.setTitle("Opération effectuée avec succès" );
-         alert2.setMessage("Paiement initialisé vous recevrez un message à la fin de l'opération");
-       break;
-       case -1:
-       alert2.setMessage("Echec de l'opération!");
-       break;
-       case'-2':
-       alert2.setMessage("échec de paiement. Veuillez réessayer");
-       break;
-       default:
-       alert2.setMessage("Echec de l'opération!");
-       break;
-     }
-   }, err => {
-    let alert2 = this.alerCtrl.create();
-     console.log("Error");               
-     alert2.setMessage("Echec: erreur rencontrée lors de la connexion avec le serveur. veuillez réessayer");
-     alert2.present();
-   })
-  }  
+export class PayementService{  
     private browser:any;
     private user:any;
     constructor(public alerCtrl: AlertController,
@@ -159,69 +118,16 @@ export class PayementService{
               
             }
 
-            switch(result.succes){
+            switch(result){
               case 1:
-                alert2.setTitle("Opération en cours" );
-                alert2.setMessage("vous êtes sur le point d'initier un paiement PERFECTPAY de "+montant+"FCFA ! telephone: "+userAgent+"  Veuillez entrer votre code secret.");
-                alert2.addInput({
-                  name: 'codeSecret',
-                  type: 'password',
-                  placeholder:"code secret"
-                });
-                alert2.addButton({
-                  text: "Annuler",
-                  role: "cancel",
-                  
-                })
-
-                alert2.addButton({
-                  text: "Valider",
-                  handler: value => {
-                    let alert2 = this.alerCtrl.create();
-                    alert2.setMode('ios')
-                    alert2.showBackButton(false)
-                    alert2.setMessage("Opération en cours...");
-                    alert2.setTitle("Payement");
-                    alert2.present();
-                    let link="http://" +"154.72.148.105"+":8081/Perfectpay/rest/api/paiement/initDebitMarchandPefectPay";
-      
-                    let datas={
-                      "phoneagent":codeClient,
-                      "phonedestinataire":userAgent,
-                      "codesecret":value.codeSecret,
-                      "codeclient":codeClient,
-                      "codeapi":service
-
-                    }
-                    this.h.post(link,datas,{}).map(resp => resp.json()).subscribe(resp=>{
-                      console.log(resp)
-                    if (resp.succes == 1) {
-                      alert2.setMessage("Paiement initialisé vous recevrez un message à la fin de l'opération" );
-                      alert2.present(); 
-                      
-                    }else{
-                      alert2.setMessage("echec de l'opération");
-                      alert2.setTitle("echec de l'opération");
-                      alert2.present(); 
-                    }
-                    (err) => {
-                      alert2.setMessage("echec de l'opération");
-                      alert2.setTitle("echec de l'opération");
-                      alert2.present(); 
-                    }
-                  });
-           
-                  }
-                });
-                break;
+                alert2.setTitle("Opération effectuée avec succès" );
+                alert2.setMessage("Votre recharge de "+montant+ " FCFA s'est déroulée avec succès! Vous recevrez un message d'information.");
+              break;
               case -1:
-              alert2.setMessage(result.msg);
+              alert2.setMessage("Echec de l'opération!");
               break;
-              case -2:
-              alert2.setMessage(result.msg);
-              break;
-              case -3:
-              alert2.setMessage(result.msg);
+              case'-2':
+              alert2.setMessage("Désolé le numéro de téléphone ne dispose pas de compte perfectpay");
               break;
               default:
               alert2.setMessage("Echec de l'opération!");
@@ -235,7 +141,6 @@ export class PayementService{
  
         
         }
-        make
         makemtnpayment(datas,codeClient) {
         
           console.log(datas)
@@ -338,40 +243,7 @@ export class PayementService{
             }
           });
           
-        } 
-        
-        makeOMPayment2(datas,codeClient,telephone){
-          let data= {
-            return_url:"https://perfectpay.cm",
-             cancel_url:"https://perfectpay.cm", 
-             notif_url:"https://perfectpay.cm"
-                    };  
-                    
-        let link="http://" +"154.72.148.105"+":8081/Perfectpay/rest/api/paiement/orange-money/"+telephone +"/" +
-        datas.lemontant+ "/" +
-        environment.perfectPhone+ "/" +
-        environment.codeApi+ "/" +
-        environment.projetPerfectPay+ "/ORANGE";
-        this.h.post(link,data,{}).map(resp => resp.json()).subscribe(resp=>{
-          console.log(resp)
-        if (resp.status == "201") {
-
-          
-          this.browser = this.iab.create(resp.payment_url);
-          this.browser.on('exit').subscribe(() => {
-          this.verifyCreditPaymentStatus(resp.pay_token,datas,codeClient);
-        }, err => {
-          //console.log("error"+err);
-        });
-        }
-        (err) => {
-            let alert2 = this.alerCtrl.create();
-            alert2.setMessage("Echec: erreur rencontrée lors de la connexion avec le serveur. veuillez réessayer" + console.error());
-            alert2.present(); 
-        }
-      });
-      
-    }  
+        }  
 
       verifyCreditPaymentStatus(pay_token:string,datas,codeClient){
         let link="http://" +"154.72.148.105"+":8081/Perfectpay/rest/api/paiement/getStatusRecharge/"+pay_token+"/" +codeClient

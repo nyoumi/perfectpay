@@ -381,9 +381,7 @@ export class PerfectPaymentPage {
         let codeClient=this.user[0].Telephone;
         if(datas.userAgent == ""){
           alert.setSubTitle("Veuillez entrez un numéro valide")
-          alert.present().then(() => {
-            //this.testRadioOpen = true;
-          });
+          this.enterAmountByMobileMoney(data)
         }
         else{
           if(data == "perfectpayPayment"){

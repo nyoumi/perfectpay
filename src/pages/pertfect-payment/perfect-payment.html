@@ -23,7 +23,7 @@
           <ion-input class="text-input" formControlName="montant" type="number"  autocorrect="off" autocapitalize="none" name="montant" placeholder="montant"></ion-input>
         </ion-item>
         <ion-item class="country">
-          <ion-select [(ngModel)]="service" [ngModelOptions]="{standalone: true}" placeholder="service"
+          <ion-select [(ngModel)]="service" [ngModelOptions]="{standalone: true}" placeholder="service" 
            multiple="false">
             <ion-option *ngFor="let svc of mServices" [value]="svc" >
               {{svc.NomService}}</ion-option>

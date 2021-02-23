@@ -50,7 +50,8 @@ export class Services {
       this.http.get("https://" + environment.server + environment.apilink + params)
         .subscribe(data => {
           console.log(data.json()); 
-          resolve(data.json());
+          console.log("========")
+          resolve(data.json());  
         }, err => {
           console.log("Error"); 
           resolve(err);

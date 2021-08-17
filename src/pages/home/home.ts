@@ -147,6 +147,11 @@ export class HomePage {
     alert.addInput({
       type: 'radio',
       label: 'Orange money',
+      value: 'omCreditUssd'
+    });
+    alert.addInput({
+      type: 'radio',
+      label: 'Orange money (web)',
       value: 'omCredit'
     });
 
@@ -175,12 +180,13 @@ export class HomePage {
           this.enterAmountByMobileMoney(data,datatype);
         }
 
-        if (data == "omCredit") {
+        if (data == "omCredit" || data=="omCreditUssd") {
           //this.makeOMpayment();
           //this.makeOMPayment(datas,datatype);
           //this.payementService.makeOMPayment(datas,datatype);
           this.enterAmountByMobileMoney(data,datatype);
         }
+        
       }
     });
     alert.present().then(() => {
@@ -217,7 +223,7 @@ export class HomePage {
     });
     alert.addInput({
       type: 'radio',
-      label: 'ransfert vers Mobile Money',
+      label: 'Transfert vers Mobile Money',
       value: 'omCredit'
     });
 
@@ -370,6 +376,11 @@ export class HomePage {
              -
             this.payementService.makeOMPayment(datas,codeClient,this.user[0].Telephone);
           }
+          if(data == "omCreditUssd"){
+            -
+           this.payementService.makeOMPayment(datas,codeClient,this.user[0].Telephone);
+         }
+          
         }
       
       }

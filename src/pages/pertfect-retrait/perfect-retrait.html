@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>RETRAIT PERFECTPAY</ion-title>
+    <div class="frontImage"> 
+
+    </div>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+    <form (submit)="login()"  [formGroup]="formgroup">
+      <div class="form-content">
+      <div  text-center >
+        <h6>RETRAIT </h6>
+      </div>
+      <ion-list>
+  
+        <ion-item class="form-item">
+          <ion-input class="text-input" formControlName="montant" type="number"  autocorrect="off" autocapitalize="none" name="montant" placeholder="montant"></ion-input>
+        </ion-item>
+        <ion-item class="form-item">
+          <ion-input formControlName="code_point_vente" class="text-input" type="text" autocorrect="off" autocapitalize="none" name="code_point_vente" placeholder="code du point de vente"></ion-input>
+        </ion-item>  
+  
+      </ion-list>
+    
+  </div>
+
+    </form>
+  
+  <div  text-center>
+    <button ion-button  block class="login-button" [disabled]="!formgroup.valid" (tap)="checkRetrait()">Valider</button>
+
+  </div>
+  
+  <div  text-center class="message-error-text">
+          
+         
+    <p >{{ message }} </p>
+ 
+</div>
+</ion-content>  

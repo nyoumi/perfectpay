@@ -5,61 +5,54 @@ import { Services } from '../../services/services';
 import { LoginPage } from '../login/login';
 
 
-
 @Component({
-  selector: 'page-perfect-transfert',
-  templateUrl: 'perfect-transfert.html'
+  selector: 'page-perfect-retrait',
+  templateUrl: 'perfect-retrait.html'
 })
-export class PerfectTransfertPage {
+export class PerfectRetraitPage {
   formgroup: FormGroup; 
-  private account: AbstractControl;
-  private raison: AbstractControl;
+  private code_point_vente: AbstractControl;
   private montant: AbstractControl;
-  
-
-  private message:any=""
+  private message="";
   private user:any;
   transferInfo: any;
+
+
 
   constructor(public navCtrl: NavController,
     public alerCtrl: AlertController,
     public formbuilder: FormBuilder,public services: Services, 
     public loadingController: LoadingController) {
-      this.formgroup = formbuilder.group({
-        account: ['',Validators.required], 
-        raison: ['', Validators.required],
-        montant: ['', Validators.required],
-      });
-      this.account = this.formgroup.controls['account'];
-      this.raison = this.formgroup.controls['raison'];
-      this.montant = this.formgroup.controls['montant'];
-
       this.services.daoGetStatus().then(status=>{
         if(status!=true){
           this.navCtrl.setRoot(LoginPage)
         }
-        this.services.daoGetUser().then(user=>{
-          this.user=user;
-          console.log(user)
-        })
   
        });
-
+      this.formgroup = formbuilder.group({
+        code_point_vente: ['', Validators.required],
+        montant: ['', Validators.required],
+      });
+      this.code_point_vente = this.formgroup.controls['code_point_vente'];
+      this.montant = this.formgroup.controls['montant'];
+      this.services.daoGetUser().then(user=>{
+        this.user=user;
+        console.log(user)
+      })
   }
 
-  checkTransfert() {
+  checkRetrait() {
 
     this.message=""
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
     this.transferInfo={
-      account: this.account.value,
-      raison:this.raison.value,
-      montant:this.montant.value,   
+      code_point_vente: this.code_point_vente.value,
+      Montant:this.montant.value,   
       CodeClientExpediteur:this.user[0].Telephone
     }
     
-      this.services.checkTransfert(this.transferInfo).then((result: any) => {
+      this.services.checkRetrait(this.transferInfo).then((result: any) => {
            console.log(result)
         loading.dismiss();
         //console.log(result);
@@ -80,8 +73,8 @@ export class PerfectTransfertPage {
   handle( response){
     let alert = this.alerCtrl.create({
       title: 'Confirmation',
-      message: 'Vous êtes sur le point d\'effectuer la transaction suivante:<br/>'+
-      'Destinataire:<b>'+response.destinataire+'</b><br/>'+ 
+      message: 'Vous êtes sur le point d\'effectuer le retrait suivant:<br/>'+
+      'Point de Vente:<b>'+response.destinataire+'('+response.CodePointVente+')</b><br/>'+ 
       'Montant:<b>'+response.Montant+' FCFA</b><br/>'+
       'Frais:<b>'+response.Frais+' FCFA</b><br/>'+ 
       'Montant Total:<b>'+response.MonantNet+' FCFA</b><br/>'+ 
@@ -91,7 +84,6 @@ export class PerfectTransfertPage {
           name: 'secret_code',
           placeholder: '123456',
           type:"password"
-
         }
       ],
       buttons: [
@@ -105,19 +97,25 @@ export class PerfectTransfertPage {
           handler: data => {
             if(!data.secret_code) return
             console.log(data.secret_code)
-            this.makeTransfert(this.transferInfo,data.secret_code)
+            this.makeRetrait(this.transferInfo,data.secret_code)
           }
         }
       ]
     });
+    alert.setMode("ios");
     alert.present()
 
     
   }
-  makeTransfert(transferInfo,secretCode) {
+  /**
+   * effectuer un retrait
+   * @param transferInfo 
+   * @param secretCode 
+   */
+  makeRetrait(transferInfo,secretCode) {
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
-    this.services.makeTransfert(transferInfo,secretCode).then((result:any)=>{
+    this.services.makeRetrait(transferInfo,secretCode).then((result:any)=>{
       loading.dismiss()
       console.log(result.resultat)
       let alert = this.alerCtrl.create();
@@ -128,94 +126,22 @@ export class PerfectTransfertPage {
 
           alert.setTitle("Opération effectuée avec succès" );
           alert.setMode("ios");
-          alert.setMessage("Votre opération s'est déroulée avec sussès! Vous recevrez un message d'information.");
+          alert.setMessage(result.msg);
           alert.onDidDismiss(data=>{
             this.navCtrl.pop()
           })
-                
-          break;
-        case -1:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-          
-          break;
-        case -2:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -3:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -4:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -5:
-          
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -6:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
+      
           break;
 
-        case -7:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -8:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -9:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -10:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-
-                                
         default:
+          this.message=result.msg
+          alert.setMode("ios");
+          alert.setMessage(result.msg);
           break;
       }
       alert.addButton("OK")
       alert.present();
-      alert.onDidDismiss(data=>{
-        this.navCtrl.pop()
-      })
+
 
 
     })

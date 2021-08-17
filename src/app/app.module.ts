@@ -30,6 +30,7 @@ import { PayementService } from '../services/payement.service';
 
 import { PayPal } from '@ionic-native/paypal';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
 
 
 /**
@@ -48,7 +49,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     RegisterPage,
     PerfectTransfertPage ,
     ExchangeRatePage,
-    PerfectPaymentPage
+    PerfectPaymentPage,
+    PerfectRetraitPage
 
   ],
   imports: [
@@ -65,6 +67,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     RegisterPage,
     PerfectTransfertPage,
     PerfectPaymentPage ,
+    PerfectRetraitPage,
     ExchangeRatePage,
     HistoryPage
 

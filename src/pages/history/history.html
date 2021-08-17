@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Historique</ion-title>
+    <ion-title>Historique des transactions</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -19,10 +19,10 @@
                 montant
               </ion-col>           
                <ion-col>
-                frais
+                Id Transaction
               </ion-col>
                 <ion-col>
-                  Destinataire
+                  Transaction
               </ion-col>
           </ion-row>
 
@@ -36,11 +36,11 @@
 
             </ion-col>
             <ion-col>
-              {{ entry.Frais}} FCFA 
+              {{ entry.IDTransaction}}  
 
             </ion-col>
             <ion-col>
-              {{ entry.ReferenceArticle}}
+              {{ entry.Libelle}}
 
             </ion-col>
           </ion-row>

@@ -11,8 +11,8 @@
 
       
       <ion-list>
-        <ion-slides pager (ionSlideDidChange)="slideChanged()" >
-          <ion-slide >
+       <!--  <ion-slides pager (ionSlideDidChange)="slideChanged()" >
+          <ion-slide > -->
             <h2 class="slide-title" >Identification</h2>
             <ion-item class="form-item">
               <ion-input class="text-input" formControlName="nom"  type="text" autocorrect="off" autocapitalize="none"
@@ -29,6 +29,10 @@
                   {{ctry.name}}</ion-option>
               </ion-select>
             </ion-item>
+            <ion-item class="form-item">
+              <ion-input class="text-input" formControlName="Ville"  type="text" autocorrect="off" autocapitalize="none" 
+              name="Ville" placeholder="Ville"></ion-input>
+            </ion-item>
                 <ion-item class="form-item">
                   <ion-input class="side-i" [disabled]="true"  placeholder="Indicatif"
                    formControlName="dial_code" value="{{this.country.dial_code}}" type="text"></ion-input>
@@ -42,11 +46,11 @@
                 </ion-item>
                 <div  text-center>
                   <button ion-button  block class="login-button"
-                   [disabled]="!(email.valid && Telephone.valid && nom.valid && country )"
-                   id="nextButton" (tap)="goToNextSlide()">Suivant</button>
+                   [disabled]="!(email.valid && Telephone.valid && nom.valid && country  && Ville.valid )"
+                   id="nextButton"  (tap)="register()">Inscription</button>
                 </div>
-          </ion-slide>
-          <ion-slide>
+         <!--  </ion-slide> -->
+<!--           <ion-slide>
             <h2 class="slide-title" >localisation</h2>
 
 
@@ -60,10 +64,7 @@
               <ion-option *ngFor="let dep of Departements"  [value]="dep.departement_id" >{{dep.departement_label}}</ion-option>
             </ion-select>   
           </ion-item>     
-          <ion-item class="form-item">
-            <ion-input class="text-input" formControlName="Ville"  type="text" autocorrect="off" autocapitalize="none" 
-            name="Ville" placeholder="Ville"></ion-input>
-          </ion-item>
+          
           <ion-item class="form-item">
             <ion-datetime displayFormat="DD/MM/YYYY"  max="2020" placeholder="Date de Naissance"
               formControlName="DateNaissance"></ion-datetime>
@@ -72,11 +73,11 @@
           <div  text-center>
             <button ion-button  block class="login-button" 
             [disabled]="!(DateNaissance.valid && Departement.valid && Region.valid && Ville.valid )"
-            (tap)="register()">CONNEXION</button>
+            (tap)="register()">Inscription</button>
           </div>
-          </ion-slide>
+          </ion-slide> -->
      
-        </ion-slides>
+        <!-- </ion-slides> -->
 
      
     <!--       <ion-item class="form-item">

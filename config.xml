@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="pay.perfect.kakotel" version="0.0.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="pay.perfect.kakotel" version="0.0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>perfectPay</name>
-    <description>Easy mobile payment in cameroon by KAKOTEL .</description>
+    <description>Full mobile payment solution in Africa by KAKOTEL SA.</description>
     <author email="info@kakotel.com" href="http://ionicframework.com/">Kakotel DEV TEAM</author>
     <content src="index.html" />
     <access origin="*" />
@@ -22,6 +22,7 @@
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
             <application android:networkSecurityConfig="@xml/network_security_config" />
         </edit-config>
+        <preference name="loadUrlTimeoutValue" value="700000" />
         <resource-file src="resources/android/xml/network_security_config.xml" target="res/xml/network_security_config.xml" />
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -92,6 +93,7 @@
         <splash height="2436" src="resources/ios/splash/Default-2436h.png" width="1125" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
+    <engine name="android" spec="6.3.0" />
     <plugin name="cordova-plugin-advanced-http" spec="^3.1.0" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.4" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.3" />
@@ -102,5 +104,4 @@
     <plugin name="cordova-plugin-inappbrowser" spec="^4.1.0" />
     <plugin name="com.paypal.cordova.mobilesdk" spec="^3.5.0" />
     <plugin name="cordova-plugin-stripe" spec="^1.5.3" />
-    <engine name="android" spec="6.3.0" />
 </widget>

@@ -60,9 +60,8 @@ export class Services {
 
   register(UserInfo) {
 
-    let params="action=create_account&Nom="+UserInfo.nom+"&Prenom="+UserInfo.Prenom+
-    "&Email="+UserInfo.email+
-    "&Region="+UserInfo.Region+"&Telephone="+UserInfo.Telephone+"&Departement="+UserInfo.Departement+"&Pays="+UserInfo.Pays+"&DateNaissance="+UserInfo.DateNaissance+"&Ville="+UserInfo.Ville;
+    let params="action=create_account_update&Nom="+UserInfo.nom+"&Prenom="+UserInfo.Prenom+
+    "&Email="+UserInfo.email+"&Telephone="+UserInfo.Telephone+"&Pays="+UserInfo.Pays+"&Ville="+UserInfo.Ville;
     return new Promise(resolve => {
       this.http.get("https://" + environment.server + environment.apilink + params)
         .subscribe(data => {
@@ -116,12 +115,14 @@ export class Services {
     });
   }
   getHistory(idClient) {
-    let action="action=check_transaction";
+    let action="action=check_transaction_update";
 
   return new Promise(resolve => {
     this.http.get("https://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
       .subscribe(data => {
         //console.log(data._body); 
+        //data=JSON.stringify(data).slice(0, -3)
+        //console.log(data); 
         resolve(data.json());
       }, err => {
         //console.log("Error"); 
@@ -202,6 +203,61 @@ return new Promise(resolve => {
 makePayment(transferInfos,codeSecret) {
   let link="action=paiement_marchand_mobile&Code_client="+transferInfos.CodeClientExpediteur+
   "&CodeMarchand="+transferInfos.Code_marchand+
+  "&Montant="+transferInfos.Montant+
+  "&CodeSecurite="+codeSecret;
+
+return new Promise(resolve => {
+  this.http.get("https://" + environment.server + environment.apilink+link)
+  .subscribe(data => {
+      //console.log(data._body); 
+      let result=-1;
+      try {
+        result=data.json()
+      } catch (error) {
+        
+      }
+      resolve(result);
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+
+checkRetrait(transferInfos) {
+  let link="action=check_informations_CodePointVente_Retrait_PerfectPayMobile&"+
+  "&Code_clientPerfectPay="+transferInfos.CodeClientExpediteur+
+  "&CodeAPI="+environment.codeApi+
+  "&Projet="+ environment.projetPerfectPay+
+  "&CodeClient="+environment.perfectPhone+
+  "&Code_PointVentePerfectPay="+transferInfos.code_point_vente+
+  "&Montant="+transferInfos.Montant;
+ 
+
+return new Promise(resolve => {
+  this.http.get("https://" + environment.server + environment.apilink+link)
+  .subscribe(data => {
+      //console.log(data._body);
+      let result=-1;
+      try {
+        result=data.trim().json()
+      } catch (error) {
+        
+      } 
+      resolve(data.json());
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+makeRetrait(transferInfos,codeSecret) {
+  let link="action=Valider_Retrait_PerfectPayMobile_NewMethode"+
+  "&CodeAPI="+environment.codeApi+
+  "&CodeClient="+environment.perfectPhone+
+  "&Projet="+ environment.projetPerfectPay+
+  "&Code_clientPerfectPay="+transferInfos.CodeClientExpediteur+
+  "&Code_PointVentePerfectPay="+transferInfos.code_point_vente+
   "&Montant="+transferInfos.Montant+
   "&CodeSecurite="+codeSecret;
 
@@ -676,6 +732,37 @@ async daoGetUsability(): Promise<boolean> {
         }, err => {
           //console.log("Error"); 
           resolve("error");
+        })
+    });
+  }
+
+  checkRetraitValidation(number) {
+    let action="action=checker_si_retrait_en_cours_mobile";
+
+    return new Promise(resolve => {
+      this.http.get("https://" + environment.server + environment.apilink+action+"&Code_clientExpediteurint="+number)
+        .subscribe(data => {
+          //console.log(data._body); 
+          resolve(data.json());
+        }, err => {
+          //console.log("Error"); 
+          resolve(err);
+        })
+    });
+  }
+  makeRetraitValidation(number,secretCode,transactionId) {
+    let action="action=validation_retrait_account_perfect_pay_Mobile";
+
+    return new Promise(resolve => {
+      this.http.get("https://" + environment.server + environment.apilink+action+"&Code_clientExpediteur="+number
+      +"&CodeSecurite="+secretCode
+      +"&IdTransaction="+transactionId)
+        .subscribe(data => {
+          //console.log(data._body); 
+          resolve(data.json());
+        }, err => {
+          //console.log("Error"); 
+          resolve(err);
         })
     });
   }

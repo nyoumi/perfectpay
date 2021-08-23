@@ -20,6 +20,8 @@ export class PerfectTransfertPage {
   private message:any=""
   private user:any;
   transferInfo: any;
+  private operateur="PerfectPay";
+  private operateurs=["PerfectPay","Orange","MTN"]
 
   constructor(public navCtrl: NavController,
     public alerCtrl: AlertController,
@@ -46,7 +48,15 @@ export class PerfectTransfertPage {
        });
 
   }
-
+  launchcheck(){
+    if(this.operateur=="PerfectPay"){
+      this.checkTransfert()
+    }
+    if(this.operateur=="Orange"){
+      this.checkTransfertOM()
+    }
+    
+  }
   checkTransfert() {
 
     this.message=""
@@ -67,6 +77,37 @@ export class PerfectTransfertPage {
           case 1:
             console.log(result.resultat)
             this.handle(result.resultat[0])
+            break;
+                                  
+          default:
+            this.message=result.msg
+            break;
+        }
+
+    });
+  
+  }
+
+  checkTransfertOM() {
+
+    this.message=""
+    let loading = this.loadingController.create({ content: "Traitement..."});
+    loading.present();
+    this.transferInfo={
+      account: this.account.value,
+      raison:this.raison.value,
+      montant:this.montant.value,   
+      CodeClientExpediteur:this.user[0].Telephone
+    }
+    
+      this.services.checkTransfertOM(this.transferInfo).then((result: any) => {
+           console.log(result)
+        loading.dismiss();
+        //console.log(result);
+        switch (result.succes) {
+          case 1:
+            console.log(result.resultat)
+            this.handleOM(result)
             break;
                                   
           default:
@@ -114,6 +155,38 @@ export class PerfectTransfertPage {
 
     
   }
+  handleOM( response){
+    let alert = this.alerCtrl.create({
+      title: 'Confirmation',
+      message: response.msg,
+      inputs: [
+        {
+          name: 'secret_code',
+          placeholder: '123456',
+          type:"password"
+
+        }
+      ],
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          
+        },
+        {
+          text: 'Valider',
+          handler: data => {
+            if(!data.secret_code) return
+            console.log(data.secret_code)
+            this.makeTransfertOM(this.transferInfo,data.secret_code)
+          }
+        }
+      ]
+    });
+    alert.present()
+
+    
+  }
   makeTransfert(transferInfo,secretCode) {
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
@@ -121,94 +194,70 @@ export class PerfectTransfertPage {
       loading.dismiss()
       console.log(result.resultat)
       let alert = this.alerCtrl.create();
-      alert.setTitle("Echec de l'opération" );
+     
+      alert.setMode("ios");
 
       switch (result.succes) {
         case 1:
 
           alert.setTitle("Opération effectuée avec succès" );
-          alert.setMode("ios");
+         
           alert.setMessage("Votre opération s'est déroulée avec sussès! Vous recevrez un message d'information.");
           alert.onDidDismiss(data=>{
             this.navCtrl.pop()
           })
                 
           break;
-        case -1:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
 
-          
-          break;
-        case -2:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -3:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -4:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -5:
-          
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -6:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-
-        case -7:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -8:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -9:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
-        case -10:
-          this.message=result.msg
-          alert.setMode("ios");
-alert.setMessage(result.msg);
-
-
-          break;
 
                                 
         default:
+          this.message=result.msg
+          alert.setMode("ios");
+          alert.setMessage(result.msg);
+          alert.setTitle("Echec de l'opération" );
+          break;
+      }
+      alert.addButton("OK")
+      alert.present();
+      alert.onDidDismiss(data=>{
+        this.navCtrl.pop()
+      })
+
+
+    })
+  }
+
+
+  makeTransfertOM(transferInfo,secretCode) {
+    let loading = this.loadingController.create({ content: "Traitement..."});
+    loading.present();
+    this.services.makeTransfertOM(transferInfo,secretCode).then((result:any)=>{
+      loading.dismiss()
+      console.log(result.resultat)
+      let alert = this.alerCtrl.create();
+     
+      alert.setMode("ios");
+
+      switch (result.succes) {
+        case 1:
+
+          alert.setTitle("Opération effectuée avec succès" );
+         
+          alert.setMessage(result.msg);
+          alert.onDidDismiss(data=>{
+            this.navCtrl.pop()
+          })
+                
+          break;
+
+
+                                
+        default:
+          this.message=result.msg
+          alert.setMode("ios");
+          alert.setMessage(result.msg);
+          alert.setTitle("Echec de l'opération" );
           break;
       }
       alert.addButton("OK")

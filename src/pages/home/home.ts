@@ -360,25 +360,37 @@ export class HomePage {
       name:'lemontant',
       placeholder:"Veuillez entrer le montant"
     });
+
+    if(data == "omCreditUssd"){
+            
+      alert.addInput({
+        type:'string',
+        name:'compteOM',
+        placeholder:"Numéro Orange Money à utiliser"
+      });
+    }
     alert.addButton("Annuler");
     alert.addButton({
       text:'ok',
       handler:datas=>{
         let codeClient=this.user[0].Telephone;
-        if(datas.lemontant == ""){
+        if(datas.lemontant == "" ){
           this.showErrorToast("Veuillez saisir le montant");
+        }
+        if(datas.compteOM == "" ){
+          this.showErrorToast("Veuillez saisir le numéro de téléphone à utiliser");
         }
         else{
           if(data == "MTNCredit"){
             this.payementService.makemtnpayment(datas,codeClient);
           }
           if(data == "omCredit"){
-             -
+             
             this.payementService.makeOMPayment(datas,codeClient,this.user[0].Telephone);
           }
           if(data == "omCreditUssd"){
-            -
-           this.payementService.makeOMPayment(datas,codeClient,this.user[0].Telephone);
+            
+           this.payementService.makeOMUSSDPayment(datas,codeClient,this.user[0].Telephone,datas.compteOM);
          }
           
         }

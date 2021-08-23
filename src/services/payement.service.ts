@@ -198,8 +198,39 @@ export class PayementService{
             }
           });
           
-        }  
+        } 
 
+        makeOMUSSDPayment(datas,codeClient,Usertelephone,compteOM){
+              let data= { 
+              "telephone":compteOM,
+              "amount":datas.lemontant,
+              "codeClient":codeClient,
+              "codeApi":environment.codeApi,
+              "nomProjet":environment.projetPerfectPay,
+              "compteClient":Usertelephone	
+            };  
+                        
+            let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/orange-money-RechargeOm"
+            
+            
+            
+  
+            this.h.post(link,data,{}).map(resp => resp.json()).subscribe(resp=>{
+              console.log(resp)
+            if (resp.status == "200") {
+
+              return resp
+              
+             
+            }
+            
+            (err) => {
+                return err;
+            }
+          });
+          
+        }   
+        
       verifyCreditPaymentStatus(pay_token:string,datas,codeClient){
         let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/getStatusRecharge/"+pay_token+"/" +codeClient
 

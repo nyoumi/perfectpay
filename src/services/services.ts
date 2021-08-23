@@ -172,9 +172,48 @@ return new Promise(resolve => {
 });
 }
 
+checkTransfertOM(transferInfos) {
+  this.transferInfos=transferInfos;
+  let link="action=checker_solde_transfert_autre_compte_OrangeMoney&CodeClient="+environment.perfectPhone+
+  "&CodeAPI="+environment.codeApi+"&Projet=PERFECTPAY&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&Code_clientDestinataire="+
+  transferInfos.account+"&Montant="+transferInfos.montant+"&Raison_transfert="+transferInfos.raison;
 
+return new Promise(resolve => {
+  this.http.get("https://" + environment.server + environment.apilink+link)
+    .subscribe(data => {
+      //console.log(data._body); 
+      let result=-1;
+      try {
+        result=data.json()
+      } catch (error) {
+        
+      }
+      resolve(result);
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
 
-   
+makeTransfertOM(transferInfos,secretCode) {  
+  let link="action=transfert_account_perfect_pay_vers_orangeMoney&CodeClient="+environment.perfectPhone+
+  "&CodeAPI="+environment.codeApi+"&Projet="+ environment.projetPerfectPay+"&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&Code_clientDestinataireOrange="+
+  transferInfos.account+"&Montant="+transferInfos.montant+"&Raison_transfert="+transferInfos.raison+"&CodeSecurite="+secretCode;
+ 
+
+return new Promise(resolve => {
+  this.http.get("https://" + environment.server + environment.apilink+link)
+  .subscribe(data => {
+      //console.log(data._body); 
+      console.log(data.json())
+      resolve(data.json());
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+} 
 
 checkPayment(transferInfos) {
   let link="action=chek_marchand_code&"+

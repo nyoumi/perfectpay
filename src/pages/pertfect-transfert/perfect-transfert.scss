@@ -176,4 +176,24 @@ ion-img.appImage.img-loaded {
         width: 30%;
         margin-left: 10%;
     }
+
+    ion-select.select {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        color: white;
+        
+    }
+    .select.select-icon {
+
+        margin-right: 2px;
+    }
+    ion-select {
+        .select-icon {
+          .select-icon-inner {
+             color : white !important;
+          }
+        }
+      }
 }

@@ -151,6 +151,7 @@ export class PerfectTransfertPage {
         }
       ]
     });
+    alert.setMode("ios")
     alert.present()
 
     

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AlertController } from "ionic-angular";
+import { AlertController, LoadingController } from "ionic-angular";
 import { environment } from "../environment/environment";
 import { ActionSheetController } from 'ionic-angular';
 import {Http} from '@angular/http';
@@ -13,7 +13,7 @@ import { Services } from '../services/services';
 export class PayementService{
     private browser:any;
     private user:any;
-    constructor(public alerCtrl: AlertController,
+    constructor(public alerCtrl: AlertController,public loadingController: LoadingController,
         public actionSheetCtrl: ActionSheetController,
         //private contactService: ContactService,
         private h:Http,
@@ -201,10 +201,13 @@ export class PayementService{
         } 
 
         makeOMUSSDPayment(datas,codeClient,Usertelephone,compteOM){
+          let loading = this.loadingController.create({ content: "Traitement..."});
+          loading.present();
+          
               let data= { 
               "telephone":compteOM,
               "amount":datas.lemontant,
-              "codeClient":codeClient,
+              "codeClient":environment.perfectPhone,
               "codeApi":environment.codeApi,
               "nomProjet":environment.projetPerfectPay,
               "compteClient":Usertelephone	
@@ -212,17 +215,17 @@ export class PayementService{
                         
             let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/orange-money-RechargeOm"
             
-            
-            
-  
             this.h.post(link,data,{}).map(resp => resp.json()).subscribe(resp=>{
+              loading.dismiss()
               console.log(resp)
-            if (resp.status == "200") {
-
-              return resp
               
-             
-            }
+              let alert3 = this.alerCtrl.create();
+              alert3.setTitle("Infos");
+              alert3.setMessage(resp.message);
+              alert3.setMode("ios");
+              alert3.addButton("OK")
+              alert3.present();
+
             
             (err) => {
                 return err;

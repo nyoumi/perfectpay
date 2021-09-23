@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { AlertController, LoadingController, NavController } from 'ionic-angular';
 import { FormBuilder} from '@angular/forms';
-import { LoginPage } from '../login/login';
-import { GimacServices } from '../gimac/gimac-services/gimac-services';
+import { GimacServices } from '../gimac-services/gimac-services';
+import { LoginPage } from '../../login/login';
 
 
 @Component({
-  selector: 'page-history',
-  templateUrl: 'history.html'
+  selector: 'page-gimac-history',
+  templateUrl: 'gimac-history.html'
 })
 export class HistoryPage {
   private user:any;

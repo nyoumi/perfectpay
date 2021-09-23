@@ -22,22 +22,13 @@ import { HTTP } from '@ionic-native/http';
 import { HttpModule } from '@angular/http';
 
 import { Stripe } from '@ionic-native/stripe';
-
-///////
-  
- 
 import { PayementService } from '../services/payement.service';
 
 import { PayPal } from '@ionic-native/paypal';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
 
-
-/**
- * import de carlos
- */
-
-
+import { GimacModule } from '../pages/gimac/gimac.module';
 
 
 @NgModule({
@@ -47,16 +38,17 @@ import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
     HistoryPage,
     LoginPage,
     RegisterPage,
-    PerfectTransfertPage ,
+    PerfectTransfertPage ,  
     ExchangeRatePage,
     PerfectPaymentPage,
-    PerfectRetraitPage
+    PerfectRetraitPage,
 
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
+    GimacModule
 
   ],
   bootstrap: [IonicApp],
@@ -69,7 +61,8 @@ import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
     PerfectPaymentPage ,
     PerfectRetraitPage,
     ExchangeRatePage,
-    HistoryPage
+    HistoryPage,
+
 
   ],
   providers: [
@@ -82,7 +75,7 @@ import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
     Services,
     ParametreService,
     PayementService,
-    InAppBrowser
+    InAppBrowser,
 
   ]
 })

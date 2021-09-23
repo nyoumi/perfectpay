@@ -1,0 +1,124 @@
+page-home-gimac {
+    .scroll-content {
+        background: #ffe4c400;
+    }
+    .fixed-content {
+        background: #f0f8ff05;
+    }
+    .ion-page {
+        background: blue;
+    }
+    .content-md {
+        color: #000;
+        background-image: url('../assets/imgs/fond.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        
+    }
+    .content-ios {
+        color: #000;
+        background-image: url('../assets/imgs/fond.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        
+    }
+    .toolbar-title {
+        color: white !important;   
+    }
+    .toolbar-title.toolbar-title-md {
+        color: white;
+    }
+
+    .button-inner { 
+
+    display: block;
+    font-family: CaviarDreams;
+    align-items: center;
+    align-items: center;
+    align-self: center;
+    display: contents;
+    font-size: x-small;
+}
+.button-md {
+    height: 6em;
+    padding: 0 1.1em;
+    width: 96%;
+}
+.button-md:hover{
+    border: 0;
+    background: #FA9B03;
+}
+.button-ios {
+    height: 6em;
+    padding: 0 1.1em;
+    width: 96%;
+}
+.button-ios:hover{
+    border: 0;
+    background: #FA9B03;
+}
+.applications{
+    width: 100%;
+    /* display: block; */
+    text-align: center;
+}
+.img-content{
+    height: 35%;
+    width: 110%;
+    margin-left: -5%;
+    margin-top: -16px;
+    margin-bottom: 12%;
+    background-image: url('../assets/imgs/appImage.jpg');
+    background-size: cover;
+
+}
+.col{
+    padding: 0;
+}
+
+ion-img.appImage.img-loaded {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+.prior{
+    background: #b31c23;
+    border: 0;
+}
+.toolbar-background-md {
+ 
+    background: transparent;
+}
+.toolbar-background-ios {
+ 
+    background: transparent;
+}
+.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
+    color: #b31c23;
+}
+.bar-button-default-ios, .bar-button-clear-ios-default, .bar-button-ios-default {
+    color: #b31c23;
+}
+.toast-success {
+    > div{
+         background-color:#86f3b3!important;
+     }
+  }
+  .toast-error{
+    > div{
+         background-color:#ec8181!important;
+     }
+  }
+  .header-img{
+      max-width: 40%;
+  }
+  .frontImage {
+    color: #fff;
+    background-image: url(../assets/imgs/perfectpay.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 30%;
+    margin-left: 10%;
+}
+}

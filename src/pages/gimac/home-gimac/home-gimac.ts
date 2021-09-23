@@ -1,21 +1,19 @@
 import { Component } from '@angular/core';
-import { Services } from '../../services/services';
 import { FormBuilder } from '@angular/forms';
 import { AlertController, LoadingController, MenuController, NavController, ToastController } from 'ionic-angular';
-import { PerfectTransfertPage } from '../pertfect-transfert/perfect-transfert';
-import { PerfectPaymentPage } from '../pertfect-payment/perfect-payment';
-import { PayementService } from '../../services/payement.service';
-import { HistoryPage } from '../history/history';
-import { LoginPage } from '../login/login';
-import { HomeGimacPage } from '../gimac/home-gimac/home-gimac';
-
+import { GimacTransfertPage } from '../gimac-transfert/gimac-transfert';
+import { GimacPaymentPage } from '../gimac-payment/gimac-payment';
+import { HistoryPage } from '../gimac-history/gimac-history';
+import { GimacPayementService } from '../gimac-services/gimac-payement.service';
+import { GimacServices } from '../gimac-services/gimac-services';
+import { LoginPage } from '../../login/login';
 
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home-gimac.html'
 })
-export class HomePage {
+export class HomeGimacPage {
   private user: any;
   private testRadioOpen;
   private testRadioResult;
@@ -23,9 +21,9 @@ export class HomePage {
   constructor(public navCtrl: NavController,public menuCtrl: MenuController,
     public alerCtrl: AlertController,
     public formbuilder: FormBuilder,
-    public services: Services, 
+    public services: GimacServices, 
     private toastCtrl: ToastController,
-    private payementService:PayementService,
+    private payementService:GimacPayementService,
     public loadingController: LoadingController) {
     this.services.daoGetUser().then(user=>{
       this.user=user;
@@ -113,10 +111,10 @@ export class HomePage {
     
   }
   gotoTransfert(){
-    this.navCtrl.push(PerfectTransfertPage)
+    this.navCtrl.push(GimacTransfertPage)
   }
   gotoPayment(){
-    this.navCtrl.push(PerfectPaymentPage)
+    this.navCtrl.push(GimacPaymentPage)
   }
   getHistory(){
     this.navCtrl.push(HistoryPage)
@@ -199,7 +197,52 @@ export class HomePage {
 
  
   makeBanking() {
-    this.navCtrl.push(HomeGimacPage)
+    let alert = this.alerCtrl.create();
+    alert.setTitle("Opération");
+    alert.setSubTitle("Quelle opération souhaitez-vous effectuer?")
+    alert.setMode("ios")
+
+
+
+ 
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Transfert vers une carte',
+      value: 'paypalPayment'
+    });
+    alert.addInput({
+      type: 'radio', 
+      label: 'transfert vers compte bancaire',
+      value: 'MTNCredit'
+    });
+    alert.addInput({
+      type: 'radio',
+      label: 'Transfert vers Orange Money',
+      value: 'omCredit'
+    });
+    alert.addInput({
+      type: 'radio',
+      label: 'Transfert vers Mobile Money',
+      value: 'omCredit'
+    });
+
+    alert.addButton("Annuler");
+    alert.addButton({
+      text: 'Ok',
+      handler: data => {
+        let alert = this.alerCtrl.create();
+        alert.setTitle("Coming soon!");
+        alert.setSubTitle("Bientôt disponible")
+        alert.setMessage("Cette fonctionnalité sera bientôt disponible")
+        alert.setMode("ios")
+        alert.present()
+  
+      }
+    });
+    alert.present().then(() => {
+      this.testRadioOpen = true;
+    });
   }
  /*  payMethod() { 
     let alert = this.alerCtrl.create();

@@ -25,8 +25,18 @@ page-home-gimac {
     .toolbar-title {
         color: white !important;   
     }
+    .toolbar-title{
+        padding: 0 12px;
+        font-size: 2rem;
+        font-weight: 500;
+        color: #ffffff;
+    }
+    .toolbar-title-md {
+
+        color: #f8f8f8 !important;
+    }
     .toolbar-title.toolbar-title-md {
-        color: white;
+        color: white!important;
     }
 
     .button-inner { 

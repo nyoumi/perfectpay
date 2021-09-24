@@ -10,7 +10,7 @@ import { LoginPage } from '../../login/login';
 
 
 @Component({
-  selector: 'page-home',
+  selector: 'page-home-gimac',
   templateUrl: 'home-gimac.html'
 })
 export class HomeGimacPage {

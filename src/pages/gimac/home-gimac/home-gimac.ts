@@ -38,78 +38,7 @@ export class HomeGimacPage {
      this.menuCtrl.get().enable(true);
 
   }
-  getSolde(){
-    let alert = this.alerCtrl.create({
-      mode:"ios",
-      title: 'Authentification',
-      message: 'Veuillez entrer votre code secret pour continuer',
-      inputs: [
-        {
-          name: 'secret_code',
-          placeholder: '123456',
-          type:"password"
-        }
-      ],
-      buttons: [
-        {
-          text: 'Annuler',
-          role: 'cancel',
-          
-        },
-        {
-          text: 'Valider',
-          handler: data => {
-            if(!data.secret_code) return
-            let loading = this.loadingController.create({ content: "chargement..."});
-            loading.present();
-            console.log(data.secret_code)
-            this.services.getSoldeClient(this.user[0].Indexe,data.secret_code).then((solde:any)=>{
-              loading.dismiss();
-              if(solde.succes==-1){
-                let alert = this.alerCtrl.create();
-                alert.setTitle("Erreur d'authentifcation" );
-                alert.setMode("ios");
-                alert.setMessage("le code secret que vous avez saisi est incorrecte");
-                alert.addButton("OK")
-                alert.present();
-                alert.setMode("ios")
-                return ;
-              }
-                if(solde.succes==1){
-                  let alert = this.alerCtrl.create();
-                  alert.setTitle("Solde Actuel" );
-                  alert.setMode("ios");
-                  alert.setMessage(solde.resultat[0].Solde+ " FCFA");
-                  alert.addButton("OK")
-                  alert.present();
-                  alert.setMode("ios")
 
-                  return ;
-                }else{
-                let alert = this.alerCtrl.create();
-                alert.setTitle("Erreur de vérification" );
-                alert.setMode("ios");
-                alert.setMessage("Erreur de verification veuillez réessayer plus tard");
-                alert.addButton("OK")
-                alert.present();
-                alert.setMode("ios")
-
-                return; 
-              }
-
-
-            })
-          }
-        }
-      ]
-    });
-
-    
-    alert.present();
-    alert.setMode("ios")
-
-    
-  }
   gotoTransfert(){
     this.navCtrl.push(GimacTransfertPage)
   }
@@ -445,21 +374,7 @@ export class HomeGimacPage {
     console.log("+++++++++++++++++++++++")
     this.services.daoGetUser().then(user=>{
       this.user=user;
-      if(this.user)
-      this.services.checkSecret(this.user[0].Indexe).then((result:any)=>{
-        console.log(result)
-        if (result.succes==1) {
-          this.createSecret()
-        } else {
-          if(result.succes==-1 || result.succes==0){
-            this.services.disconnect()
-            this.navCtrl.setRoot(LoginPage)
-          }
-          if (result.succes==2) {
-           this.services.daoSetHaveUsed(true)
-          }
-        }
-      })
+
     })
 
 
@@ -474,68 +389,5 @@ export class HomeGimacPage {
 
 
   }
-  createSecret(){
-    let alert = this.alerCtrl.create({
-
-      enableBackdropDismiss:false
-    });
-    alert.setTitle("Code secret");
-    alert.setSubTitle("Veuillez définir votre code secret")
-    alert.setMessage("votre code secret vous permet de sécuriser vos opération PerfectPay. Vous devez donc le conserver de manière confidentielle!")
-    alert.setMode("ios")
-
-
-    alert.addInput({
-      type:'password',
-      name:'secret',
-      placeholder:"123456"
-    });
-    alert.addInput({
-      type:'password',
-      name:'secretConfirm',
-      placeholder:"123456"
-    });
-    alert.addButton({
-      text:'ok',
-      handler:datas=>{
-        let codeClient=this.user[0].Indexe;
-        if(!datas.secret){
-          this.createSecret()
-          this.showErrorToast("Veuillez saisir Votre code secret");
-          return ;
-        }
-        if(datas.secret != datas.secretConfirm ){
-          this.showErrorToast("Les codes que vous avez saisi ne sont pas identiques");
-          this.createSecret()
-          return;
-        }
-        
-    this.services.createSecret(codeClient,datas.secret).then((result:any)=>{
-      if (result.succes==1) {
-        let alert2= this.alerCtrl.create();
-        alert2.setTitle("Succès de l'opération");
-        alert2.setSubTitle("Code secret Enregistré avec succès")
-        alert2.setMessage("Ce code secret vous sera demandé lors de vos opérations PerfectPay. ")
-        alert2.setMode("ios")
-        alert2.present()
-    
-      } else {
-        let alert2= this.alerCtrl.create();
-        alert2.setTitle("Echec de l'enregistrement");
-        alert2.setSubTitle("Code secret non définit!")
-        alert2.setMessage("Une erreur s'est produite lors de l'enregistrement de votre code secret ")
-        alert2.setMode("ios")
-        alert2.present()
-      }
-    })
-
-      
-      }
-
-    });
-    alert.present()
-  
-
-
-  }
+ 
 }

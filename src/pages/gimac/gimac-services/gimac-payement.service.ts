@@ -6,6 +6,7 @@ import { PayPal, PayPalPayment, PayPalConfiguration, PayPalPaymentDetails } from
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { GimacServices } from './gimac-services';
 import { environment } from "../../../environment/environment";
+import { Services } from "../../../services/services";
 
 
 
@@ -18,8 +19,8 @@ export class GimacPayementService{
         //private contactService: ContactService,
         private h:Http,
         private payPal: PayPal,
-        private iab: InAppBrowser,
-        private service: GimacServices){
+        private iab: InAppBrowser, private service: Services,
+        private gimacService: GimacServices){
           this.service.daoGetgetUserInfo().then(user=>{
             this.user=user;
 

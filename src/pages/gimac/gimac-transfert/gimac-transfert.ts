@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, NavController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { GimacServices } from '../gimac-services/gimac-services';
@@ -10,10 +10,10 @@ import { LoginPage } from '../../login/login';
   selector: 'page-gimac-transfert',
   templateUrl: 'gimac-transfert.html'
 })
-export class GimacTransfertPage {
+export class GimacTransfertPage implements OnInit {
   formgroup: FormGroup; 
   private account: AbstractControl;
-  private raison: AbstractControl;
+  private reference: AbstractControl;
   private montant: AbstractControl;
   
 
@@ -21,19 +21,38 @@ export class GimacTransfertPage {
   private user:any;
   transferInfo: any;
   private operateur="PerfectPay";
-  private operateurs=["PerfectPay","Orange","MTN"]
+  private paysWallet=false
+  private paysBank=false
+  private paysWallets=[];
+  private paysBanks=[];
+
+  selectedSegment: any;
+  showAll: boolean;
+  showRead: boolean;
+  showBank: boolean;
+  showWallet: boolean=true;
+  selectOptions: { title: string; subTitle: string; mode: string; };
+  wallets: any;
+  selectOptions2 = {
+    title: "selectionnez le wallet du destinataire",
+    subTitle: 'Select wallet',
+    mode: 'ios'
+  };
+  wallet=null;
 
   constructor(public navCtrl: NavController,
     public alerCtrl: AlertController,
     public formbuilder: FormBuilder,public services: GimacServices, 
     public loadingController: LoadingController) {
+      this.selectedSegment = "showWallet"; 
+
       this.formgroup = formbuilder.group({
         account: ['',Validators.required], 
-        raison: ['', Validators.required],
+        reference: ['', Validators.required],
         montant: ['', Validators.required],
       });
       this.account = this.formgroup.controls['account'];
-      this.raison = this.formgroup.controls['raison'];
+      this.reference = this.formgroup.controls['reference'];
       this.montant = this.formgroup.controls['montant'];
 
       this.services.daoGetStatus().then(status=>{
@@ -47,36 +66,135 @@ export class GimacTransfertPage {
   
        });
 
+
+       this.selectOptions = {
+        title: "selectionnez le pays",
+        subTitle: 'Select the country',
+        mode: 'ios'
+      };
+
+
   }
+ 
+
+  ngOnInit(): void {
+    this.getGimacBankCountries()
+    this.getGimacMNOCountries()
+  }
+
+  getGimacMNOCountries() {
+    this.services.getGimacMNOCountries().then((result: any) => {
+      console.log(result)
+    
+    //console.log(result);
+    switch (result.succes) {
+     case 1:
+       console.log(result.resultat)
+       this.paysWallets=result.resultat;
+       
+       break;
+                             
+     default:
+       this.message=result.msg
+       break;
+    }
+    
+    });
+  }
+  getGimacBankCountries() {
+    this.services.getGimacBankCountries().then((result: any) => {
+      console.log(result)
+   switch (result.succes) {
+     case 1:
+       console.log(result.resultat)
+       this.paysBanks= result.resultat
+       break;                     
+     default:
+       this.message=result.msg
+       break;
+   }
+
+});
+  }
+
+
+  onChangeWallet(event){
+    console.log(event)
+    let loading = this.loadingController.create({ content: "Chargement...",enableBackdropDismiss:true});
+    loading.present();
+    this.services.getGimacMNOWallets(event).then((result: any) => {
+      loading.dismiss();
+      console.log(result)
+        switch (result.succes) {
+     case 1:
+       console.log(result.resultat)
+       this.wallets=result.resultat;
+       break;                  
+     default:
+       this.message=result.msg
+       break;
+    }
+    
+    });
+
+  }
+  onChangeBank(event){
+    let loading = this.loadingController.create({ content: "chargement...",enableBackdropDismiss:true});
+    loading.present();
+    this.services.getGimacBankWallets(event).then((result: any) => {
+      loading.dismiss();
+      console.log(result)
+    
+    //console.log(result);
+    switch (result.succes) {
+     case 1:
+       console.log(result.resultat)
+       this.wallets=result.resultat;
+       
+       break;
+                             
+     default:
+       this.message=result.msg
+       break;
+    }
+    
+    });
+
+   
+  }
+
   launchcheck(){
-    if(this.operateur=="PerfectPay"){
-      this.checkTransfert()
-    }
-    if(this.operateur=="Orange"){
-      this.checkTransfertOM()
+    if(this.showBank){
+      this.checkTransfertBank()
+    }else {
+      (this.showWallet)
+      this.checkTransfertMNO()
     }
     
   }
-  checkTransfert() {
+  
+  checkTransfertMNO() {
 
     this.message=""
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
     this.transferInfo={
-      account: this.account.value,
-      raison:this.raison.value,
-      montant:this.montant.value,   
-      CodeClientExpediteur:this.user[0].Telephone
+      Code_clientDestinataire: this.account.value,
+      reference:this.reference.value,
+      Montant:this.montant.value,   
+      CodeClientExpediteur:this.user[0].Telephone,
+      WalletDestinataire:this.wallet
+
     }
     
-      this.services.checkTransfert(this.transferInfo).then((result: any) => {
+      this.services.checkTransfertMNO(this.transferInfo).then((result: any) => {
            console.log(result)
         loading.dismiss();
         //console.log(result);
         switch (result.succes) {
           case 1:
             console.log(result.resultat)
-            this.handle(result.resultat[0])
+            this.handle(result)
             break;
                                   
           default:
@@ -88,26 +206,28 @@ export class GimacTransfertPage {
   
   }
 
-  checkTransfertOM() {
+  checkTransfertBank() {
 
     this.message=""
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
     this.transferInfo={
-      account: this.account.value,
-      raison:this.raison.value,
-      montant:this.montant.value,   
-      CodeClientExpediteur:this.user[0].Telephone
+      Code_clientDestinataire: this.account.value,
+      reference:this.reference.value,
+      Montant:this.montant.value,   
+      CodeClientExpediteur:this.user[0].Telephone,
+      WalletDestinataire:this.wallet
+
     }
     
-      this.services.checkTransfertOM(this.transferInfo).then((result: any) => {
+      this.services.checkTransfertBank(this.transferInfo).then((result: any) => {
            console.log(result)
         loading.dismiss();
         //console.log(result);
         switch (result.succes) {
           case 1:
             console.log(result.resultat)
-            this.handleOM(result)
+            this.handle(result)
             break;
                                   
           default:
@@ -118,45 +238,9 @@ export class GimacTransfertPage {
     });
   
   }
+
+
   handle( response){
-    let alert = this.alerCtrl.create({
-      title: 'Confirmation',
-      message: 'Vous êtes sur le point d\'effectuer la transaction suivante:<br/>'+
-      'Destinataire:<b>'+response.destinataire+'</b><br/>'+ 
-      'Montant:<b>'+response.Montant+' FCFA</b><br/>'+
-      'Frais:<b>'+response.Frais+' FCFA</b><br/>'+ 
-      'Montant Total:<b>'+response.MonantNet+' FCFA</b><br/>'+ 
-      '<b>Veuillez entrer votre code secret pour confirmer</b>',
-      inputs: [
-        {
-          name: 'secret_code',
-          placeholder: '123456',
-          type:"password"
-
-        }
-      ],
-      buttons: [
-        {
-          text: 'Annuler',
-          role: 'cancel',
-          
-        },
-        {
-          text: 'Valider',
-          handler: data => {
-            if(!data.secret_code) return
-            console.log(data.secret_code)
-            this.makeTransfert(this.transferInfo,data.secret_code)
-          }
-        }
-      ]
-    });
-    alert.setMode("ios")
-    alert.present()
-
-    
-  }
-  handleOM( response){
     let alert = this.alerCtrl.create({
       title: 'Confirmation',
       message: response.msg,
@@ -179,19 +263,26 @@ export class GimacTransfertPage {
           handler: data => {
             if(!data.secret_code) return
             console.log(data.secret_code)
-            this.makeTransfertOM(this.transferInfo,data.secret_code)
+            if(this.showWallet){
+              this.makeTransfertMNO(this.transferInfo,data.secret_code)
+            }else{
+              this.makeTransfertBank(this.transferInfo,data.secret_code)
+            }
+           
           }
         }
       ]
     });
+    alert.setMode("ios")
     alert.present()
 
     
   }
-  makeTransfert(transferInfo,secretCode) {
+
+  makeTransfertMNO(transferInfo,secretCode) {
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
-    this.services.makeTransfert(transferInfo,secretCode).then((result:any)=>{
+    this.services.makeTransfertMNO(transferInfo,secretCode).then((result:any)=>{
       loading.dismiss()
       console.log(result.resultat)
       let alert = this.alerCtrl.create();
@@ -203,15 +294,12 @@ export class GimacTransfertPage {
 
           alert.setTitle("Opération effectuée avec succès" );
          
-          alert.setMessage("Votre opération s'est déroulée avec sussès! Vous recevrez un message d'information.");
+          alert.setMessage(result.msg);
           alert.onDidDismiss(data=>{
             this.navCtrl.pop()
           })
                 
-          break;
-
-
-                                
+          break;                  
         default:
           this.message=result.msg
           alert.setMode("ios");
@@ -230,10 +318,10 @@ export class GimacTransfertPage {
   }
 
 
-  makeTransfertOM(transferInfo,secretCode) {
+  makeTransfertBank(transferInfo,secretCode) {
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
-    this.services.makeTransfertOM(transferInfo,secretCode).then((result:any)=>{
+    this.services.makeTransfertBank(transferInfo,secretCode).then((result:any)=>{
       loading.dismiss()
       console.log(result.resultat)
       let alert = this.alerCtrl.create();
@@ -250,10 +338,7 @@ export class GimacTransfertPage {
             this.navCtrl.pop()
           })
                 
-          break;
-
-
-                                
+          break;                    
         default:
           this.message=result.msg
           alert.setMode("ios");
@@ -271,4 +356,12 @@ export class GimacTransfertPage {
     })
   }
 
+  onSegmentChanged(segmentButton: any) {
+    this.wallet=null;
+    this.selectedSegment = segmentButton; 
+    segmentButton.value=="showBank"?this.showBank = true:this.showBank = false;
+    segmentButton.value=="showWallet"?this.showWallet = true:this.showWallet = false;
+    if( segmentButton.value!="showBank" && segmentButton.value!="showWallet") this.showBank = true
+
+  }
 }

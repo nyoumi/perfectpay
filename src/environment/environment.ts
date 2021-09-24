@@ -5,6 +5,7 @@ export const environment = {
   //server:"kmertv.iplans.cm",
   server:"api.kakotel.com",
   apilink:"/api-perfectpay.php?",
+  apiGimacLink:"/api-gimacpay_mobile.php?",
   codeApi:"326029964",
   projetPerfectPay:"PERFECTPAY",
   //CodeClient:"5022664154",

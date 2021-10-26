@@ -49,7 +49,7 @@
     "zone.js": "0.8.29"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.2.4",
+    "@ionic/app-scripts": "3.2.3",
     "cordova-plugin-qrscanner": "^3.0.1",
     "typescript": "^2.6.2"
   },

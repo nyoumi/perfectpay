@@ -259,16 +259,52 @@ export class GimacPaymentPage {
        // start scanning
        let scanSub = this.qrScanner.scan().subscribe((text: string) => {
          console.log('Scanned something', text);
+         let alert = this.alerCtrl.create({
+          title: 'code scanner',
+          message: text,
+          buttons: [
+            {
+              text: 'Annuler',
+              role: 'cancel',
+              
+            }
+          ]
+        });
+        alert.present()
 
          this.qrScanner.hide(); // hide camera preview
          scanSub.unsubscribe(); // stop scanning
        });
 
      } else if (status.denied) {
+      let alert = this.alerCtrl.create({
+        title: 'code scanner',
+        message: "camera permission was permanently denied",
+        buttons: [
+          {
+            text: 'Annuler',
+            role: 'cancel',
+            
+          }
+        ]
+      });
+      alert.present()
        // camera permission was permanently denied
        // you must use QRScanner.openSettings() method to guide the user to the settings page
        // then they can grant the permission from there
      } else {
+      let alert = this.alerCtrl.create({
+        title: 'code scanner',
+        message: " permission was denied, but not permanently. You can ask for permission again at a later time",
+        buttons: [
+          {
+            text: 'Annuler',
+            role: 'cancel',
+            
+          }
+        ]
+      });
+      alert.present()
        // permission was denied, but not permanently. You can ask for permission again at a later time.
      }
   })

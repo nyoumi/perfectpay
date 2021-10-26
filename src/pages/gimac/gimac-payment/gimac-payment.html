@@ -31,9 +31,12 @@
   </div>
 
     </form>
+    <div  text-center>
+      <button ion-button icon-left   block class="login-button"  (tap)="scanCode()">Scanner le code QR</button>
   
+    </div>
   <div  text-center>
-    <button ion-button  block class="login-button" [disabled]="!formgroup.valid" (tap)="checkPayment()">Payer</button>
+    <button ion-button   block class="login-button" [disabled]="!formgroup.valid" (tap)="checkPayment()">Payer</button>
 
   </div>
   

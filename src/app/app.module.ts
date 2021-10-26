@@ -14,6 +14,8 @@ import { PerfectTransfertPage } from '../pages/pertfect-transfert/perfect-transf
 import { PerfectPaymentPage } from '../pages/pertfect-payment/perfect-payment'
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { QRScanner } from '@ionic-native/qr-scanner';
+
 
 import { Services } from '../services/services';
 import { ParametreService } from '../services/parametre.service';
@@ -68,6 +70,7 @@ import { GimacModule } from '../pages/gimac/gimac.module';
   providers: [
     StatusBar,
     SplashScreen,
+    QRScanner, 
     PayPal,
     Stripe,
     HTTP,

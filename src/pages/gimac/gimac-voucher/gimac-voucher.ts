@@ -3,17 +3,21 @@ import { AlertController, LoadingController, NavController } from 'ionic-angular
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
+import { VoucherHistoryPage } from '../voucher-history/voucher-history';
 
 
 
 @Component({
-  selector: 'page-gimac-transfert',
-  templateUrl: 'gimac-transfert.html'
+  selector: 'page-gimac-voucher',
+  templateUrl: 'gimac-voucher.html'
 })
-export class GimacTransfertPage implements OnInit {
+export class GimacVoucherPage implements OnInit {
   formgroup: FormGroup; 
   private account: AbstractControl;
   private montant: AbstractControl;
+  private validity: AbstractControl;
+
+  
   
 
   private message:any=""
@@ -24,6 +28,7 @@ export class GimacTransfertPage implements OnInit {
   private paysBank=false
   private paysWallets=[];
   private paysBanks=[];
+  private advanced:boolean=false;
 
   selectedSegment: any;
   showAll: boolean;
@@ -47,10 +52,15 @@ export class GimacTransfertPage implements OnInit {
 
       this.formgroup = formbuilder.group({
         account: ['',Validators.required], 
-        montant: ['', Validators.required],
+        montant: ['', Validators.compose([
+          Validators.min(100),
+          Validators.required,
+        ])],
+        validity:['0', Validators.required]
       });
       this.account = this.formgroup.controls['account'];
       this.montant = this.formgroup.controls['montant'];
+      this.validity=this.formgroup.controls['validity'];
 
       this.services.daoGetStatus().then(status=>{
         if(status!=true){
@@ -197,6 +207,7 @@ export class GimacTransfertPage implements OnInit {
             this.message=result.msg
             break;
         }
+        if(!result.succes) this.message= "Echec de l'opération. Veuillez Réessayer!"
 
     });
   
@@ -358,5 +369,9 @@ export class GimacTransfertPage implements OnInit {
     segmentButton.value=="showWallet"?this.showWallet = true:this.showWallet = false;
     if( segmentButton.value!="showBank" && segmentButton.value!="showWallet") this.showBank = true
 
+  }
+
+  openVoucherHistory(){
+    this.navCtrl.push(VoucherHistoryPage);
   }
 }

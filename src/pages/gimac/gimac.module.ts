@@ -6,6 +6,9 @@ import { GimacServices } from './gimac-services/gimac-services';
 import { GimacPayementService } from './gimac-services/gimac-payement.service';
 import { CommonModule } from '@angular/common';
 import { GimacTransfertPage } from './gimac-transfert/gimac-transfert';
+import { GimacVoucherPage } from './gimac-voucher/gimac-voucher';
+import { VoucherHistoryPage } from './voucher-history/voucher-history';
+import { GimacPaymentPage } from './gimac-payment/gimac-payment';
 
 
 
@@ -14,6 +17,9 @@ import { GimacTransfertPage } from './gimac-transfert/gimac-transfert';
   declarations: [
     HomeGimacPage,
     GimacTransfertPage,
+    GimacVoucherPage,
+    VoucherHistoryPage,
+    GimacPaymentPage
     
 
   ],
@@ -24,11 +30,14 @@ import { GimacTransfertPage } from './gimac-transfert/gimac-transfert';
 
 
   ],
-  bootstrap: [IonicApp],
+  bootstrap: [IonicApp], 
   entryComponents: [
 
     HomeGimacPage,
     GimacTransfertPage,
+    GimacVoucherPage,
+    VoucherHistoryPage,
+    GimacPaymentPage
     
 
 

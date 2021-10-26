@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Mes Vouchers</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+      <div class="form-content">
+      <ion-grid>
+          <ion-row class="header-row">
+  <ion-col >
+                  Date 
+              </ion-col>
+              <ion-col>
+                montant
+              </ion-col>           
+               <ion-col>
+                code voucher
+              </ion-col>
+                <ion-col>
+                  etat
+              </ion-col>
+          </ion-row>
+
+          <ion-row  class="entry" (tap)="showEntry(voucher)">
+            <ion-col>
+              {{ voucher.DateTransaction}} {{ voucher.HeureTransaction}} 
+            </ion-col>
+            <ion-col>
+              {{ voucher.Montant}} FCFA
+
+            </ion-col>
+            <ion-col>
+              {{ voucher.IDTransaction}}  
+
+            </ion-col>
+            <ion-col>
+              {{ voucher.Libelle}}
+
+            </ion-col>
+          </ion-row>
+          <ion-row *ngFor="let entry of history" class="entry" (tap)="showEntry(entry)">
+            <ion-col>
+              {{ entry.DateTransaction}} {{ entry.HeureTransaction}} 
+            </ion-col>
+            <ion-col>
+              {{ entry.Montant}} FCFA
+
+            </ion-col>
+            <ion-col>
+              {{ entry.IDTransaction}}  
+
+            </ion-col>
+            <ion-col>
+              {{ entry.Libelle}}
+
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    
+  </div>
+
+  
+
+  
+  <div  text-center class="message-error-text">     
+         
+    <p >{{ message }} </p>
+ 
+</div>
+</ion-content>  

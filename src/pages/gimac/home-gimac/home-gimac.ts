@@ -7,6 +7,7 @@ import { HistoryPage } from '../gimac-history/gimac-history';
 import { GimacPayementService } from '../gimac-services/gimac-payement.service';
 import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
+import { GimacVoucherPage } from '../gimac-voucher/gimac-voucher';
 
 
 @Component({
@@ -45,8 +46,8 @@ export class HomeGimacPage {
   gotoPayment(){
     this.navCtrl.push(GimacPaymentPage)
   }
-  getHistory(){
-    this.navCtrl.push(HistoryPage)
+  gotoVoucher(){
+    this.navCtrl.push(GimacVoucherPage)
 
 
   }

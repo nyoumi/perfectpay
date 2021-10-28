@@ -32,13 +32,18 @@
 
     </form>
     <div  text-center>
-      <button ion-button icon-left   block class="login-button"  (tap)="scanCode()">Scanner le code QR</button>
+      <button ion-button icon-left   block class="login-button"  (tap)="scanCode()"><ion-icon name="qr-scanner"></ion-icon> code QR</button>
   
     </div>
+  <!--   <div  text-center>
+      <button ion-button icon-left   block class="login-button"  (tap)="generate()"><ion-icon name="qr-scanner"></ion-icon> code QR</button>
+  
+    </div> -->
   <div  text-center>
     <button ion-button   block class="login-button" [disabled]="!formgroup.valid" (tap)="checkPayment()">Payer</button>
 
   </div>
+  <qrcode [qrdata]="'Votre chaîne de caractère QR code'" [size]="256" [level]="'M'"></qrcode>
   
   <div  text-center class="message-error-text">
           

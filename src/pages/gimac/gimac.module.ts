@@ -9,8 +9,9 @@ import { GimacTransfertPage } from './gimac-transfert/gimac-transfert';
 import { GimacVoucherPage } from './gimac-voucher/gimac-voucher';
 import { VoucherHistoryPage } from './voucher-history/voucher-history';
 import { GimacPaymentPage } from './gimac-payment/gimac-payment';
+import { GimacScannerPage } from "./gimac-scanner/gimac-scanner";
 
-
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 @NgModule({
@@ -19,14 +20,15 @@ import { GimacPaymentPage } from './gimac-payment/gimac-payment';
     GimacTransfertPage,
     GimacVoucherPage,
     VoucherHistoryPage,
-    GimacPaymentPage
+    GimacPaymentPage,
+    GimacScannerPage
     
 
   ],
   imports: [
     BrowserModule,
     CommonModule,
-    IonicModule
+    IonicModule,QRCodeModule
 
 
   ],
@@ -37,7 +39,8 @@ import { GimacPaymentPage } from './gimac-payment/gimac-payment';
     GimacTransfertPage,
     GimacVoucherPage,
     VoucherHistoryPage,
-    GimacPaymentPage
+    GimacPaymentPage,
+    GimacScannerPage
     
 
 

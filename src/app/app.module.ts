@@ -14,7 +14,6 @@ import { PerfectTransfertPage } from '../pages/pertfect-transfert/perfect-transf
 import { PerfectPaymentPage } from '../pages/pertfect-payment/perfect-payment'
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { QRScanner } from '@ionic-native/qr-scanner';
 
 
 import { Services } from '../services/services';
@@ -31,8 +30,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
 
 import { GimacModule } from '../pages/gimac/gimac.module';
-
-
+import { NgxQRCodeModule } from "ngx-qrcode2";
+import { QRScanner } from '@ionic-native/qr-scanner'; 
 @NgModule({
   declarations: [
     MyApp,
@@ -45,12 +44,16 @@ import { GimacModule } from '../pages/gimac/gimac.module';
     PerfectPaymentPage,
     PerfectRetraitPage,
 
+
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    GimacModule
+    GimacModule,
+    NgxQRCodeModule
+    
+
 
   ],
   bootstrap: [IonicApp],
@@ -70,7 +73,6 @@ import { GimacModule } from '../pages/gimac/gimac.module';
   providers: [
     StatusBar,
     SplashScreen,
-    QRScanner, 
     PayPal,
     Stripe,
     HTTP,
@@ -79,7 +81,8 @@ import { GimacModule } from '../pages/gimac/gimac.module';
     ParametreService,
     PayementService,
     InAppBrowser,
-
+    QRScanner
+    
   ]
 })
 export class AppModule {}

@@ -3,9 +3,9 @@ import { AlertController, LoadingController, NavController } from 'ionic-angular
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
-import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 
-
+import { NgxQRCodeModule } from "ngx-qrcode2";
+import { GimacScannerPage } from '../gimac-scanner/gimac-scanner';
 @Component({
   selector: 'page-gimac-payment',
   templateUrl: 'gimac-payment.html'
@@ -20,13 +20,13 @@ export class GimacPaymentPage {
 
 
 
-  constructor(public navCtrl: NavController,private qrScanner: QRScanner,
+  constructor(public navCtrl: NavController, 
     public alerCtrl: AlertController,
     public formbuilder: FormBuilder,public services: GimacServices, 
     public loadingController: LoadingController) {
       this.services.daoGetStatus().then(status=>{
         if(status!=true){
-          this.navCtrl.setRoot(LoginPage)
+          this.navCtrl.setRoot(LoginPage)    
         }
   
        });
@@ -245,69 +245,10 @@ export class GimacPaymentPage {
       alert.onDidDismiss(data=>{
         this.navCtrl.pop()
       })
-
-
     })
   }
+   
   scanCode(){
-    this.qrScanner.prepare()
-  .then((status: QRScannerStatus) => {
-     if (status.authorized) {
-       // camera permission was granted
-
-
-       // start scanning
-       let scanSub = this.qrScanner.scan().subscribe((text: string) => {
-         console.log('Scanned something', text);
-         let alert = this.alerCtrl.create({
-          title: 'code scanner',
-          message: text,
-          buttons: [
-            {
-              text: 'Annuler',
-              role: 'cancel',
-              
-            }
-          ]
-        });
-        alert.present()
-
-         this.qrScanner.hide(); // hide camera preview
-         scanSub.unsubscribe(); // stop scanning
-       });
-
-     } else if (status.denied) {
-      let alert = this.alerCtrl.create({
-        title: 'code scanner',
-        message: "camera permission was permanently denied",
-        buttons: [
-          {
-            text: 'Annuler',
-            role: 'cancel',
-            
-          }
-        ]
-      });
-      alert.present()
-       // camera permission was permanently denied
-       // you must use QRScanner.openSettings() method to guide the user to the settings page
-       // then they can grant the permission from there
-     } else {
-      let alert = this.alerCtrl.create({
-        title: 'code scanner',
-        message: " permission was denied, but not permanently. You can ask for permission again at a later time",
-        buttons: [
-          {
-            text: 'Annuler',
-            role: 'cancel',
-            
-          }
-        ]
-      });
-      alert.present()
-       // permission was denied, but not permanently. You can ask for permission again at a later time.
-     }
-  })
-  .catch((e: any) => console.log('Error is', e));
-  }
+   this.navCtrl.push(GimacScannerPage)
+}
 }

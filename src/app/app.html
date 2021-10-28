@@ -13,8 +13,21 @@
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
+      <button menuClose ion-item (click)="showOngoingRetrait()">
+        Retraits USSD en cours
+      </button>
       <button menuClose ion-item (click)="secretUpdate()" *ngIf="secretStatus">
         Modifier code secret
+      </button>
+      <button menuClose ion-item (click)="showPersonnalInfos()">
+        Mon Compte
+        </button>
+      <button menuClose ion-item (click)="ddd()">
+         Partenaires
+      </button>
+    
+      <button menuClose ion-item (click)="achatServices()">
+        Achat produits et services
       </button>
       <button menuClose ion-item (click)="showHelp()">
       Aide

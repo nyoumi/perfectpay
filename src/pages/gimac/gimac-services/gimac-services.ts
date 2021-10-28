@@ -3,7 +3,7 @@ import * as localForage from "localforage";
 import { Http, Headers } from '@angular/http';
 import 'rxjs';
 import 'rxjs/add/operator/map';
-import { environment } from "../environment/environment";
+import { environment } from "../../../environment/environment";
 
 const  REGISTERED="REGISTERED";
 const  HAVE_USED="HAVEUSED";
@@ -18,11 +18,10 @@ const  APP_LINK="http://play.google.com/store/apps/details?id=cm.iplans.call";
 
    
 const  MINVERSION="MINVERSION";
-const MERCHANT_SERVICES="MERCHANT_SERVICES";
 
 
 @Injectable()
-export class Services {
+export class GimacServices {
 
 
  
@@ -43,11 +42,12 @@ export class Services {
     });
   }
  
+
   authentification(email, password) {
     //var xml2js = require('xml2js');
-    let params="action=login_account_marchand&login="+email+"&password="+password;
+    let params="action=login_account&login="+email+"&password="+password;
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink + params)
+      this.http.get("https://" + environment.server + environment.apiGimacLink + params)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -63,7 +63,7 @@ export class Services {
     let params="action=create_account_update&Nom="+UserInfo.nom+"&Prenom="+UserInfo.Prenom+
     "&Email="+UserInfo.email+"&Telephone="+UserInfo.Telephone+"&Pays="+UserInfo.Pays+"&Ville="+UserInfo.Ville;
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink + params)
+      this.http.get("https://" + environment.server + environment.apiGimacLink + params)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -76,7 +76,7 @@ export class Services {
    getRegions() {
     let action="action=show_liste_region";
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink+action)
+      this.http.get("https://" + environment.server + environment.apiGimacLink+action)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -86,10 +86,11 @@ export class Services {
         })
     });
   } 
+
   getDepartments() {
     let action="action=show_liste_departement";
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink+action)
+      this.http.get("https://" + environment.server + environment.apiGimacLink+action)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -104,7 +105,7 @@ export class Services {
       let action="action=check_solde";
 
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink+action+"&indexe_users="+idClient+"&secret_code="+secretCode)
+      this.http.get("https://" + environment.server + environment.apiGimacLink+action+"&indexe_users="+idClient+"&secret_code="+secretCode)
         .subscribe(data => {
           //console.log(data._body); 
           resolve(data.json());
@@ -114,11 +115,11 @@ export class Services {
         })
     });
   }
-  getHistory(idClient,idService) {
-    let action="action=View_liste_encaissements_services";
+  getHistory(idClient) {
+    let action="action=check_transaction_update";
 
   return new Promise(resolve => {
-    this.http.get("https://" + environment.server +environment.apilink+action+ "&indexe_users="+idClient+"&IndexeService="+idService)
+    this.http.get("https://" + environment.server + environment.apiGimacLink+action+"&indexe_users="+idClient)
       .subscribe(data => {
         //console.log(data._body); 
         //data=JSON.stringify(data).slice(0, -3)
@@ -130,28 +131,15 @@ export class Services {
       })
   });
 }
-getMerchantServices(idClient) {
-  let action="action=View_liste_services";
+  checkTransfertMNO(transferInfos) {
 
-return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
-    .subscribe(data => {
-      //console.log(data._body); 
-      resolve(data._body);
-    }, err => {
-      //console.log("Error"); 
-      resolve(err);
-    })
-});
-}
-  checkTransfert(transferInfos) {
     this.transferInfos=transferInfos;
-    let link="action=check_informations_account_perfect_pay&CodeClient="+environment.perfectPhone+
+    let link="action=Solde_transfert_walet_MNO&CodeClient="+environment.perfectPhone+
     "&CodeAPI="+environment.codeApi+"&Projet=PERFECTPAY&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&Code_clientDestinataire="+
-    transferInfos.account+"&Montant="+transferInfos.montant+"&Raison_transfert="+transferInfos.raison;
+    transferInfos.Code_clientDestinataire+"&Montant="+transferInfos.Montant+"&WalletDestinataire="+transferInfos.WalletDestinataire;
 
   return new Promise(resolve => {
-    this.http.get("https://" + environment.server + environment.apilink+link)
+    this.http.get("https://" + environment.server + environment.apiGimacLink+link)
       .subscribe(data => {
         //console.log(data._body); 
         let result=-1;
@@ -167,14 +155,58 @@ return new Promise(resolve => {
       })
   });
 }
-makeTransfert(transferInfos,secretCode) {  
-  let link="action=transfert_account_perfect_pay&CodeClient="+environment.perfectPhone+
+checkTransfertBank(transferInfos) {
+
+  this.transferInfos=transferInfos;
+  let link="action=Solde_transfert_walet_Banque&CodeClient="+environment.perfectPhone+
+  "&CodeAPI="+environment.codeApi+"&Projet=PERFECTPAY&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&Code_clientDestinataire="+
+  transferInfos.Code_clientDestinataire+"&Montant="+transferInfos.Montant+"&WalletDestinataire="+transferInfos.WalletDestinataire;
+
+return new Promise(resolve => {
+  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+    .subscribe(data => {
+      //console.log(data._body); 
+      let result=-1;
+      try {
+        result=data.json()
+      } catch (error) {
+        
+      }
+      resolve(result);
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+makeTransfertMNO(transferInfos,secretCode) {  
+  
+ 
+  let link="action=Valide_Transfert_walet_MNO&Code_clientExpediteur="+environment.perfectPhone+
   "&CodeAPI="+environment.codeApi+"&Projet="+ environment.projetPerfectPay+"&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&Code_clientDestinataire="+
-  transferInfos.account+"&Montant="+transferInfos.montant+"&Raison_transfert="+transferInfos.raison+"&CodeSecurite="+secretCode;
+  transferInfos.Code_clientDestinataire+"&Montant="+transferInfos.Montant+"&WalletDestinataire="+transferInfos.WalletDestinataire+"&ReferenceTransaction="+transferInfos.reference+"&CodeSecurite="+secretCode;
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+  .subscribe(data => {
+      //console.log(data._body); 
+      console.log(data.json())
+      resolve(data.json());
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+makeTransfertBank(transferInfos,secretCode){
+  let link="action=Valide_Transfert_walet_Banque&Code_clientExpediteur="+environment.perfectPhone+
+  "&CodeAPI="+environment.codeApi+"&Projet="+ environment.projetPerfectPay+"&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&Code_clientDestinataire="+
+  transferInfos.Code_clientDestinataire+"&Montant="+transferInfos.Montant+"&WalletDestinataire="+transferInfos.WalletDestinataire+"&ReferenceTransaction="+transferInfos.reference+"&CodeSecurite="+secretCode;
+ 
+
+return new Promise(resolve => {
+  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
   .subscribe(data => {
       //console.log(data._body); 
       console.log(data.json())
@@ -193,7 +225,7 @@ checkTransfertOM(transferInfos) {
   transferInfos.account+"&Montant="+transferInfos.montant+"&Raison_transfert="+transferInfos.raison;
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
     .subscribe(data => {
       //console.log(data._body); 
       let result=-1;
@@ -217,7 +249,7 @@ makeTransfertOM(transferInfos,secretCode) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
   .subscribe(data => {
       //console.log(data._body); 
       console.log(data.json())
@@ -237,7 +269,7 @@ checkPayment(transferInfos) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1;
@@ -260,7 +292,7 @@ makePayment(transferInfos,codeSecret) {
   "&CodeSecurite="+codeSecret;
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
   .subscribe(data => {
       //console.log(data._body); 
       let result=-1;
@@ -277,158 +309,8 @@ return new Promise(resolve => {
 });
 }
 
-checkRetrait(transferInfos) {
-  let link="action=check_informations_CodePointVente_Retrait_PerfectPayMobile&"+
-  "&Code_clientPerfectPay="+transferInfos.CodeClientExpediteur+
-  "&CodeAPI="+environment.codeApi+
-  "&Projet="+ environment.projetPerfectPay+
-  "&CodeClient="+environment.perfectPhone+
-  "&Code_PointVentePerfectPay="+transferInfos.code_point_vente+
-  "&Montant="+transferInfos.Montant;
- 
-
-return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
-  .subscribe(data => {
-      //console.log(data._body);
-      let result=-1;
-      try {
-        result=data.trim().json()
-      } catch (error) {
-        
-      } 
-      resolve(data.json());
-    }, err => {
-      //console.log("Error"); 
-      resolve(err);
-    })
-});
-}
-makeRetrait(transferInfos,codeSecret) {
-  let link="action=Valider_Retrait_PerfectPayMobile_NewMethode"+
-  "&CodeAPI="+environment.codeApi+
-  "&CodeClient="+environment.perfectPhone+
-  "&Projet="+ environment.projetPerfectPay+
-  "&Code_clientPerfectPay="+transferInfos.CodeClientExpediteur+
-  "&Code_PointVentePerfectPay="+transferInfos.code_point_vente+
-  "&Montant="+transferInfos.Montant+
-  "&CodeSecurite="+codeSecret;
-
-return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
-  .subscribe(data => {
-      //console.log(data._body); 
-      let result=-1;
-      try {
-        result=data.json()
-      } catch (error) {
-        
-      }
-      resolve(result);
-    }, err => {
-      //console.log("Error"); 
-      resolve(err);
-    })
-});
-}
-checkSecret(idClient) {
-  let link="action=check_statut_ping&"+"&indexe_users="+idClient
- 
-
-return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
-  .subscribe(data => {
-      //console.log(data._body);
-      let result=-1000;
-      try {
-        result=data.json()
-      } catch (error) {
-        
-      } 
-      resolve(data.json());
-    }, err => {
-      //console.log("Error"); 
-      resolve(err);
-    })
-});
-}
-createSecret(idClient,secret) {
-  let link="action=New_code_secret&"
-  +"&indexe_users="+idClient
-  +"&repeat_ping_code="+secret
-  +"&ping_code="+secret
 
 
- 
-
-return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
-  .subscribe(data => {
-      //console.log(data._body);
-      let result=-1000;
-      try {
-        result=data.json()
-      } catch (error) {
-        
-      } 
-      resolve(data.json());
-    }, err => {
-      //console.log("Error"); 
-      resolve(err);
-    })
-});
-}
-updateSecret(idClient,secret,oldSecret) {
-  let link="action=create_code_secret&"
-  +"&indexe_users="+idClient
-  +"&repeat_ping_code="+secret
-  +"&ping_code="+secret
-  +"&ancien_ping_code="+oldSecret
-
- 
-
-return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
-  .subscribe(data => {
-      //console.log(data._body);
-      let result=-1000;
-      try {
-        result=data.json()
-      } catch (error) {
-        
-      } 
-      resolve(data.json());
-    }, err => {
-      //console.log("Error"); 
-      resolve(err);
-    })
-});
-}
-getSecretStatus(idClient) {
-
-  let link="action=check_statut_ping&"
-  +"&indexe_users="+idClient
-
-
- 
-
-return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
-  .subscribe(data => {
-      //console.log(data._body);
-      let result=-1000;
-      try {
-        result=data.json()
-      } catch (error) {
-        
-      } 
-      resolve(data.json());
-    }, err => {
-      //console.log("Error"); 
-      resolve(err);
-    })
-});
-}
 
 
 disconnect() {
@@ -513,7 +395,7 @@ disconnect() {
   .then(
     (data:any) => {if(data)haveUsed=data.state;}
     ,
-    error => console.error(error)
+    error => console.log(error)
   );
     /**
      * 
@@ -547,33 +429,6 @@ daoSetHaveUsed(haveUsed:boolean) {
     error => console.error('Error storing minVersion: '+error, error)
   );
    
-}
-daoSetMerchantServices(services) {
-  console.log("want to save services of merchant");
-  localForage.setItem(MERCHANT_SERVICES,services)
-  .then(
-    () => console.log("services saved"),
-    error => console.error('Error storing minVersion: '+error, error)
-  );
-   
-}
-async daoGetMerchantServices(): Promise<any> {
-  let datas;
-  await localForage.getItem(MERCHANT_SERVICES)
-  
-.then(
-  (data:any) => {
-    datas=data;
-    return Promise.resolve(data);
-  }
-  ,
-  error =>{
-    console.error(error)
-    return Promise.resolve(false);
-  } 
-);
-return Promise.resolve(datas);
-
 }
 
   /**
@@ -609,23 +464,7 @@ async daoGetPhoneNumber(): Promise<any> {
 return Promise.resolve(phone_number);
 
 }
-/**
- * recupère le nuimero de téléphone de l'utilisateur
- */
-async daoGetgetUserInfo(): Promise<any> {
-  let user:any;
-  await localForage.getItem(REGISTERED)
-.then(
-  (data:any) => {
-    user=data;
-  }
-  ,
-  error => console.error(error)
-);
 
-return Promise.resolve(user);
-
-}
 
 /**
  * recupère le password de l'utilisateur
@@ -716,47 +555,10 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
 /**
  * 
  */
-async daoGetUsability(): Promise<boolean> {
-  let result:boolean=false;
-  await this.daoGetMinVersion().then(minVersion=>{
-    if(minVersion<=ACTUAL_VERSION_VALUE || minVersion==-1){
-      result=true;
-      return Promise.resolve(result);
-    }
-     
-  });
-  return Promise.resolve(result);
 
-}
  
 
-  test() {
-    let headers = new Headers();
-    //headers.append('Host', 'api.orange.com');
-    headers.append('Authorization', 'Bearer RJNNzYWRAKE3An4qQg9EEOIXtC2G');
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'application/json');
-    let data =
-      {
-        "merchant_key": "67a655d9",
-        "currency": "OUV",
-        "order_id": "IPLANS_ORDER_ID_0832106",
-        "amount": 1100,
-        "return_url": "https://www.iplans.cm/test",
-        "cancel_url": "https://www.iplans.cm/txncncld",
-        "notif_url": "https://www.iplans.cm/notif",
-        "lang": "fr",
-        "reference": "TestOPEIPLANS_03199"
-      };
-    this.http.post('https://api.orange.com/orange-money-webpay/dev/v1/webpayment', data, { headers: headers })
-      .map(res => res.json())
-      .subscribe(res => {
-        console.log(res);
-      }, (err) => {
-        console.log(err);
-        console.log("failed");
-      });
-  }
+
 
   sendCodeConfirmation(number) {
 
@@ -789,38 +591,14 @@ async daoGetUsability(): Promise<boolean> {
         })
     });
   }
-  getUserCredit(number) {
-    //var xml2js = require('xml2js');
-    return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/getServiceBalance/" + number)
-        .subscribe(data => {
-          //console.log(data.json()); 
-          resolve(data.json());
-        }, err => {
-          //console.log("Error"); 
-          resolve("Error");
-        })
-    });
-  }
-  getUserCreditSms(number,password) {
-    //var xml2js = require('xml2js');
-    return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/checkSolde/" + number+"/"+password)
-        .subscribe(data => {
-          //console.log(data.json()); 
-          resolve(data.json());
-        }, err => {
-          //console.log("Error"); 
-          resolve("error");
-        })
-    });
-  }
+
+
 
   checkRetraitValidation(number) {
     let action="action=checker_si_retrait_en_cours_mobile";
 
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink+action+"&Code_clientExpediteurint="+number)
+      this.http.get("https://" + environment.server + environment.apiGimacLink+action+"&Code_clientExpediteurint="+number)
         .subscribe(data => {
           //console.log(data._body); 
           resolve(data.json());
@@ -834,7 +612,7 @@ async daoGetUsability(): Promise<boolean> {
     let action="action=validation_retrait_account_perfect_pay_Mobile";
 
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink+action+"&Code_clientExpediteur="+number
+      this.http.get("https://" + environment.server + environment.apiGimacLink+action+"&Code_clientExpediteur="+number
       +"&CodeSecurite="+secretCode
       +"&IdTransaction="+transactionId)
         .subscribe(data => {
@@ -849,46 +627,7 @@ async daoGetUsability(): Promise<boolean> {
 
 
 
-  editUser(nom, phoneNumber, newPhoneNumber, email, password) {
-    //var xml2js = require('xml2js');
-    return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/editUser/" + nom + "/" + phoneNumber + "/" + newPhoneNumber + "/" + email + "/" + password)
-        .subscribe(data => {
-          console.log(data.json());
-          resolve(data.json());
-        }, err => {
-          //console.log("Error"); 
-          resolve("Error");
-        })
-    });
-  }
 
-  createUser(nom, phoneNumber, email, password) {
-    //var xml2js = require('xml2js');
-    return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/createUser/" + nom + "/" + phoneNumber + "/" + email + "/" + password)
-        .subscribe(data => {
-          console.log(data.json());
-          resolve(data.json());
-        }, err => {
-          //console.log("Error"); 
-          resolve("Error");
-        })
-    });
-  }
-
-  retrySMS(phoneNumber) {
-    //var xml2js = require('xml2js');
-    return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/sendSMSNexmo/" + phoneNumber)
-        .subscribe(data => { 
-          resolve(data._body);
-        }, err => {
-          //console.log("Error"); 
-          resolve("Error");
-        })
-    });
-  }
 
   saveAndroidMinVersion() {
     //var xml2js = require('xml2js');
@@ -904,32 +643,7 @@ async daoGetUsability(): Promise<boolean> {
     });
   }
 
-  fundTransfertCardToCard(userId,customerId,last4Digits,amount) { 
-    return new Promise(resolve => {
-      this.http.get(environment.virementFondCarteToCarte + userId+ "/C2C/"+ amount+ "/"+ customerId+ "/FCFA/"+ last4Digits)
-        .subscribe(data => {
-          //console.log(data._body); 
-          resolve(data._body);
-        }, err => {
-          //console.log("Error: "+Error); 
-          console.log("Error11: "+err.toString); 
-          resolve("Error");
-        })
-    });
-  }
-  fundTransfertToCard(userId,customerId,last4Digits,amount) { 
-    return new Promise(resolve => {
-      this.http.get(environment.virementFondCarte + userId+ "/C2C/"+ amount+ "/"+ customerId+ "/FCFA/"+ last4Digits)
-        .subscribe(data => {
-          //console.log(data._body); 
-          resolve(data._body);
-        }, err => {
-          //console.log("Error: "+Error); 
-          console.log("Error11: "+err.toString); 
-          resolve("Error");
-        })
-    });
-  }
+
 
   getUserOperations(userId) { 
     return new Promise(resolve => {
@@ -987,16 +701,60 @@ async daoGetUsability(): Promise<boolean> {
     });
   }
 
-  validatePendingPayment(idPayment,smsCode) {
-    //var xml2js = require('xml2js');
+
+
+
+
+
+  getGimacBankCountries(){
+    let action="action=liste_pays_gimac_bacaire";
     return new Promise(resolve => {
-      this.http.get(environment.validatePendingPayment + idPayment+ "/"+ smsCode)
+      this.http.get("https://" + environment.server + environment.apiGimacLink+action)
         .subscribe(data => {
-          //console.log(data._body); 
+          console.log(data.json()); 
           resolve(data.json());
         }, err => {
-          //console.log("Error"); 
-          resolve("-1");
+          console.log("Error");    
+          resolve(err);
+        })
+    });
+  }
+  getGimacMNOCountries(){
+    let action="action=liste_pays_gimac_mno";
+    return new Promise(resolve => {
+      this.http.get("https://" + environment.server + environment.apiGimacLink+action)
+        .subscribe(data => {
+          console.log(data.json()); 
+          resolve(data.json());
+        }, err => {
+          console.log("Error");    
+          resolve(err);
+        })
+    });
+  }
+  getGimacMNOWallets(id_pays){
+    let action="action=liste_oparateurs_mno_pays&id_pays=";
+    return new Promise(resolve => {
+      this.http.get("https://" + environment.server + environment.apiGimacLink+action+id_pays)
+        .subscribe(data => {
+          console.log(data.json()); 
+          resolve(data.json());
+        }, err => {
+          console.log("Error");    
+          resolve(err);
+        })
+    });
+  }
+  getGimacBankWallets(id_pays){
+    let action="action=liste_oparateurs_bancaires_pays&id_pays=";
+    return new Promise(resolve => {
+      this.http.get("https://" + environment.server + environment.apiGimacLink+action+id_pays)
+        .subscribe(data => {
+          console.log(data.json()); 
+          resolve(data.json());
+        }, err => {
+          console.log("Error");    
+          resolve(err);
         })
     });
   }

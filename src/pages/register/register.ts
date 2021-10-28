@@ -13,8 +13,8 @@ import { PAYS } from '../../services/countries';
   templateUrl: 'register.html'
 })
 export class RegisterPage {
-  @ViewChild(Slides) slides: Slides;
-  slider:any;
+  //@ViewChild(Slides) slides: Slides;
+  //slider:any;
   formgroup: FormGroup; 
   private email: AbstractControl;
   private nom: AbstractControl;
@@ -74,10 +74,10 @@ export class RegisterPage {
     this.email = this.formgroup.controls['email'];
     this.nom = this.formgroup.controls['nom'];
     this.Prenom = this.formgroup.controls['Prenom'];
-    this.Region = this.formgroup.controls['Region'];
+    //this.Region = this.formgroup.controls['Region'];
     this.Telephone = this.formgroup.controls['Telephone'];
-    this.Departement = this.formgroup.controls['Departement'];
-    this.DateNaissance = this.formgroup.controls['DateNaissance'];
+    //this.Departement = this.formgroup.controls['Departement'];
+    //this.DateNaissance = this.formgroup.controls['DateNaissance'];
     this.Ville = this.formgroup.controls['Ville'];
     this.dial_code=this.formgroup.controls['dial_code'];
   }
@@ -100,30 +100,30 @@ export class RegisterPage {
   }
   
   goToPreviousSlide() {
-    this.slides.slidePrev(500,true);
+    //this.slides.slidePrev(500,true);
   }
  
   goToNextSlide(){
     //this.slides.direction="vertical";
    // this.slides.slideNext(500,true);
-   this.slides.lockSwipeToNext(false)
+  // this.slides.lockSwipeToNext(false)
 
-    this.slides.slideNext(500,false)
+   // this.slides.slideNext(500,false)
   }
   ionViewDidLoad() {
-    this.slides.enableKeyboardControl(false);
-    this.slides.nextButton=document.getElementById("nextButton");
-    this.id=this.slides.getActiveIndex();
-    this.slides.autoplay=false
-    this.slides.lockSwipeToNext(true)
-    this.slides.spaceBetween=16;
+    //this.slides.enableKeyboardControl(false);
+   // this.slides.nextButton=document.getElementById("nextButton");
+    //this.id=this.slides.getActiveIndex();
+   // this.slides.autoplay=false
+   // this.slides.lockSwipeToNext(true)
+    //this.slides.spaceBetween=16;
     //this.slides.effect="coverflow";
   }
   slideChanged(){
-    this.id=this.slides.getActiveIndex();
+    //this.id=this.slides.getActiveIndex();
     console.log(this.id);
     if(this.id=1){
-      this.slides.lockSwipeToNext(true)
+      //this.slides.lockSwipeToNext(true)
 
     }
     
@@ -136,13 +136,12 @@ export class RegisterPage {
       email:this.email.value,
       nom:this.nom.value,
       Prenom:this.Prenom.value,
-      Region:this.Region.value,
+      //Region:this.Region.value,
       Telephone:this.Telephone.value,
-      Departement:this.Departement.value,
-      DateNaissance:this.DateNaissance.value,
+      //Departement:this.Departement.value,
+      //DateNaissance:this.DateNaissance.value,
       Ville:this.Ville.value,
-
-
+      Pays: this.country.name
 
     }
     

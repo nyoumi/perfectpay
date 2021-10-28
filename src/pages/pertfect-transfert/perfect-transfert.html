@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Transfert perfectPay</ion-title>
+    <ion-title>Transfert d'argent</ion-title>
     <div class="frontImage"> 
 
     </div>
@@ -15,7 +15,7 @@
     <form   [formGroup]="formgroup">
       <div class="form-content">
       <div  text-center >
-        <h6>Transfert vers compte PerfectPay </h6>
+        <h6>Transfert d'argent </h6>
       </div>
       <ion-list>
   
@@ -37,6 +37,12 @@
         <div  text-center >
           <h6>Destinataire </h6>
         </div>
+        <ion-item class="form-item">
+          <ion-select [(ngModel)]="operateur"  multiple="false" [ngModelOptions]="{standalone: true}" > 
+            <ion-option *ngFor="let operateur of operateurs" [selected]="true" >{{operateur}}</ion-option> 
+          </ion-select>
+        </ion-item>
+
 
         <ion-item class="form-item">
           <ion-input class="text-input" formControlName="account" type="text" autocorrect="off" autocapitalize="none" name="account" placeholder="numéro de téléphone"></ion-input>
@@ -47,7 +53,7 @@
     </form>
       
   <div  text-center>
-    <button ion-button  block class="login-button" [disabled]="!formgroup.valid" (tap)="checkTransfert()">Transferer</button>
+    <button ion-button  block class="login-button" [disabled]="!formgroup.valid" (tap)="launchcheck()">Transferer</button>
 
   </div>
  

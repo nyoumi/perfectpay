@@ -12,6 +12,7 @@ import { HistoryPage } from '../pages/history/history';
 import { ExchangeRatePage } from '../pages/exchange-rate/exchange-rate';
 import { FormBuilder } from '@angular/forms';
 import { PayementService } from '../services/payement.service';
+import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
 
 
 
@@ -41,9 +42,17 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
+<<<<<<< HEAD
       { title: 'home', component: HomePage },
       { title: 'transfert', component: PerfectTransfertPage },
       { title: "paiement", component: PerfectPaymentPage, },
+=======
+      { title: 'Historique', component: HistoryPage },
+      { title: 'Transfert', component: PerfectTransfertPage },
+      { title: "Paiement Marchand", component: PerfectPaymentPage, },
+      { title: "Nouveau Retrait", component:  PerfectRetraitPage },
+
+>>>>>>> master
 /*       { title: "Taux de change", component: ExchangeRatePage },
  */
 
@@ -57,7 +66,8 @@ export class MyApp {
    
    this.services.daoGetUser().then(infos=>{
      console.log(infos)
-     this.user=infos; });   
+     this.user=infos; 
+    });   
      this.services.daoGetHaveUsed().then(infos=>{
        console.log(infos)
       this.secretStatus=infos; }); 
@@ -211,9 +221,7 @@ export class MyApp {
 
     toast.present();
   }
-  verifySecret(){
-
-  }
+  
     showHelp(){
     let alert = this.alerCtrl.create();
     alert.setTitle("Contact");
@@ -224,7 +232,118 @@ export class MyApp {
 
 
   }
+  ddd(){
+    let alert = this.alerCtrl.create();
+    alert.setTitle("Partenaires");
+    alert.setSubTitle("Voulez-vous être partenaire?")
+    alert.setMessage("Contactez-nous par Tel: (Std) +237 (2) 33 52 00 02 / +237 (2) 33 52 00 03 <br>Email: info@kakotel.com")
+    alert.setMode("ios")
+    alert.present()
+  }
+  achatServices(){
+    let alert = this.alerCtrl.create();
+    alert.setTitle("Achat de produits et services");
+    alert.setSubTitle("Bientôt disponible dans votre aplication")
+    alert.setMessage("Contactez-nous par Tel: (Std) +237 (2) 33 52 00 02 / +237 (2) 33 52 00 03 <br>Email: info@kakotel.com")
+    alert.setMode("ios")
+    alert.present()
+  }
+  showPersonnalInfos(){
+    /**
+     * refresh user datas
+     */
+    this.services.daoGetUser().then(infos=>{
+      console.log(infos)
+      this.user=infos[0]; 
+      let alert = this.alerCtrl.create();
+      alert.setTitle("Mon Compte");
+      alert.setSubTitle("Informations personnelles")
+      alert.setMessage("Nom: "+this.user.Nom +"<br>"+"Telephone: "+this.user.Telephone+"<br>"+" "+this.user.Prenom+"<br>Adresse Email: "+this.user.Email)
+      alert.setMode("ios")
+      alert.present()
+      console.log(JSON.stringify(this.user, null, 4))
+     }); 
+  
 
+
+  }
+  showOngoingRetrait(){
+    let loading = this.loadingController.create({ content: "chargement..."});
+    loading.present();
+    this.services.daoGetUser().then(infos=>{
+      loading.dismiss();
+     
+      this.user=infos[0]; 
+      this.services.checkRetraitValidation(this.user.Telephone).then((response:any)=>{
+        let alert = this.alerCtrl.create();
+        alert.setTitle("Retrait en cours");
+        alert.setSubTitle("Validation de retrait")
+        alert.setMessage(response.msg)
+        alert.setMode("ios")
+        alert.present()
+        
+        if(response.succes==1){
+          alert.addInput({
+            type:'password',
+            name:'secret_code',
+            placeholder:"Veuillez entrer votre code secret"
+          });
+          alert.addButton("Annuler")
+
+          alert.addButton({
+            text:'Valider',
+            handler:data=>{
+              if(!data.secret_code) return
+              let loading = this.loadingController.create({ content: "chargement..."});
+              loading.present();
+                 this.services.makeRetraitValidation(this.user.Telephone,data.secret_code,response.IdTransaction ).then((response:any)=>{
+                  loading.dismiss();
+                  let alert = this.alerCtrl.create();
+            
+                  switch (response.succes) {
+                    case 1:
+            
+                      alert.setTitle("Opération effectuée avec succès" );
+                      alert.setMode("ios");
+                      alert.setMessage(response.msg);
+                      
+                  
+                      break;
+            
+                    default:
+                      
+                      alert.setTitle("Echec de l'opération" );
+                      alert.setMode("ios");
+                      alert.setMessage(response.msg);
+                      break;
+                  }
+                  alert.addButton("OK")
+                  alert.present();
+
+                })
+              
+
+            }
+      
+          });
+        }else{
+          alert.addButton("OK")
+
+
+        }
+ 
+       }); 
+      
+     
+     }); 
+    /**
+     * refresh user datas
+     */
+ 
+
+
+
+  }
   changeSecret(){
     let alert = this.alerCtrl.create({
       mode:"ios",

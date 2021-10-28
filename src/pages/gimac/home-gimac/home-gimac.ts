@@ -1,55 +1,38 @@
 import { Component } from '@angular/core';
-import { Services } from '../../services/services';
 import { FormBuilder } from '@angular/forms';
 import { AlertController, LoadingController, MenuController, NavController, ToastController } from 'ionic-angular';
-import { PerfectTransfertPage } from '../pertfect-transfert/perfect-transfert';
-import { PerfectPaymentPage } from '../pertfect-payment/perfect-payment';
-import { PayementService } from '../../services/payement.service';
-import { HistoryPage } from '../history/history';
-import { LoginPage } from '../login/login';
-import { HomeGimacPage } from '../gimac/home-gimac/home-gimac';
-
+import { GimacTransfertPage } from '../gimac-transfert/gimac-transfert';
+import { GimacPaymentPage } from '../gimac-payment/gimac-payment';
+import { HistoryPage } from '../gimac-history/gimac-history';
+import { GimacPayementService } from '../gimac-services/gimac-payement.service';
+import { GimacServices } from '../gimac-services/gimac-services';
+import { LoginPage } from '../../login/login';
+import { GimacVoucherPage } from '../gimac-voucher/gimac-voucher';
 
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-home-gimac',
+  templateUrl: 'home-gimac.html'
 })
-export class HomePage {
+export class HomeGimacPage {
   private user: any;
   private testRadioOpen;
   private testRadioResult;
-  merchantServices: any[]=new Array();
-  defautltService: undefined;
 
   constructor(public navCtrl: NavController,public menuCtrl: MenuController,
     public alerCtrl: AlertController,
     public formbuilder: FormBuilder,
-    public services: Services, 
+    public services: GimacServices, 
     private toastCtrl: ToastController,
-    private payementService:PayementService,
+    private payementService:GimacPayementService,
     public loadingController: LoadingController) {
     this.services.daoGetUser().then(user=>{
       this.user=user;
       console.log(user)
-      this.services.getMerchantServices(this.user[0].Indexe).then((res:any)=>{
-        if(typeof res === 'string'){
-          console.log(res)
-          res=this.setCharAt(res,res.length-3,"")
-          res=JSON.parse(res)
-        }
-        if(res.succes=1){
-          this.merchantServices=res.resultat
-          this.services.daoSetMerchantServices(this.merchantServices);
-  
-        }
-        
-        console.log(res)
-      })
     })
     this.services.daoGetStatus().then(status=>{
       if(status!=true){
-        //this.navCtrl.setRoot(LoginPage)
+        this.navCtrl.setRoot(LoginPage)
       }
 
      });
@@ -57,90 +40,14 @@ export class HomePage {
 
   }
 
-    setCharAt(str,index,chr) {
-    if(index > str.length-1) return str;
-    return str.substring(0,index) + chr + str.substring(index+1);
-}
-  getSolde(){
-    let alert = this.alerCtrl.create({
-      mode:"ios",
-      title: 'Authentification',
-      message: 'Veuillez entrer votre code secret pour continuer',
-      inputs: [
-        {
-          name: 'secret_code',
-          placeholder: '123456',
-          type:"password"
-        }
-      ],
-      buttons: [
-        {
-          text: 'Annuler',
-          role: 'cancel',
-          
-        },
-        {
-          text: 'Valider',
-          handler: data => {
-            if(!data.secret_code) return
-            let loading = this.loadingController.create({ content: "chargement..."});
-            loading.present();
-            console.log(data.secret_code)
-            this.services.getSoldeClient(this.user[0].Indexe,data.secret_code).then((solde:any)=>{
-              loading.dismiss();
-              if(solde.succes==-1){
-                let alert = this.alerCtrl.create();
-                alert.setTitle("Erreur d'authentifcation" );
-                alert.setMode("ios");
-                alert.setMessage("le code secret que vous avez saisi est incorrect");
-                alert.addButton("OK")
-                alert.present();
-                alert.setMode("ios")
-                return ;
-              }
-                if(solde.succes==1){
-                  let alert = this.alerCtrl.create();
-                  alert.setTitle("Solde Actuel" );
-                  alert.setMode("ios");
-                  alert.setMessage(solde.resultat[0].Solde+ " FCFA");
-                  alert.addButton("OK")
-                  alert.present();
-                  alert.setMode("ios")
-
-                  return ;
-                }else{
-                let alert = this.alerCtrl.create();
-                alert.setTitle("Erreur de vérification" );
-                alert.setMode("ios");
-                alert.setMessage("Erreur de verification veuillez réessayer plus tard");
-                alert.addButton("OK")
-                alert.present();
-                alert.setMode("ios")
-
-                return; 
-              }
-
-
-            })
-          }
-        }
-      ]
-    });
-
-    
-    alert.present();
-    alert.setMode("ios")
-
-    
-  }
   gotoTransfert(){
-    this.navCtrl.push(PerfectTransfertPage)
+    this.navCtrl.push(GimacTransfertPage)
   }
   gotoPayment(){
-    this.navCtrl.push(PerfectPaymentPage)
+    this.navCtrl.push(GimacPaymentPage)
   }
-  getHistory(){
-    this.navCtrl.push(HistoryPage)
+  gotoVoucher(){
+    this.navCtrl.push(GimacVoucherPage)
 
 
   }
@@ -150,7 +57,7 @@ export class HomePage {
   doRadio(datatype) {
     let alert = this.alerCtrl.create();
     alert.setTitle("Moyen de paiement");
-    alert.setSubTitle("Choisir le moyen de paiement du client")
+    alert.setSubTitle("Choisir un moyen de paiement pour recharger votre compte")
     alert.setMode("ios")
 
 
@@ -159,8 +66,8 @@ export class HomePage {
 
     alert.addInput({
       type: 'radio',
-      label: 'PerfectPay',
-      value: 'perfectpayPayment'
+      label: 'Paypal',
+      value: 'paypalPayment'
     });
     alert.addInput({
       type: 'radio', 
@@ -176,11 +83,6 @@ export class HomePage {
       type: 'radio',
       label: 'Orange money (web)',
       value: 'omCredit'
-    });
-    alert.addInput({
-      type: 'radio',
-      label: 'Paypal',
-      value: 'paypalPayment'
     });
 
     alert.addButton("Annuler");
@@ -214,12 +116,7 @@ export class HomePage {
           //this.payementService.makeOMPayment(datas,datatype);
           this.enterAmountByMobileMoney(data,datatype);
         }
-        if (data == "perfectpayPayment") {
-          //this.makeOMpayment();
-          //this.makeOMPayment(datas,datatype);
-          //this.payementService.makeOMPayment(datas,datatype);
-          this.enterAmountByMobileMoney(data,datatype);
-        }
+        
       }
     });
     alert.present().then(() => {
@@ -227,49 +124,55 @@ export class HomePage {
     });
   }
 
+
  
-  selectService() {
+  makeBanking() {
     let alert = this.alerCtrl.create();
-    if(this.merchantServices.length>1){
-      
-      alert.present().then(() => {
-       // this.testRadioOpen = true;
-      });
-    }else{
-      this.defautltService=this.merchantServices[0]
-      this.navCtrl.push(HistoryPage,{data: this.defautltService})
-    }
-   
-    alert.setTitle("service");
-    alert.setSubTitle("Choisir le service à consulter")
+    alert.setTitle("Opération");
+    alert.setSubTitle("Quelle opération souhaitez-vous effectuer?")
     alert.setMode("ios")
-    for (let index = 0; index < this.merchantServices.length; index++) {
-      const element =  this.merchantServices[index];
-      alert.addInput({
-        type: 'radio',
-        label: element.NomService,
-        value: element
-      });
-
-    }
 
 
 
  
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Transfert vers une carte',
+      value: 'paypalPayment'
+    });
+    alert.addInput({
+      type: 'radio', 
+      label: 'transfert vers compte bancaire',
+      value: 'MTNCredit'
+    });
+    alert.addInput({
+      type: 'radio',
+      label: 'Transfert vers Orange Money',
+      value: 'omCredit'
+    });
+    alert.addInput({
+      type: 'radio',
+      label: 'Transfert vers Mobile Money',
+      value: 'omCredit'
+    });
 
     alert.addButton("Annuler");
     alert.addButton({
       text: 'Ok',
       handler: data => {
-        this.navCtrl.push(HistoryPage,{data:data})
-
+        let alert = this.alerCtrl.create();
+        alert.setTitle("Coming soon!");
+        alert.setSubTitle("Bientôt disponible")
+        alert.setMessage("Cette fonctionnalité sera bientôt disponible")
+        alert.setMode("ios")
+        alert.present()
+  
       }
     });
-
-  }
- 
-  makeBanking() {
-    this.navCtrl.push(HomeGimacPage)
+    alert.present().then(() => {
+      this.testRadioOpen = true;
+    });
   }
  /*  payMethod() { 
     let alert = this.alerCtrl.create();
@@ -472,26 +375,12 @@ export class HomePage {
     console.log("+++++++++++++++++++++++")
     this.services.daoGetUser().then(user=>{
       this.user=user;
-      if(this.user)
-      this.services.checkSecret(this.user[0].Indexe).then((result:any)=>{
-        console.log(result)
-        if (result.succes==1) {
-          this.createSecret()
-        } else {
-          if(result.succes==-1 || result.succes==0){
-            this.services.disconnect()
-            this.navCtrl.setRoot(LoginPage)
-          }
-          if (result.succes==2) {
-           this.services.daoSetHaveUsed(true)
-          }
-        }
-      })
+
     })
 
 
   }
-  showHelp(){
+  getHistorique(){
     let alert = this.alerCtrl.create();
     alert.setTitle("Contact");
     alert.setSubTitle("Besoin d'aide?")
@@ -501,68 +390,5 @@ export class HomePage {
 
 
   }
-  createSecret(){
-    let alert = this.alerCtrl.create({
-
-      enableBackdropDismiss:false
-    });
-    alert.setTitle("Code secret");
-    alert.setSubTitle("Veuillez définir votre code secret")
-    alert.setMessage("votre code secret vous permet de sécuriser vos opération PerfectPay. Vous devez donc le conserver de manière confidentielle!")
-    alert.setMode("ios")
-
-
-    alert.addInput({
-      type:'password',
-      name:'secret',
-      placeholder:"123456"
-    });
-    alert.addInput({
-      type:'password',
-      name:'secretConfirm',
-      placeholder:"123456"
-    });
-    alert.addButton({
-      text:'ok',
-      handler:datas=>{
-        let codeClient=this.user[0].Indexe;
-        if(!datas.secret){
-          this.createSecret()
-          this.showErrorToast("Veuillez saisir Votre code secret");
-          return ;
-        }
-        if(datas.secret != datas.secretConfirm ){
-          this.showErrorToast("Les codes que vous avez saisi ne sont pas identiques");
-          this.createSecret()
-          return;
-        }
-        
-    this.services.createSecret(codeClient,datas.secret).then((result:any)=>{
-      if (result.succes==1) {
-        let alert2= this.alerCtrl.create();
-        alert2.setTitle("Succès de l'opération");
-        alert2.setSubTitle("Code secret Enregistré avec succès")
-        alert2.setMessage("Ce code secret vous sera demandé lors de vos opérations PerfectPay. ")
-        alert2.setMode("ios")
-        alert2.present()
-    
-      } else {
-        let alert2= this.alerCtrl.create();
-        alert2.setTitle("Echec de l'enregistrement");
-        alert2.setSubTitle("Code secret non définit!")
-        alert2.setMessage("Une erreur s'est produite lors de l'enregistrement de votre code secret ")
-        alert2.setMode("ios")
-        alert2.present()
-      }
-    })
-
-      
-      }
-
-    });
-    alert.present()
-  
-
-
-  }
+ 
 }

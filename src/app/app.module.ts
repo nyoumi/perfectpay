@@ -15,6 +15,7 @@ import { PerfectPaymentPage } from '../pages/pertfect-payment/perfect-payment'
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+
 import { Services } from '../services/services';
 import { ParametreService } from '../services/parametre.service';
 import { HTTP } from '@ionic-native/http';
@@ -22,23 +23,15 @@ import { HTTP } from '@ionic-native/http';
 import { HttpModule } from '@angular/http';
 
 import { Stripe } from '@ionic-native/stripe';
-
-///////
-  
- 
 import { PayementService } from '../services/payement.service';
 
 import { PayPal } from '@ionic-native/paypal';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
 
-
-/**
- * import de carlos
- */
-
-
-
-
+import { GimacModule } from '../pages/gimac/gimac.module';
+import { NgxQRCodeModule } from "ngx-qrcode2";
+import { QRScanner } from '@ionic-native/qr-scanner'; 
 @NgModule({
   declarations: [
     MyApp,
@@ -46,15 +39,21 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     HistoryPage,
     LoginPage,
     RegisterPage,
-    PerfectTransfertPage ,
+    PerfectTransfertPage ,  
     ExchangeRatePage,
-    PerfectPaymentPage
+    PerfectPaymentPage,
+    PerfectRetraitPage,
+
 
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
+    GimacModule,
+    NgxQRCodeModule
+    
+
 
   ],
   bootstrap: [IonicApp],
@@ -65,8 +64,10 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     RegisterPage,
     PerfectTransfertPage,
     PerfectPaymentPage ,
+    PerfectRetraitPage,
     ExchangeRatePage,
-    HistoryPage
+    HistoryPage,
+
 
   ],
   providers: [
@@ -79,8 +80,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     Services,
     ParametreService,
     PayementService,
-    InAppBrowser
-
+    InAppBrowser,
+    QRScanner
+    
   ]
 })
 export class AppModule {}

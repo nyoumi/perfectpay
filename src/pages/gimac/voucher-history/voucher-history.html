@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Historique encaissements</ion-title>
+    <ion-title>Mes Vouchers</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -19,14 +19,30 @@
                 montant
               </ion-col>           
                <ion-col>
-                Id Transaction
+                code voucher
               </ion-col>
                 <ion-col>
-                  Transaction
+                  etat
               </ion-col>
           </ion-row>
 
- 
+          <ion-row  class="entry" (tap)="showEntry(voucher)">
+            <ion-col>
+              {{ voucher.DateTransaction}} {{ voucher.HeureTransaction}} 
+            </ion-col>
+            <ion-col>
+              {{ voucher.Montant}} FCFA
+
+            </ion-col>
+            <ion-col>
+              {{ voucher.IDTransaction}}  
+
+            </ion-col>
+            <ion-col>
+              {{ voucher.Libelle}}
+
+            </ion-col>
+          </ion-row>
           <ion-row *ngFor="let entry of history" class="entry" (tap)="showEntry(entry)">
             <ion-col>
               {{ entry.DateTransaction}} {{ entry.HeureTransaction}} 

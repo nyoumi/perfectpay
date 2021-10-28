@@ -1,4 +1,4 @@
-page-perfect-transfert {
+page-perfect-retrait {
     .scroll-content {
         background: #ffe4c400;
     }
@@ -6,7 +6,7 @@ page-perfect-transfert {
         background: #f0f8ff05;
     }
     .ion-page {
-        background: blue;
+        background: rgba(237, 237, 240, 0);
         font-family: CaviarDreams;
         
     }
@@ -16,6 +16,15 @@ page-perfect-transfert {
         background-size: cover;
         background-repeat: no-repeat;
         
+    }
+    .frontImage {
+        color: #fff;
+        background-image: url(../assets/imgs/perfectpay.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 30%;
+        margin-left: 10%;
     }
     .content-ios {
         color: #fff;
@@ -131,6 +140,9 @@ ion-img.appImage.img-loaded {
     margin-bottom: 16px;
     height: 30px;
 }
+.header-img{
+    max-width: 40%;
+}
 
 .toolbar-title-md {
     padding: 0 12px;
@@ -162,38 +174,6 @@ ion-img.appImage.img-loaded {
     -webkit-box-shadow:unset;
     box-shadow: white;
 }
-.message-error-text{   
+.message-error-text{
     color: #e8aaad;}
-    .header-img{
-        max-width: 40%;
-    }
-    .frontImage {
-        color: #fff;
-        background-image: url(../assets/imgs/perfectpay.png);
-        background-size: contain;
-        background-repeat: no-repeat;
-        height: 100%;
-        width: 30%;
-        margin-left: 10%;
-    }
-
-    ion-select.select {
-        width: 100%;
-        max-width: 100%;
-        padding-left: 0;
-        padding-right: 0;
-        color: white;
-        
-    }
-    .select.select-icon {
-
-        margin-right: 2px;
-    }
-    ion-select {
-        .select-icon {
-          .select-icon-inner {
-             color : white !important;
-          }
-        }
-      }
 }

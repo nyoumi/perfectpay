@@ -1,22 +1,20 @@
 import { Component } from '@angular/core';
-import { AlertController, LoadingController, NavController, NavParams } from 'ionic-angular';
+import { AlertController, LoadingController, NavController } from 'ionic-angular';
 import { FormBuilder} from '@angular/forms';
-import { LoginPage } from '../login/login';
-import { Services } from '../../services/services';
+import { GimacServices } from '../gimac-services/gimac-services';
+import { LoginPage } from '../../login/login';
 
 
 @Component({
-  selector: 'page-history',
-  templateUrl: 'history.html'
+  selector: 'page-gimac-history',
+  templateUrl: 'gimac-history.html'
 })
 export class HistoryPage {
   private user:any;
   history: any=[];
-  
-  merchantService: any;
   constructor(public navCtrl: NavController,
     public alerCtrl: AlertController,
-    public formbuilder: FormBuilder,public services: Services, private params: NavParams,
+    public formbuilder: FormBuilder,public services: GimacServices, 
     public loadingController: LoadingController) {
       this.services.daoGetStatus().then(status=>{
         if(status!=true){
@@ -26,13 +24,11 @@ export class HistoryPage {
        });
       let loading = this.loadingController.create({ content: "Chargement de l'historique"});
       loading.present();
-      this.merchantService=this.params.get('data');
-      console.log("service" + this.params.get('data'));
+
       this.services.daoGetUser().then(user=>{
         this.user=user;
-        this.services.getHistory(this.user[0].Indexe,this.merchantService.CodeService).then((res:any)=>{
+        this.services.getHistory(this.user[0].Indexe).then((res:any)=>{
           loading.dismiss()
-  
           if(res.succes=1){
             this.history=res.resultat
     
@@ -46,8 +42,6 @@ export class HistoryPage {
 
  
   }
-
-
   showEntry(entry){
     let alert = this.alerCtrl.create();
     alert.setTitle("Détails de l'opération");

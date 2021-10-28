@@ -8,11 +8,8 @@ import { PerfectTransfertPage } from '../pages/pertfect-transfert/perfect-transf
 import { LoginPage } from '../pages/login/login';
 import { PerfectPaymentPage } from '../pages/pertfect-payment/perfect-payment';
 import { Services } from '../services/services'; 
-import { HistoryPage } from '../pages/history/history';
-import { ExchangeRatePage } from '../pages/exchange-rate/exchange-rate';
 import { FormBuilder } from '@angular/forms';
 import { PayementService } from '../services/payement.service';
-import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
 
 
 
@@ -35,7 +32,6 @@ export class MyApp {
     public formbuilder: FormBuilder,
     public services: Services, 
     private toastCtrl: ToastController,
-    private payementService:PayementService,
     public loadingController: LoadingController,
      public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();

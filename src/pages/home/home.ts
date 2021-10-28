@@ -32,6 +32,7 @@ export class HomePage {
     this.services.daoGetUser().then(user=>{
       this.user=user;
       console.log(user)
+      if(user)
       this.services.getMerchantServices(this.user[0].Indexe).then((res:any)=>{
         if(typeof res === 'string'){
           console.log(res)
@@ -49,7 +50,7 @@ export class HomePage {
     })
     this.services.daoGetStatus().then(status=>{
       if(status!=true){
-        //this.navCtrl.setRoot(LoginPage)
+        this.navCtrl.setRoot(LoginPage)
       }
 
      });

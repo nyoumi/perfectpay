@@ -22,7 +22,7 @@ import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any ;
   status:boolean;
   user:any;
 
@@ -42,17 +42,9 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-<<<<<<< HEAD
       { title: 'home', component: HomePage },
       { title: 'transfert', component: PerfectTransfertPage },
       { title: "paiement", component: PerfectPaymentPage, },
-=======
-      { title: 'Historique', component: HistoryPage },
-      { title: 'Transfert', component: PerfectTransfertPage },
-      { title: "Paiement Marchand", component: PerfectPaymentPage, },
-      { title: "Nouveau Retrait", component:  PerfectRetraitPage },
-
->>>>>>> master
 /*       { title: "Taux de change", component: ExchangeRatePage },
  */
 

@@ -895,8 +895,8 @@ async daoGetUsability(): Promise<boolean> {
     return new Promise(resolve => {
       this.http.get("http://" + environment.smsServer + "/rest/api/getAndroidMinVersion")
         .subscribe(data => {
-          //console.log(data.json()); 
-          resolve(data.json());
+          console.log(data); 
+          resolve(data);
         }, err => {
           //console.log("Error"); 
           resolve("Error");

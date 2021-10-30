@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Paiement marchand</ion-title>
+    <div class="frontImage"> 
+
+    </div>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div  text-center>
+   <label for="">Montant: </label> <span> {{ amount }} Fcfa</span> 
+
+  </div>
+  <div style="text-align: center;">
+    <qrcode [qrdata]=qrdata [size]="512" [level]="M"></qrcode>
+
+  </div>
+
+  
+
+  <div  text-center>
+    <button ion-button   block class="login-button" color="success" ></button>
+
+  </div>
+ 
+
+
+</ion-content>  

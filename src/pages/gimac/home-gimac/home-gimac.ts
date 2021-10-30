@@ -8,6 +8,7 @@ import { GimacPayementService } from '../gimac-services/gimac-payement.service';
 import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
 import { GimacVoucherPage } from '../gimac-voucher/gimac-voucher';
+import { GimacQrcodePage } from '../gimac-qrcode/gimac-qrcode';
 
 
 @Component({
@@ -56,8 +57,8 @@ export class HomeGimacPage {
  
   doRadio(datatype) {
     let alert = this.alerCtrl.create();
-    alert.setTitle("Moyen de paiement");
-    alert.setSubTitle("Choisir un moyen de paiement pour recharger votre compte")
+    alert.setTitle("QR CODE");
+    alert.setSubTitle("Vous pouvez ajouter un montant à votre QR Code de manière optionnelle.")
     alert.setMode("ios")
 
 
@@ -65,60 +66,35 @@ export class HomeGimacPage {
  
 
     alert.addInput({
-      type: 'radio',
-      label: 'Paypal',
-      value: 'paypalPayment'
-    });
-    alert.addInput({
-      type: 'radio', 
-      label: 'MTN mobile money',
-      value: 'MTNCredit'
-    });
-    alert.addInput({
-      type: 'radio',
-      label: 'Orange money',
-      value: 'omCreditUssd'
-    });
-    alert.addInput({
-      type: 'radio',
-      label: 'Orange money (web)',
-      value: 'omCredit'
+      type: 'number',
+      label: 'montant en FCFA',
+      value: '',
+      min:50,
+      placeholder:'montant en FCFA',
+      name:"montant"
     });
 
-    alert.addButton("Annuler");
+    alert.addButton("Sans montant");
     alert.addButton({
-      text: 'Ok',
+      text: 'Générer',
       handler: data => {
-       // console.log('Radio data:', data);
-       if (data == "stripeCredit") {
-        //this.navCtrl.push(StripePayment,{
-         // param:datas.lemontant
-        //});
-        this.enterAmountByCard(data,datatype);
-      }
-        this.testRadioOpen = false;
-        this.testRadioResult = data;
-        if (data == "paypalPayment") {
-          //this.payementService.makepaypalpayment(datatype);
-          //this.makepaypalpayment(datas,datatype);
-          this.enterAmountByCard(data,datatype);
-        }
+        console.log( data);
 
-        if (data == "MTNCredit") {
-          //this.makemtnpayment(datas);
-          //this.payementService.makemtnpayment(datas);
-          this.enterAmountByMobileMoney(data,datatype);
-        }
-
-        if (data == "omCredit" || data=="omCreditUssd") {
-          //this.makeOMpayment();
-          //this.makeOMPayment(datas,datatype);
-          //this.payementService.makeOMPayment(datas,datatype);
-          this.enterAmountByMobileMoney(data,datatype);
-        }
+    
         
       }
     });
+    alert.onWillDismiss(data =>{
+      console.log(this.user[0].Telephone)
+      data.Telephone=this.user[0].Telephone;
+      data.CodeClient=this.user[0].CodeClient;
+
+
+      this.navCtrl.push(GimacQrcodePage,{"data":data})
+
+      
+      console.log(data)
+    })
     alert.present().then(() => {
       this.testRadioOpen = true;
     });

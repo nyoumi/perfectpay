@@ -38,6 +38,12 @@ private scanSub;
     this.qrScanner.hide();
   }
   scanCode(){
+    try {
+      this.qrScanner.show()
+    } catch (error) {
+      console.log(error)
+    }
+
     this.qrScanner.prepare()
     .then((status: QRScannerStatus) => {
        if (status.authorized) {
@@ -45,12 +51,13 @@ private scanSub;
    
   
          // start scanning
+         this.qrScanner.show()
          this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
-          let element= document.getElementById("cordova-plugin-qrscanner-video-preview");
-          element.style.zIndex="10000";
-          console.log( element.style.zIndex)
+          //let element= document.getElementById("cordova-plugin-qrscanner-video-preview");
+          //element.style.zIndex="10000";
+          //console.log( element.style.zIndex)
            console.log('Scanned something', text);
-           element.style.zIndex="-100";
+          // element.style.zIndex="-100";
   
            this.qrScanner.hide(); // hide camera preview
            this.scanSub.unsubscribe(); // stop scanning
@@ -88,5 +95,6 @@ private scanSub;
       });
       alert.present()
     } 
+
     )}
 }

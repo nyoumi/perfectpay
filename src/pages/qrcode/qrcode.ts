@@ -26,6 +26,7 @@ private qrdata: string;
       //this.qrdata=this.navParams.get("data");
       const datas=this.navParams.get("data");
       this.amount=datas.amount
+      this.telephone=datas.amount
       
       this.qrdata=JSON.stringify(datas)
       console.log(this.qrdata)

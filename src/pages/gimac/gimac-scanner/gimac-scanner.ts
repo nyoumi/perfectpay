@@ -14,6 +14,7 @@ export class GimacScannerPage {
   private message="";
   transferInfo: any;
 private scanSub;
+  camera: Boolean=true;
 
 
 
@@ -35,7 +36,15 @@ private scanSub;
  
   cancel(){
     this.scanSub.unsubscribe();
+
     this.qrScanner.hide();
+    this.qrScanner.destroy()
+
+    this.navCtrl.pop()
+  }
+  switch(){
+    this.camera?this.qrScanner.useFrontCamera():this.qrScanner.useBackCamera();
+    this.camera=!this.camera;
   }
   scanCode(){
     try {
@@ -52,13 +61,15 @@ private scanSub;
   
          // start scanning
          this.qrScanner.show()
+         let appRoot=document.getElementsByClassName("app-root")[0] as HTMLElement;
+         appRoot.style.background="transparent"
          this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
           //let element= document.getElementById("cordova-plugin-qrscanner-video-preview");
           //element.style.zIndex="10000";
           //console.log( element.style.zIndex)
            console.log('Scanned something', text);
           // element.style.zIndex="-100";
-  
+          appRoot.style.background="#FFF"
            this.qrScanner.hide(); // hide camera preview
            this.scanSub.unsubscribe(); // stop scanning
            let alert = this.alerCtrl.create({

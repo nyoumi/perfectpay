@@ -4,10 +4,10 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { QRCodeModule } from 'angularx-qrcode';
 @Component({
-  selector: 'page-gimac-qrcode', 
-  templateUrl: 'gimac-qrcode.html'
+  selector: 'page-qrcode', 
+  templateUrl: 'qrcode.html'
 })
-export class GimacQrcodePage {
+export class QrcodePage {
 
   private message="";
   transferInfo: any;

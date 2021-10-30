@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { AlertController, LoadingController, MenuController, NavController, ToastController } from 'ionic-angular';
 import { GimacTransfertPage } from '../gimac-transfert/gimac-transfert';
 import { GimacPaymentPage } from '../gimac-payment/gimac-payment';
-import { HistoryPage } from '../gimac-history/gimac-history';
+import { GimacHistoryPage } from '../gimac-history/gimac-history';
 import { GimacPayementService } from '../gimac-services/gimac-payement.service';
 import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';

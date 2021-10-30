@@ -9,7 +9,6 @@ import { HistoryPage } from '../pages/history/history';
 import { LoginPage } from '../pages/login/login';
 
 import { RegisterPage } from '../pages/register/register';
-import { ExchangeRatePage } from '../pages/exchange-rate/exchange-rate';
 import { PerfectTransfertPage } from '../pages/pertfect-transfert/perfect-transfert';
 import { PerfectPaymentPage } from '../pages/pertfect-payment/perfect-payment'
 import { StatusBar } from '@ionic-native/status-bar';
@@ -31,7 +30,10 @@ import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
 
 import { GimacModule } from '../pages/gimac/gimac.module';
 import { NgxQRCodeModule } from "ngx-qrcode2";
-import { QRScanner } from '@ionic-native/qr-scanner'; 
+import { QRScanner } from '@ionic-native/qr-scanner';
+import { QRCodeModule } from 'angularx-qrcode';
+import { QrcodePage } from '../pages/qrcode/qrcode';
+import { SocialSharing } from '@ionic-native/social-sharing';
 @NgModule({
   declarations: [
     MyApp,
@@ -40,9 +42,9 @@ import { QRScanner } from '@ionic-native/qr-scanner';
     LoginPage,
     RegisterPage,
     PerfectTransfertPage ,  
-    ExchangeRatePage,
     PerfectPaymentPage,
     PerfectRetraitPage,
+    QrcodePage
 
 
   ],
@@ -51,7 +53,8 @@ import { QRScanner } from '@ionic-native/qr-scanner';
     IonicModule.forRoot(MyApp),
     HttpModule,
     GimacModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
+    QRCodeModule
     
 
 
@@ -65,13 +68,12 @@ import { QRScanner } from '@ionic-native/qr-scanner';
     PerfectTransfertPage,
     PerfectPaymentPage ,
     PerfectRetraitPage,
-    ExchangeRatePage,
     HistoryPage,
-
+    QrcodePage
 
   ],
   providers: [
-    StatusBar,
+    StatusBar, 
     SplashScreen,
     PayPal,
     Stripe,
@@ -81,7 +83,8 @@ import { QRScanner } from '@ionic-native/qr-scanner';
     ParametreService,
     PayementService,
     InAppBrowser,
-    QRScanner
+    QRScanner,
+    SocialSharing
     
   ]
 })

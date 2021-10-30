@@ -9,7 +9,7 @@ import { LoginPage } from '../../login/login';
   selector: 'page-gimac-history',
   templateUrl: 'gimac-history.html'
 })
-export class HistoryPage {
+export class GimacHistoryPage {
   private user:any;
   history: any=[];
   constructor(public navCtrl: NavController,

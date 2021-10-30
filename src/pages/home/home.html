@@ -9,6 +9,12 @@
     <div class="frontImage"> 
 
     </div>
+    
+    <ion-buttons end>
+      <button ion-button icon-only (click)="getQrcode()">
+        <ion-icon name="qr-scanner"></ion-icon>
+      </button>
+    </ion-buttons>
     </ion-navbar>
 
 </ion-header>
@@ -54,7 +60,7 @@
          <button ion-button color="light" outline (tap)="gotoPayment()">
 
         <div><ion-icon name="custom-settings"></ion-icon></div>
-        Paiement Marchand
+        Paiement marchand
         
       </button>
     </ion-col>

@@ -8,6 +8,7 @@ import { PayementService } from '../../services/payement.service';
 import { HistoryPage } from '../history/history';
 import { LoginPage } from '../login/login';
 import { HomeGimacPage } from '../gimac/home-gimac/home-gimac';
+import { QrcodePage } from '../qrcode/qrcode';
 
 
 
@@ -197,7 +198,68 @@ export class HomePage {
   }
 
 
+  getQrcode() {
+    let alert = this.alerCtrl.create();
+    alert.setTitle("QR CODE");
+    alert.setSubTitle("Vous pouvez ajouter un montant à votre QR Code de manière optionnelle ou genérer votre code sans montant.")
+    alert.setMode("ios")
+
+
+
  
+
+    alert.addInput({
+      type: 'number',
+      label: 'montant en FCFA',
+      value: '',
+      min:50,
+      placeholder:'montant en FCFA',
+      name:"montant"
+    });
+
+    alert.addButton("Annuler");
+    alert.addButton({
+      text: 'Générer',
+      handler: data => {
+        let qrdata;
+        if( data.amount>0){
+          qrdata=
+            { amount:  data.amount,
+              telephone:this.user[0].Telephone,
+              codeClient:this.user[0].CodeClient
+    
+    
+            }
+          ;
+        }
+     
+        else{
+          qrdata=
+            { 
+              telephone:this.user[0].Telephone,
+              codeClient:this.user[0].CodeClient
+    
+            }
+          ;
+        }
+        console.log(this.user[0].Telephone)
+
+  
+  
+        this.navCtrl.push(QrcodePage,{"data":qrdata})
+  
+        
+        console.log(data)
+
+    
+        
+      }
+    });
+ 
+    alert.present().then(() => {
+      this.testRadioOpen = true;
+    });
+  }
   makeBanking() {
     this.navCtrl.push(HomeGimacPage)
   }

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 import * as localForage from "localforage";
 import { Http, Headers } from '@angular/http';
 import 'rxjs';
@@ -23,6 +23,7 @@ const  MINVERSION="MINVERSION";
 @Injectable()
 export class GimacServices {
 
+  scanner: EventEmitter<number> = new EventEmitter<number>();
 
  
   private http: any;
@@ -41,6 +42,10 @@ export class GimacServices {
       console.log(ACTUAL_VERSION_VALUE);
     });
   }
+
+scanned(data){
+  this.scanner.emit(data);
+}
  
 
   authentification(email, password) {

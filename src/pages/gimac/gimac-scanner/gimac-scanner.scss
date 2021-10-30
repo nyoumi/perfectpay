@@ -11,6 +11,15 @@ page-gimac-scanner {
         font-family: CaviarDreams;
         
     }
+    .cadre{
+        background-image: url('../../../assets/imgs/pngegg.PNG');
+    width: 100%;
+    height: 500px;
+    background-repeat: no-repeat;
+    margin-top: 100px;
+    text-align: center;
+    background-size: contain;
+    }
     .content-md {
         color: #fff;
         background: transparent;
@@ -76,8 +85,8 @@ page-gimac-scanner {
 }
 .scroll-content{
     padding-bottom: 0 !important;
-    padding-left: 40px !important;
-    padding-right: 40px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
 
 }
 .item-input ion-input{

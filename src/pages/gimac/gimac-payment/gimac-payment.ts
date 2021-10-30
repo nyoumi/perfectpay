@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 import { AlertController, LoadingController, NavController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { GimacServices } from '../gimac-services/gimac-services';
@@ -11,6 +11,9 @@ import { GimacScannerPage } from '../gimac-scanner/gimac-scanner';
   templateUrl: 'gimac-payment.html'
 })
 export class GimacPaymentPage {
+  @Input() open: EventEmitter<any> = new EventEmitter();
+
+
   formgroup: FormGroup; 
   private code_marchand: AbstractControl;
   private montant: AbstractControl;
@@ -24,6 +27,14 @@ export class GimacPaymentPage {
     public alerCtrl: AlertController,
     public formbuilder: FormBuilder,public services: GimacServices, 
     public loadingController: LoadingController) {
+      this.services.scanner.subscribe(datas => {
+        console.log(datas,"datas")
+        datas=JSON.parse(datas)
+        this.code_marchand.setValue(datas.codeClient)
+        this.montant.setValue(datas.amount)
+
+      });
+     
       this.services.daoGetStatus().then(status=>{
         if(status!=true){
           this.navCtrl.setRoot(LoginPage)    

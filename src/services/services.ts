@@ -14,7 +14,7 @@ const  VALUE_HAVE_USED=1;
 const  VALUE_FIRST_USE=0;
 
 const  ACTUAL_VERSION_VALUE=10;
-const  APP_LINK="http://play.google.com/store/apps/details?id=cm.iplans.call";
+const  APP_LINK="https://play.google.com/store/apps/details?id=cm.iplans.call";
 
    
 const  MINVERSION="MINVERSION";
@@ -461,6 +461,33 @@ disconnect() {
     }))); 
   }
   
+  daoAddNotifications(notification) {
+    
+    localForage.getItem('notifications', function (err, value:string) { 
+      let notifications:Array<any>;
+      if(value) {
+        notifications= JSON.parse(value)
+        notifications.push(notification)
+        
+      }else{
+        notifications= new Array();
+        notifications.push(notification)
+      }
+      localForage.setItem('notifications',notifications,function (err, value) {
+        if(err) return false;
+        
+      });
+      return true
+
+    })
+   
+  }  
+  daoGetNotifications() {
+    return new Promise((resolve :any, reject: any) => resolve(localForage.getItem('notifications', function (err, value) {  
+      
+    }))); 
+  }
+  
   daoSetJournal(journal) {
     localForage.setItem('journal',journal);
   }  
@@ -720,7 +747,7 @@ async daoGetUsability(): Promise<boolean> {
   sendCodeConfirmation(number) {
 
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/confirmNumber/" + number)
+      this.http.get("https://" + environment.smsServer + "/rest/api/confirmNumber/" + number)
         .subscribe(data => {
           //console.log(data._body); 
           resolve(data._body);
@@ -738,7 +765,7 @@ async daoGetUsability(): Promise<boolean> {
   getUser(number) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/getUser/" + number)
+      this.http.get("https://" + environment.smsServer + "/rest/api/getUser/" + number)
         .subscribe(data => {
           //console.log(data.json()); 
           resolve(data.json());
@@ -751,7 +778,7 @@ async daoGetUsability(): Promise<boolean> {
   getUserCredit(number) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/getServiceBalance/" + number)
+      this.http.get("https://" + environment.smsServer + "/rest/api/getServiceBalance/" + number)
         .subscribe(data => {
           //console.log(data.json()); 
           resolve(data.json());
@@ -764,7 +791,7 @@ async daoGetUsability(): Promise<boolean> {
   getUserCreditSms(number,password) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/checkSolde/" + number+"/"+password)
+      this.http.get("https://" + environment.smsServer + "/rest/api/checkSolde/" + number+"/"+password)
         .subscribe(data => {
           //console.log(data.json()); 
           resolve(data.json());
@@ -811,7 +838,7 @@ async daoGetUsability(): Promise<boolean> {
   editUser(nom, phoneNumber, newPhoneNumber, email, password) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/editUser/" + nom + "/" + phoneNumber + "/" + newPhoneNumber + "/" + email + "/" + password)
+      this.http.get("https://" + environment.smsServer + "/rest/api/editUser/" + nom + "/" + phoneNumber + "/" + newPhoneNumber + "/" + email + "/" + password)
         .subscribe(data => {
           console.log(data.json());
           resolve(data.json());
@@ -825,7 +852,7 @@ async daoGetUsability(): Promise<boolean> {
   createUser(nom, phoneNumber, email, password) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/createUser/" + nom + "/" + phoneNumber + "/" + email + "/" + password)
+      this.http.get("https://" + environment.smsServer + "/rest/api/createUser/" + nom + "/" + phoneNumber + "/" + email + "/" + password)
         .subscribe(data => {
           console.log(data.json());
           resolve(data.json());
@@ -839,7 +866,7 @@ async daoGetUsability(): Promise<boolean> {
   retrySMS(phoneNumber) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/sendSMSNexmo/" + phoneNumber)
+      this.http.get("https://" + environment.smsServer + "/rest/api/sendSMSNexmo/" + phoneNumber)
         .subscribe(data => { 
           resolve(data._body);
         }, err => {
@@ -852,7 +879,7 @@ async daoGetUsability(): Promise<boolean> {
   saveAndroidMinVersion() {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/getAndroidMinVersion")
+      this.http.get("https://" + environment.smsServer + "/rest/api/getAndroidMinVersion")
         .subscribe(data => {
           //console.log(data.json()); 
           resolve(data.json());

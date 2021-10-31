@@ -31,7 +31,7 @@ export class GimacPaymentPage {
         console.log(datas,"datas")
         datas=JSON.parse(datas)
         this.code_marchand.setValue(datas.codeClient)
-        this.montant.setValue(datas.amount)
+        this.montant.setValue(datas.montant)
 
       });
      

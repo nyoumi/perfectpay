@@ -21,6 +21,7 @@
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
     "@ionic-native/core": "4.20.0",
+    "@ionic-native/deeplinks": "^4.20.0",
     "@ionic-native/http": "^4.20.0",
     "@ionic-native/in-app-browser": "^4.20.0",
     "@ionic-native/paypal": "^4.20.0",
@@ -60,6 +61,7 @@
     "cordova-plugin-qrscanner": "^3.0.1",
     "cordova-plugin-x-socialsharing": "^6.0.3",
     "es6-promise-plugin": "^4.2.2",
+    "ionic-plugin-deeplinks": "^1.0.24",
     "typescript": "^2.6.2"
   },
   "description": "easy payment app",
@@ -80,7 +82,25 @@
       "cordova-plugin-qrscanner": {},
       "cordova-plugin-x-socialsharing": {},
       "cordova-plugin-androidx": {},
-      "cordova-plugin-androidx-adapter": {}
+      "cordova-plugin-androidx-adapter": {},
+      "ionic-plugin-deeplinks": {
+        "URL_SCHEME": "perfectpay",
+        "DEEPLINK_SCHEME": "https",
+        "DEEPLINK_HOST": "perfectpay.cm",
+        "ANDROID_PATH_PREFIX": "/",
+        "ANDROID_2_PATH_PREFIX": "/",
+        "ANDROID_3_PATH_PREFIX": "/",
+        "ANDROID_4_PATH_PREFIX": "/",
+        "ANDROID_5_PATH_PREFIX": "/",
+        "DEEPLINK_2_SCHEME": " ",
+        "DEEPLINK_2_HOST": " ",
+        "DEEPLINK_3_SCHEME": " ",
+        "DEEPLINK_3_HOST": " ",
+        "DEEPLINK_4_SCHEME": " ",
+        "DEEPLINK_4_HOST": " ",
+        "DEEPLINK_5_SCHEME": " ",
+        "DEEPLINK_5_HOST": " "
+      }
     },
     "platforms": [
       "browser",

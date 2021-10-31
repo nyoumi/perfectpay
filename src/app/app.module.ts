@@ -34,6 +34,8 @@ import { QRScanner } from '@ionic-native/qr-scanner';
 import { QRCodeModule } from 'angularx-qrcode';
 import { QrcodePage } from '../pages/qrcode/qrcode';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { Deeplinks } from '@ionic-native/deeplinks';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -84,7 +86,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     PayementService,
     InAppBrowser,
     QRScanner,
-    SocialSharing
+    SocialSharing,
+    Deeplinks
     
   ]
 })

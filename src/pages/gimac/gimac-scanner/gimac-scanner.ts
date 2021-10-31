@@ -82,16 +82,8 @@ private scanSub;
           appRoot.style.background="#FFF"
            this.qrScanner.hide(); // hide camera preview
            this.scanSub.unsubscribe(); // stop scanning
-           let alert = this.alerCtrl.create({
-            title: 'Qr code',
-            message: text,
+           this.navCtrl.pop()
            
-            
-          });
-          alert.present()
-          alert.onWillDismiss(data=>{
-            this.navCtrl.pop()
-          })
          });
   
        } else if (status.denied) {

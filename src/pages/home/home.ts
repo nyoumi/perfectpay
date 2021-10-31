@@ -20,6 +20,23 @@ export class HomePage {
   private user: any;
   private testRadioOpen;
   private testRadioResult;
+  private unread=0;
+  private notifications:Array<any>=[
+    {
+      "titre":"tranfert entrant",
+      "message": "vous evez reçu un montant de 5000Fcfa de 696844889 le 12/12/2021 à 15h. IDTransaction: re147d5d85c8f ",
+      "page":"HistoryPage",
+      "date":"18/12/2021 12:30",
+      "status":"unread"
+    },
+    {
+      "titre":"tranfert entrant",
+      "message": "vous evez reçu un montant de 5000Fcfa de 696844889 le 12/12/2021 à 15h. IDTransaction: re147d5d85c8f ",
+      "page":"HistoryPage",
+      "date":"18/12/2021 12:30"
+    }
+  ];
+  private showNotification;
 
   constructor(public navCtrl: NavController,public menuCtrl: MenuController,
     public alerCtrl: AlertController,
@@ -28,6 +45,23 @@ export class HomePage {
     private toastCtrl: ToastController,
     private payementService:PayementService,
     public loadingController: LoadingController) {
+      this.services.daoGetNotifications().then((notifications:any)=>{
+        if(notifications){
+          console.log(notifications.length)
+          this.notifications=notifications;
+
+        }
+        this.notifications.forEach(notifcation => {
+          if(notifcation.status=="unread"){
+            this.unread++;
+          }
+            
+        });
+        this.notifications=this.notifications.filter(notif=>{
+          return notif.status=="unread";
+        })
+//[ngClass]="notif.status=='unread' ? 'unread' : 'read'"
+      })
     this.services.daoGetUser().then(user=>{
       this.user=user;
       console.log(user)
@@ -40,6 +74,23 @@ export class HomePage {
      });
      this.menuCtrl.get().enable(true);
 
+  }
+  hide(hide){
+    this.showNotification=false;
+    console.log("ffdfd")
+  }
+  viewNotifications() {
+    this.showNotification=!this.showNotification;
+    this.unread=0;
+    this.notifications=this.notifications.map(notif=>{
+      notif.status="read"
+      return notif;
+    })
+    console.log(this.notifications)
+    setTimeout(() => {
+      this.showNotification=false;
+    }, 5000);
+  
   }
   getSolde(){
     let alert = this.alerCtrl.create({
@@ -221,32 +272,21 @@ export class HomePage {
     alert.addButton({
       text: 'Générer',
       handler: data => {
-        let qrdata;
-        if( data.amount>0){
-          qrdata=
-            { amount:  data.amount,
-              telephone:this.user[0].Telephone,
-              codeClient:this.user[0].CodeClient
-    
-    
-            }
-          ;
-        }
-     
-        else{
-          qrdata=
-            { 
-              telephone:this.user[0].Telephone,
-              codeClient:this.user[0].CodeClient
-    
-            }
-          ;
-        }
-        console.log(this.user[0].Telephone)
 
+        alert.onWillDismiss(data =>{
+          console.log(this.user[0].Telephone)
+          data.telephone=this.user[0].Telephone;
+          data.codeClient=this.user[0].CodeClient;
+          data.wallet="perfectpay";
+    
+    
+          this.navCtrl.push(QrcodePage,{"data":data})
+    
+          
+          console.log(data)
+        })
   
   
-        this.navCtrl.push(QrcodePage,{"data":qrdata})
   
         
         console.log(data)

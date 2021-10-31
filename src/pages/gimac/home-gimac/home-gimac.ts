@@ -9,6 +9,7 @@ import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
 import { GimacVoucherPage } from '../gimac-voucher/gimac-voucher';
 import { GimacQrcodePage } from '../gimac-qrcode/gimac-qrcode';
+import { QrcodePage } from '../../qrcode/qrcode';
 
 
 @Component({
@@ -86,11 +87,12 @@ export class HomeGimacPage {
     });
     alert.onWillDismiss(data =>{
       console.log(this.user[0].Telephone)
-      data.Telephone=this.user[0].Telephone;
-      data.CodeClient=this.user[0].CodeClient;
+      data.telephone=this.user[0].Telephone;
+      data.codeClient=this.user[0].CodeClient;
+      data.wallet="perfectpay"
 
 
-      this.navCtrl.push(GimacQrcodePage,{"data":data})
+      this.navCtrl.push(QrcodePage,{"data":data})
 
       
       console.log(data)

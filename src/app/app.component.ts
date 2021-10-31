@@ -14,6 +14,9 @@ import { FormBuilder } from '@angular/forms';
 import { PayementService } from '../services/payement.service';
 import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
 
+import { Deeplinks } from '@ionic-native/deeplinks';
+import { GimacHistoryPage } from '../pages/gimac/gimac-history/gimac-history';
+import { GimacPaymentPage } from '../pages/gimac/gimac-payment/gimac-payment';
 
 
 @Component({
@@ -30,7 +33,7 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
   secretStatus: boolean=false;
 
-  constructor(public platform: Platform,
+  constructor(public platform: Platform, protected deeplinks: Deeplinks,
       public alerCtrl: AlertController,
     public formbuilder: FormBuilder,
     public services: Services, 
@@ -78,6 +81,24 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.deeplinks.route({
+        '/home': HomePage,
+        '/history': HistoryPage,
+        '/gimac-history': GimacHistoryPage,
+        '/transfert/:phoneNumber/:amount/:reason': HistoryPage,
+        '/payment/:merchantNumber/:amount/:wallet': GimacPaymentPage,
+
+
+      }).subscribe((match) => {
+        // match.$route - the route we matched, which is the matched entry from the arguments to route()
+        // match.$args - the args passed in the link
+        // match.$link - the full link data
+        console.log('Successfully matched route', match);
+      },
+      (nomatch) => {
+        // nomatch.$link - the full link data
+        console.error('Got a deeplink that didn\'t match', nomatch);
+      });
     });
       /**
      * verifie si c'est la première utilisation

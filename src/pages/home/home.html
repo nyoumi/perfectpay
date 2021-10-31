@@ -11,6 +11,10 @@
     </div>
     
     <ion-buttons end>
+      <button ion-button icon-only (click)="viewNotifications()">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-badge item-end class="notif-badge" color="success" *ngIf="unread>0">{{ unread }}</ion-badge>
+      </button>
       <button ion-button icon-only (click)="getQrcode()">
         <ion-icon name="qr-scanner"></ion-icon>
       </button>
@@ -20,6 +24,17 @@
 </ion-header>
 
 <ion-content padding>
+  <div class="notif-container"  (focusout)="hide($event)" on-focus="hide()" on-focusout="hide()"> 
+    <ion-list class="notifications" *ngIf="showNotification">
+      <ion-item *ngFor="let notif of notifications" class="notification"  >  
+        
+        <h2>{{ notif.titre}}</h2>
+        <h3>{{ notif.date}}</h3>
+        <p>{{ notif.message}}</p>
+      </ion-item>
+    </ion-list>
+  </div>
+
 
   <div class="img-content">
   </div>

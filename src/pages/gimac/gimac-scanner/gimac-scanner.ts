@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AlertController, LoadingController, NavController } from 'ionic-angular';
 import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
@@ -10,10 +10,13 @@ import { QRCodeModule } from 'angularx-qrcode';
   templateUrl: 'gimac-scanner.html'
 })
 export class GimacScannerPage {
+  visible: boolean = true;
+  @Output() open: EventEmitter<any> = new EventEmitter();
 
   private message="";
   transferInfo: any;
 private scanSub;
+  camera: Boolean=true;
 
 
 
@@ -21,6 +24,8 @@ private scanSub;
     public alerCtrl: AlertController,
     public services: GimacServices, 
     public loadingController: LoadingController) {
+      
+ 
       this.services.daoGetStatus().then(status=>{
         if(status!=true){
           this.navCtrl.setRoot(LoginPage)    
@@ -35,9 +40,26 @@ private scanSub;
  
   cancel(){
     this.scanSub.unsubscribe();
+
     this.qrScanner.hide();
+    this.qrScanner.destroy()
+   
+
+    this.navCtrl.pop()
+   
+
+  }
+  switch(){
+    this.camera?this.qrScanner.useFrontCamera():this.qrScanner.useBackCamera();
+    this.camera=!this.camera;
   }
   scanCode(){
+    try {
+      this.qrScanner.show()
+    } catch (error) {
+      console.log(error)
+    }
+
     this.qrScanner.prepare()
     .then((status: QRScannerStatus) => {
        if (status.authorized) {
@@ -45,22 +67,23 @@ private scanSub;
    
   
          // start scanning
+         this.qrScanner.show()
+         let appRoot=document.getElementsByClassName("app-root")[0] as HTMLElement;
+         appRoot.style.background="transparent"
          this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
-          let element= document.getElementById("cordova-plugin-qrscanner-video-preview");
-          element.style.zIndex="10000";
-          console.log( element.style.zIndex)
+          //let element= document.getElementById("cordova-plugin-qrscanner-video-preview");
+          //element.style.zIndex="10000";
+          //console.log( element.style.zIndex)
+          this.services.scanned(text)
+
            console.log('Scanned something', text);
-           element.style.zIndex="-100";
-  
+           this.open.emit(text);
+          // element.style.zIndex="-100";
+          appRoot.style.background="#FFF"
            this.qrScanner.hide(); // hide camera preview
            this.scanSub.unsubscribe(); // stop scanning
-           let alert = this.alerCtrl.create({
-            title: 'Qr code',
-            message: text,
+           this.navCtrl.pop()
            
-            
-          });
-          alert.present()
          });
   
        } else if (status.denied) {
@@ -71,6 +94,7 @@ private scanSub;
           
         });
         alert.present()
+        this.navCtrl.pop()
          // camera permission was permanently denied
          // you must use QRScanner.openSettings() method to guide the user to the settings page
          // then they can grant the permission from there
@@ -88,5 +112,6 @@ private scanSub;
       });
       alert.present()
     } 
+
     )}
 }

@@ -14,7 +14,7 @@ const  VALUE_HAVE_USED=1;
 const  VALUE_FIRST_USE=0;
 
 const  ACTUAL_VERSION_VALUE=10;
-const  APP_LINK="http://play.google.com/store/apps/details?id=cm.iplans.call";
+const  APP_LINK="https://play.google.com/store/apps/details?id=cm.iplans.call";
 
    
 const  MINVERSION="MINVERSION";
@@ -47,7 +47,7 @@ export class Services {
     //var xml2js = require('xml2js');
     let params="action=login_account_marchand&login="+email+"&password="+password;
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink + params)
+      this.http.get("http://" + environment.server + environment.apilink + params)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -63,7 +63,7 @@ export class Services {
     let params="action=create_account_update&Nom="+UserInfo.nom+"&Prenom="+UserInfo.Prenom+
     "&Email="+UserInfo.email+"&Telephone="+UserInfo.Telephone+"&Pays="+UserInfo.Pays+"&Ville="+UserInfo.Ville;
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink + params)
+      this.http.get("http://" + environment.server + environment.apilink + params)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -76,7 +76,7 @@ export class Services {
    getRegions() {
     let action="action=show_liste_region";
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink+action)
+      this.http.get("http://" + environment.server + environment.apilink+action)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -89,7 +89,7 @@ export class Services {
   getDepartments() {
     let action="action=show_liste_departement";
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink+action)
+      this.http.get("http://" + environment.server + environment.apilink+action)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -104,7 +104,7 @@ export class Services {
       let action="action=check_solde";
 
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink+action+"&indexe_users="+idClient+"&secret_code="+secretCode)
+      this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient+"&secret_code="+secretCode)
         .subscribe(data => {
           //console.log(data._body); 
           resolve(data.json());
@@ -118,7 +118,11 @@ export class Services {
     let action="action=View_liste_encaissements_services";
 
   return new Promise(resolve => {
+<<<<<<< HEAD
     this.http.get("https://" + environment.server +environment.apilink+action+ "&indexe_users="+idClient+"&IndexeService="+idService)
+=======
+    this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
+>>>>>>> master
       .subscribe(data => {
         //console.log(data._body); 
         //data=JSON.stringify(data).slice(0, -3)
@@ -151,7 +155,7 @@ return new Promise(resolve => {
     transferInfos.account+"&Montant="+transferInfos.montant+"&Raison_transfert="+transferInfos.raison;
 
   return new Promise(resolve => {
-    this.http.get("https://" + environment.server + environment.apilink+link)
+    this.http.get("http://" + environment.server + environment.apilink+link)
       .subscribe(data => {
         //console.log(data._body); 
         let result=-1;
@@ -174,7 +178,7 @@ makeTransfert(transferInfos,secretCode) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("http://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body); 
       console.log(data.json())
@@ -193,7 +197,7 @@ checkTransfertOM(transferInfos) {
   transferInfos.account+"&Montant="+transferInfos.montant+"&Raison_transfert="+transferInfos.raison;
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("http://" + environment.server + environment.apilink+link)
     .subscribe(data => {
       //console.log(data._body); 
       let result=-1;
@@ -217,7 +221,7 @@ makeTransfertOM(transferInfos,secretCode) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("http://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body); 
       console.log(data.json())
@@ -237,7 +241,7 @@ checkPayment(transferInfos) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("http://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1;
@@ -260,7 +264,7 @@ makePayment(transferInfos,codeSecret) {
   "&CodeSecurite="+codeSecret;
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("http://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body); 
       let result=-1;
@@ -288,7 +292,7 @@ checkRetrait(transferInfos) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("http://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1;
@@ -315,7 +319,7 @@ makeRetrait(transferInfos,codeSecret) {
   "&CodeSecurite="+codeSecret;
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("http://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body); 
       let result=-1;
@@ -336,7 +340,7 @@ checkSecret(idClient) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("http://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1000;
@@ -362,7 +366,7 @@ createSecret(idClient,secret) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("http://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1000;
@@ -388,7 +392,7 @@ updateSecret(idClient,secret,oldSecret) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("http://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1000;
@@ -413,7 +417,7 @@ getSecretStatus(idClient) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apilink+link)
+  this.http.get("http://" + environment.server + environment.apilink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1000;
@@ -472,6 +476,48 @@ disconnect() {
 
   daoGetjournal() {
     return new Promise((resolve :any, reject: any) => resolve(localForage.getItem('journal', function (err, value) {  
+    }))); 
+  }
+  
+  daoAddNotifications(notification) {
+    
+    localForage.getItem('notifications', function (err, value:string) { 
+      let notifications:Array<any>;
+      if(value) {
+        notifications= JSON.parse(value)
+        notifications.push(notification)
+        
+      }else{
+        notifications= new Array();
+        notifications.push(notification)
+      }
+      localForage.setItem('notifications',notifications,function (err, value) {
+        if(err) return false;
+        
+      });
+      return true
+
+    })
+   
+  }  
+  daoclearNotifications() {
+    
+      let notifications:Array<any>;
+    
+        notifications= new Array();
+      
+      localForage.setItem('notifications',notifications,function (err, value) {
+        if(err) return false;
+        
+      });
+      return true
+
+    }
+   
+  
+  daoGetNotifications() {
+    return new Promise((resolve :any, reject: any) => resolve(localForage.getItem('notifications', function (err, value) {  
+      
     }))); 
   }
   
@@ -761,7 +807,7 @@ async daoGetUsability(): Promise<boolean> {
   sendCodeConfirmation(number) {
 
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/confirmNumber/" + number)
+      this.http.get("https://" + environment.smsServer + "/rest/api/confirmNumber/" + number)
         .subscribe(data => {
           //console.log(data._body); 
           resolve(data._body);
@@ -779,7 +825,7 @@ async daoGetUsability(): Promise<boolean> {
   getUser(number) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/getUser/" + number)
+      this.http.get("https://" + environment.smsServer + "/rest/api/getUser/" + number)
         .subscribe(data => {
           //console.log(data.json()); 
           resolve(data.json());
@@ -792,7 +838,7 @@ async daoGetUsability(): Promise<boolean> {
   getUserCredit(number) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/getServiceBalance/" + number)
+      this.http.get("https://" + environment.smsServer + "/rest/api/getServiceBalance/" + number)
         .subscribe(data => {
           //console.log(data.json()); 
           resolve(data.json());
@@ -805,7 +851,7 @@ async daoGetUsability(): Promise<boolean> {
   getUserCreditSms(number,password) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/checkSolde/" + number+"/"+password)
+      this.http.get("https://" + environment.smsServer + "/rest/api/checkSolde/" + number+"/"+password)
         .subscribe(data => {
           //console.log(data.json()); 
           resolve(data.json());
@@ -820,7 +866,7 @@ async daoGetUsability(): Promise<boolean> {
     let action="action=checker_si_retrait_en_cours_mobile";
 
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink+action+"&Code_clientExpediteurint="+number)
+      this.http.get("http://" + environment.server + environment.apilink+action+"&Code_clientExpediteurint="+number)
         .subscribe(data => {
           //console.log(data._body); 
           resolve(data.json());
@@ -834,7 +880,7 @@ async daoGetUsability(): Promise<boolean> {
     let action="action=validation_retrait_account_perfect_pay_Mobile";
 
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apilink+action+"&Code_clientExpediteur="+number
+      this.http.get("http://" + environment.server + environment.apilink+action+"&Code_clientExpediteur="+number
       +"&CodeSecurite="+secretCode
       +"&IdTransaction="+transactionId)
         .subscribe(data => {
@@ -852,7 +898,7 @@ async daoGetUsability(): Promise<boolean> {
   editUser(nom, phoneNumber, newPhoneNumber, email, password) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/editUser/" + nom + "/" + phoneNumber + "/" + newPhoneNumber + "/" + email + "/" + password)
+      this.http.get("https://" + environment.smsServer + "/rest/api/editUser/" + nom + "/" + phoneNumber + "/" + newPhoneNumber + "/" + email + "/" + password)
         .subscribe(data => {
           console.log(data.json());
           resolve(data.json());
@@ -866,7 +912,7 @@ async daoGetUsability(): Promise<boolean> {
   createUser(nom, phoneNumber, email, password) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/createUser/" + nom + "/" + phoneNumber + "/" + email + "/" + password)
+      this.http.get("https://" + environment.smsServer + "/rest/api/createUser/" + nom + "/" + phoneNumber + "/" + email + "/" + password)
         .subscribe(data => {
           console.log(data.json());
           resolve(data.json());
@@ -880,7 +926,7 @@ async daoGetUsability(): Promise<boolean> {
   retrySMS(phoneNumber) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/sendSMSNexmo/" + phoneNumber)
+      this.http.get("https://" + environment.smsServer + "/rest/api/sendSMSNexmo/" + phoneNumber)
         .subscribe(data => { 
           resolve(data._body);
         }, err => {
@@ -893,7 +939,7 @@ async daoGetUsability(): Promise<boolean> {
   saveAndroidMinVersion() {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/getAndroidMinVersion")
+      this.http.get("https://" + environment.smsServer + "/rest/api/getAndroidMinVersion")
         .subscribe(data => {
           console.log(data); 
           resolve(data);

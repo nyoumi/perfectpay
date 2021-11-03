@@ -12,6 +12,7 @@ import { GimacPaymentPage } from './gimac-payment/gimac-payment';
 import { GimacScannerPage } from "./gimac-scanner/gimac-scanner";
 
 import { QRCodeModule } from 'angularx-qrcode';
+import { GimacHistoryPage } from './gimac-history/gimac-history';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     GimacVoucherPage,
     VoucherHistoryPage,
     GimacPaymentPage,
-    GimacScannerPage
+    GimacScannerPage,
+    GimacHistoryPage
     
 
   ],
@@ -40,7 +42,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     GimacVoucherPage,
     VoucherHistoryPage,
     GimacPaymentPage,
-    GimacScannerPage
+    GimacScannerPage,
+    GimacHistoryPage
     
 
 

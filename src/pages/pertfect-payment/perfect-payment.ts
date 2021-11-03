@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { Services } from '../../services/services';
 import { LoginPage } from '../login/login';
 import { PayementService } from '../../services/payement.service';
+import { NFC, Ndef } from '@ionic-native/nfc';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class PerfectPaymentPage {
   service;
 
 
-  constructor(public navCtrl: NavController,
+  constructor(public navCtrl: NavController,private nfc: NFC, private ndef: Ndef,
     public alerCtrl: AlertController,private params: NavParams,
     public formbuilder: FormBuilder,public services: Services, private payementService:PayementService,
     public loadingController: LoadingController) {
@@ -401,4 +402,42 @@ export class PerfectPaymentPage {
     });
   } 
 
+  payNFC(){
+    this.nfc.addNdefListener(() => {
+      console.log('successfully attached ndef listener');
+    }, (err) => {
+      console.log('error attaching ndef listener', err);
+    }).subscribe((event) => {
+      console.log('received ndef message. the tag contains: ', event.tag);
+      console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
+    
+      let message = this.ndef.textRecord('Hello world');
+      this.nfc.share([message]).then(data=>{
+
+        console.log(data);
+        
+      }).catch(err=>{
+        console.log(err);
+        
+      });
+    });
+    this.nfc.addTagDiscoveredListener(data=>{
+      console.log("success",data)
+    }, data=>{
+      console.log("error",data);
+      
+    });
+
+    var message = [
+      this.ndef.textRecord("hello, world"),
+      this.ndef.uriRecord("http://github.com/chariotsolutions/phonegap-nfc")
+  ];
+  
+  this.nfc.write(message);
+  this.nfc.showSettings().then(data=>{
+    console.log("settings",data);
+    
+  })
+
+  }
 }

@@ -72,6 +72,7 @@ export class PerfectTransfertPage {
       this.services.checkTransfert(this.transferInfo).then((result: any) => {
            console.log(result)
         loading.dismiss();
+        
         //console.log(result);
         switch (result.succes) {
           case 1:
@@ -158,6 +159,7 @@ export class PerfectTransfertPage {
   }
   handleOM( response){
     let alert = this.alerCtrl.create({
+      mode:"ios",
       title: 'Confirmation',
       message: response.msg,
       inputs: [

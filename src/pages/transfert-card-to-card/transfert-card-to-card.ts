@@ -31,8 +31,9 @@ export class TransfertCardToCardPage {
     public loadingController: LoadingController,
     public toastCtrl: ToastController,
     public alerCtrl:AlertController, 
-    public navParams: NavParams) {
-    this.formgroup = formbuilder.group({
+    public navParams: NavParams) 
+    {
+      this.formgroup = formbuilder.group({
       customerId: ['', Validators.required],
       last4Digits: ['', Validators.required],
       amount: ['', Validators.required]

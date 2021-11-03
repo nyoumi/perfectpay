@@ -176,4 +176,58 @@ ion-img.appImage.img-loaded {
 }
 .message-error-text{
     color: #e8aaad;}
+    ion-select.select {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        color: white;
+        
+    }
+    .select.select-icon {
+
+        margin-right: 2px;
+        left: unset !important;
+    }
+    .select-md .select-icon {
+        position: relative;
+        width: 12px;
+        height: 19px;
+        left: -3px;
+    }
+    .select-placeholder{
+        color: #d0c5c5 !important;
+    }
+ 
+
+    ion-select {
+        .select-icon {
+          .select-icon-inner {
+             color : white !important;
+          }
+        }
+      }
+
+      .advanced{
+        color : white;
+      }
+      
+      .toggle {
+        border: 0 !important;
+        /* padding: 0 !important; */
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        align-items: end;
+        text-align: end;
+    }
+    .toggle-ios{
+        height: -webkit-fill-available;
+        padding: 0 !important;
+
+    }
+    ion-item.validity.item.item-block.item-md.item-range {
+        background: transparent;
+        color: white;
+        padding: 0;
+    }
 }

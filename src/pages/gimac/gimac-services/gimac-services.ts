@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 import * as localForage from "localforage";
 import { Http, Headers } from '@angular/http';
 import 'rxjs';
@@ -23,6 +23,7 @@ const  MINVERSION="MINVERSION";
 @Injectable()
 export class GimacServices {
 
+  scanner: EventEmitter<number> = new EventEmitter<number>();
 
  
   private http: any;
@@ -41,6 +42,10 @@ export class GimacServices {
       console.log(ACTUAL_VERSION_VALUE);
     });
   }
+
+scanned(data){
+  this.scanner.emit(data);
+}
  
 
   authentification(email, password) {
@@ -563,7 +568,7 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
   sendCodeConfirmation(number) {
 
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/confirmNumber/" + number)
+      this.http.get("https://" + environment.smsServer + "/rest/api/confirmNumber/" + number)
         .subscribe(data => {
           //console.log(data._body); 
           resolve(data._body);
@@ -581,7 +586,7 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
   getUser(number) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/getUser/" + number)
+      this.http.get("https://" + environment.smsServer + "/rest/api/getUser/" + number)
         .subscribe(data => {
           //console.log(data.json()); 
           resolve(data.json());
@@ -632,7 +637,7 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
   saveAndroidMinVersion() {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("http://" + environment.smsServer + "/rest/api/getAndroidMinVersion")
+      this.http.get("https://" + environment.smsServer + "/rest/api/getAndroidMinVersion")
         .subscribe(data => {
           //console.log(data.json()); 
           resolve(data.json());

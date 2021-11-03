@@ -18,7 +18,17 @@
         <h6>Paiement </h6>
       </div>
       <ion-list>
-  
+        <ion-item class="form-item" >
+          <ion-select [(ngModel)]="paysWallet"  multiple="false" [ngModelOptions]="{standalone: true}" [selectOptions]="selectOptions" placeholder="Pays" (ionChange)="onChangeWallet($event)"> 
+            <ion-option  *ngFor="let paysWallet of paysWallets"  value={{paysWallet.pays_id}} [selected]="paysWallet.pays_id==defaultpaysWallet.pays_id"> {{paysWallet.libelle_label}} </ion-option> 
+          </ion-select>
+        </ion-item>
+       
+        <ion-item class="form-item" >
+          <ion-select [(ngModel)]="wallet"  multiple="false" [ngModelOptions]="{standalone: true}" [selectOptions]="selectOptions2" placeholder='type de marchand' > 
+            <ion-option *ngFor="let wallet of wallets"  value={{wallet.code_walet}} selected="wallet.code_walet=='perfectpay'">{{wallet.libelle_walet}} ({{ wallet.mno}})</ion-option> 
+          </ion-select>
+        </ion-item>
         <ion-item class="form-item">
           <ion-input class="text-input" formControlName="montant" type="number"  autocorrect="off" autocapitalize="none" name="montant" placeholder="montant"></ion-input>
         </ion-item>
@@ -38,12 +48,11 @@
   <!--   <div  text-center>
       <button ion-button icon-left   block class="login-button"  (tap)="generate()"><ion-icon name="qr-scanner"></ion-icon> code QR</button>
   
-    </div> -->
+    </div> --> 
   <div  text-center>
     <button ion-button   block class="login-button" [disabled]="!formgroup.valid" (tap)="checkPayment()">Payer</button>
 
   </div>
-  <qrcode [qrdata]="'Votre chaîne de caractère QR code'" [size]="256" [level]="'M'"></qrcode>
   
   <div  text-center class="message-error-text">
           

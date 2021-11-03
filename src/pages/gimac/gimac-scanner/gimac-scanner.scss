@@ -1,8 +1,5 @@
 page-gimac-scanner {
-    ion-content {
-        --ion-background-color: transparent;
-        --ion-background: transparent;
-    }
+
     .scroll-content {
         background: #ffe4c400;
     }
@@ -13,6 +10,15 @@ page-gimac-scanner {
         background: rgba(237, 237, 240, 0);
         font-family: CaviarDreams;
         
+    }
+    .cadre{
+        background-image: url('../../../assets/imgs/pngegg.PNG');
+    width: 100%;
+    height: 500px;
+    background-repeat: no-repeat;
+    margin-top: 100px;
+    text-align: center;
+    background-size: contain;
     }
     .content-md {
         color: #fff;
@@ -30,6 +36,20 @@ page-gimac-scanner {
 
         
     } 
+    .reverse{
+        position: absolute;
+        top: 50px;
+        right: 20px;
+    }
+    footer{
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        
+    }
+ 
     form{
         color:#fff;
     }
@@ -65,8 +85,8 @@ page-gimac-scanner {
 }
 .scroll-content{
     padding-bottom: 0 !important;
-    padding-left: 40px !important;
-    padding-right: 40px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
 
 }
 .item-input ion-input{

@@ -8,7 +8,9 @@ import { PayementService } from '../../services/payement.service';
 import { HistoryPage } from '../history/history';
 import { LoginPage } from '../login/login';
 import { HomeGimacPage } from '../gimac/home-gimac/home-gimac';
+import { QrcodePage } from '../qrcode/qrcode';
 
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 
 @Component({
@@ -21,6 +23,24 @@ export class HomePage {
   private testRadioResult;
   merchantServices: any[]=new Array();
   defautltService: undefined;
+  private unread=0;
+  private notifications:Array<any>=[  
+    {
+      "titre":"Tranfert entrant",
+      "message": "vous evez reçu un montant de 5000Fcfa de 696844889 le 12/12/2021 à 15h. IDTransaction: re147d5d85c8f ",
+      "page":"HistoryPage",
+      "date":"18/12/2021 12:30",
+      "status":"unread"
+    },
+    {
+      "titre":"Tranfert entrant",
+      "message": "le 12/12/2021 à 15h. IDTransaction: re147d5d85c8f ",
+      "page":"HistoryPage",
+      "date":"18/12/2021 12:30",
+      "status":"unread"
+    }
+  ];
+  private showNotification;
 
   constructor(public navCtrl: NavController,public menuCtrl: MenuController,
     public alerCtrl: AlertController,
@@ -29,6 +49,52 @@ export class HomePage {
     private toastCtrl: ToastController,
     private payementService:PayementService,
     public loadingController: LoadingController) {
+
+      Notify.init({
+        width: '280px',
+        position: 'right-top',
+        distance: '40px',
+        opacity: 1,
+        clickToClose: true,
+        closeButton: true,
+        borderRadius: '10px',
+        useIcon: false,
+
+
+        info: {
+          background: '#fff',
+          textColor: '#000',
+          childClassName: 'notiflix-notify-info',
+          notiflixIconColor: 'rgba(0,0,0,0.2)',
+          fontAwesomeClassName: 'fas fa-info-circle',
+          fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
+          backOverlayColor: 'rgba(38,192,211,0.2)',
+        }
+
+        // ...
+      });
+
+      this.services.daoGetNotifications().then((notifications:any)=>{
+        console.log(notifications);
+        console.log( this.notifications);
+
+        if(notifications.length){
+          console.log(notifications.length)
+          this.notifications=notifications;
+          console.log( this.notifications);
+        }
+        this.notifications.forEach(notifcation => {
+          if(notifcation.status=="unread"){
+            this.unread++;
+          }
+            
+        });
+        this.notifications=this.notifications.filter(notif=>{
+          return notif.status=="unread";
+        })
+        
+//[ngClass]="notif.status=='unread' ? 'unread' : 'read'"
+      })
     this.services.daoGetUser().then(user=>{
       this.user=user;
       console.log(user)
@@ -62,6 +128,36 @@ export class HomePage {
     if(index > str.length-1) return str;
     return str.substring(0,index) + chr + str.substring(index+1);
 }
+  hide(hide){
+    this.showNotification=false;
+    console.log("ffdfd")
+  }
+  viewNotifications() {
+    
+    this.notifications.forEach(notification => {
+      let parent=this;
+     setTimeout(() => {
+      Notify.info(notification.message,{
+          clickToClose:true,
+          closeButton:true,
+          position:'right-top',
+          cssAnimation:true,
+          distance: "10px",
+          
+        });
+     }, 200);
+      
+    });
+    this.notifications=[];
+    this.unread=0
+    this.services.daoclearNotifications()
+    let notis=Array.from( document.getElementsByClassName("notiflix-notify") );
+
+    
+
+ 
+  }
+ 
   getSolde(){
     let alert = this.alerCtrl.create({
       mode:"ios",
@@ -268,7 +364,57 @@ export class HomePage {
     });
 
   }
+  getQrcode() {
+    let alert = this.alerCtrl.create();
+    alert.setTitle("QR CODE");
+    alert.setSubTitle("Vous pouvez ajouter un montant à votre QR Code de manière optionnelle ou genérer votre code sans montant.")
+    alert.setMode("ios")
+
+
+
  
+
+    alert.addInput({
+      type: 'number',
+      label: 'montant en FCFA',
+      value: '',
+      min:50,
+      placeholder:'montant en FCFA',
+      name:"montant"
+    });
+
+    alert.addButton("Annuler");
+    alert.addButton({
+      text: 'Générer',
+      handler: data => {
+
+        alert.onWillDismiss(data =>{
+          console.log(this.user[0].Telephone)
+          data.telephone=this.user[0].Telephone;
+          data.codeClient=this.user[0].CodeClient;
+          data.wallet="perfectpay";
+    
+    
+          this.navCtrl.push(QrcodePage,{"data":data})
+    
+          
+          console.log(data)
+        })
+  
+  
+  
+        
+        console.log(data)
+
+    
+        
+      }
+    });
+ 
+    alert.present().then(() => {
+      this.testRadioOpen = true;
+    });
+  }
   makeBanking() {
     this.navCtrl.push(HomeGimacPage)
   }

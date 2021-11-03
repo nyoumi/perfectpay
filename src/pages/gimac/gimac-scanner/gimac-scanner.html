@@ -1,27 +1,17 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Paiement marchand</ion-title>
-    <div class="frontImage"> 
 
-    </div>
-  </ion-navbar>
-</ion-header>
 
 <ion-content padding>
+  <div style="text-align: center;">
+    <div class="cadre">
+
+    </div>
+  </div>
+ 
   
     
-    <div  text-center>
-      <button ion-button icon-left   block class="login-button"  (tap)="scanCode()"><ion-icon name="qr-scanner"></ion-icon> code QR</button>
-  
-    </div>
+    <ion-icon class="reverse" name="reverse-camera" (tap)="switch()"></ion-icon>
 
-  <div  text-center>
-    <button ion-button   block class="login-button" (tap)="cancel()">Annuler</button>
-
-  </div>
+ 
  
   
   <div  text-center class="message-error-text">
@@ -31,4 +21,11 @@
  
 </div>
 
+
+<footer>
+  <div  text-center class="cancel-button">
+    <button ion-button   block class="login-button" (tap)="cancel()">Annuler</button>
+
+  </div>
+</footer>
 </ion-content>  

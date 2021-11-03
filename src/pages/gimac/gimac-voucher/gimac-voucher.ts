@@ -370,7 +370,7 @@ export class GimacVoucherPage implements OnInit {
     if( segmentButton.value!="showBank" && segmentButton.value!="showWallet") this.showBank = true
 
   }
-
+ 
   openVoucherHistory(){
     this.navCtrl.push(VoucherHistoryPage);
   }

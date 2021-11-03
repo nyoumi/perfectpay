@@ -3,11 +3,12 @@ import { FormBuilder } from '@angular/forms';
 import { AlertController, LoadingController, MenuController, NavController, ToastController } from 'ionic-angular';
 import { GimacTransfertPage } from '../gimac-transfert/gimac-transfert';
 import { GimacPaymentPage } from '../gimac-payment/gimac-payment';
-import { HistoryPage } from '../gimac-history/gimac-history';
+import { GimacHistoryPage } from '../gimac-history/gimac-history';
 import { GimacPayementService } from '../gimac-services/gimac-payement.service';
 import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
 import { GimacVoucherPage } from '../gimac-voucher/gimac-voucher';
+import { QrcodePage } from '../../qrcode/qrcode';
 
 
 @Component({
@@ -56,8 +57,8 @@ export class HomeGimacPage {
  
   doRadio(datatype) {
     let alert = this.alerCtrl.create();
-    alert.setTitle("Moyen de paiement");
-    alert.setSubTitle("Choisir un moyen de paiement pour recharger votre compte")
+    alert.setTitle("QR CODE");
+    alert.setSubTitle("Vous pouvez ajouter un montant à votre QR Code de manière optionnelle.")
     alert.setMode("ios")
 
 
@@ -65,57 +66,38 @@ export class HomeGimacPage {
  
 
     alert.addInput({
-      type: 'radio',
-      label: 'Paypal',
-      value: 'paypalPayment'
-    });
-    alert.addInput({
-      type: 'radio', 
-      label: 'MTN mobile money',
-      value: 'MTNCredit'
-    });
-    alert.addInput({
-      type: 'radio',
-      label: 'Orange money',
-      value: 'omCreditUssd'
-    });
-    alert.addInput({
-      type: 'radio',
-      label: 'Orange money (web)',
-      value: 'omCredit'
+      type: 'number',
+      label: 'montant en FCFA',
+      value: '',
+      min:50,
+      placeholder:'montant en FCFA',
+      name:"montant"
     });
 
     alert.addButton("Annuler");
     alert.addButton({
-      text: 'Ok',
+      text: 'Générer',
       handler: data => {
-       // console.log('Radio data:', data);
-       if (data == "stripeCredit") {
-        //this.navCtrl.push(StripePayment,{
-         // param:datas.lemontant
-        //});
-        this.enterAmountByCard(data,datatype);
-      }
-        this.testRadioOpen = false;
-        this.testRadioResult = data;
-        if (data == "paypalPayment") {
-          //this.payementService.makepaypalpayment(datatype);
-          //this.makepaypalpayment(datas,datatype);
-          this.enterAmountByCard(data,datatype);
-        }
 
-        if (data == "MTNCredit") {
-          //this.makemtnpayment(datas);
-          //this.payementService.makemtnpayment(datas);
-          this.enterAmountByMobileMoney(data,datatype);
-        }
+        alert.onWillDismiss(data =>{
+          console.log(this.user[0].Telephone)
+          data.telephone=this.user[0].Telephone;
+          data.codeClient=this.user[0].CodeClient;
+          data.wallet="perfectpay";
+    
+    
+          this.navCtrl.push(QrcodePage,{"data":data})
+    
+          
+          console.log(data)
+        })
+  
+  
+  
+        
+        console.log(data)
 
-        if (data == "omCredit" || data=="omCreditUssd") {
-          //this.makeOMpayment();
-          //this.makeOMPayment(datas,datatype);
-          //this.payementService.makeOMPayment(datas,datatype);
-          this.enterAmountByMobileMoney(data,datatype);
-        }
+    
         
       }
     });
@@ -174,44 +156,7 @@ export class HomeGimacPage {
       this.testRadioOpen = true;
     });
   }
- /*  payMethod() { 
-    let alert = this.alerCtrl.create();
-    alert.setTitle("Méthode de paiement");
 
-    alert.addInput({
-      type: 'radio',
-      label: 'Paypal',
-      value: 'green',
-      checked: true
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Credit card',
-      value: 'blue'
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Mobile money',
-      value: 'green'
-    });
-
-    alert.addButton('Cancel');
-    alert.addButton({
-      text: 'Ok',
-      handler: data => {
-        console.log('Radio data:------------------');
-        console.log('Radio data:', data);
-        this.testRadioOpen = false;
-        this.testRadioResult = data;
-      }
-    });
-
-    alert.present().then(() => {
-      this.testRadioOpen = true;
-    });
-  } */
 
   creditCard() {
     let alert = this.alerCtrl.create();

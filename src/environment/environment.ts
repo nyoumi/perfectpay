@@ -1,8 +1,7 @@
 export const environment = {
 
   //joel 
-  //server:"154.72.148.105",
-  //server:"kmertv.iplans.cm",
+  //server:"192.168.1.113",
   server:"api.kakotel.com",
   apilink:"/api-perfectpay.php?",
   apiGimacLink:"/api-gimacpay_mobile.php?",

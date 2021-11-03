@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input } from '@angular/core';
-import { AlertController, LoadingController, NavController } from 'ionic-angular';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { AlertController, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
@@ -10,7 +10,7 @@ import { GimacScannerPage } from '../gimac-scanner/gimac-scanner';
   selector: 'page-gimac-payment',
   templateUrl: 'gimac-payment.html'
 })
-export class GimacPaymentPage {
+export class GimacPaymentPage implements OnInit {
   @Input() open: EventEmitter<any> = new EventEmitter();
 
 
@@ -20,10 +20,22 @@ export class GimacPaymentPage {
   private message="";
   private user:any;
   transferInfo: any;
+  private paysWallets=[{pays_id: '1', libelle_label: 'Cameroun'}];
+  private defaultpaysWallet={pays_id: '1', libelle_label: 'Cameroun'}
+  private paysWallet={pays_id: '1', libelle_label: 'Cameroun'}
 
+  wallets: any;
+ 
 
+  selectOptions: { title: string; subTitle: string; mode: string; };
+  selectOptions2 = {
+    title: "selectionnez type de marchand",
+    subTitle: 'Select wallet',
+    mode: 'ios'
+  };
+  wallet=null;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,  public navParams: NavParams,
     public alerCtrl: AlertController,
     public formbuilder: FormBuilder,public services: GimacServices, 
     public loadingController: LoadingController) {
@@ -51,6 +63,58 @@ export class GimacPaymentPage {
         this.user=user;
         console.log(user)
       })
+      const datas=this.navParams.data
+      if(datas){
+        this.montant.setValue(datas.montant)
+        this.code_marchand.setValue(datas.codeClient)
+      }
+      this.selectOptions = {
+        title: "selectionnez le pays",
+        subTitle: 'Select the country',
+        mode: 'ios'
+      };
+  }
+  ngOnInit(): void {
+    this.getGimacMNOCountries()
+  }
+  getGimacMNOCountries() {
+    this.services.getGimacMNOCountries().then((result: any) => {
+      console.log(result)
+    
+    //console.log(result);
+    switch (result.succes) {
+     case 1:
+       console.log(result.resultat)
+       this.paysWallets=result.resultat;
+       
+       break;
+                             
+     default:
+       this.message=result.msg
+       break;
+    }
+    
+    });
+  }
+  onChangeWallet(event){
+    console.log(event)
+    let loading = this.loadingController.create({ content: "Chargement...",enableBackdropDismiss:true});
+    loading.present();
+    this.services.getGimacMNOWallets(event).then((result: any) => {
+      loading.dismiss();
+      console.log(result)
+        switch (result.succes) {
+     case 1:
+       console.log(result.resultat)
+       this.wallets=result.resultat;
+       break;                  
+     default:
+       this.message=result.msg
+       break;
+    }
+    
+    });
+
   }
 
   checkPayment() {
@@ -73,51 +137,11 @@ export class GimacPaymentPage {
             console.log(result.resultat)
             this.handle(result.resultat[0])
             break;
-          case -1:
-            this.message=result.msg
-            
-            break;
-          case -2:
-            this.message=result.msg
-
-            break;
-          case -3:
-            this.message=result.msg
-
-            break;
-          case -4:
-            this.message=result.msg
-
-            break;
-          case -5:
-            
-            this.message=result.msg
-
-            break;
-          case -6:
-            this.message=result.msg
-
-            break;
-
-          case -7:
-            this.message=result.msg
-
-            break;
-          case -8:
-            this.message=result.msg
-
-            break;
-          case -9:
-            this.message=result.msg
-
-            break;
-          case 0:
-            this.message=result.msg
-
-            break;
 
                                   
           default:
+            this.message=result.msg
+
             break;
         }
 

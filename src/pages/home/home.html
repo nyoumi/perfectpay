@@ -24,8 +24,11 @@
 </ion-header>
 
 <ion-content padding>
+
   <div class="notif-container"  (focusout)="hide($event)" on-focus="hide()" on-focusout="hide()"> 
+
     <ion-list class="notifications" *ngIf="showNotification">
+
       <ion-item *ngFor="let notif of notifications" class="notification"  >  
         
         <h2>{{ notif.titre}}</h2>

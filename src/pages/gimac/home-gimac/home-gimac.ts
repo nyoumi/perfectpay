@@ -8,7 +8,6 @@ import { GimacPayementService } from '../gimac-services/gimac-payement.service';
 import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
 import { GimacVoucherPage } from '../gimac-voucher/gimac-voucher';
-import { GimacQrcodePage } from '../gimac-qrcode/gimac-qrcode';
 import { QrcodePage } from '../../qrcode/qrcode';
 
 
@@ -75,28 +74,33 @@ export class HomeGimacPage {
       name:"montant"
     });
 
-    alert.addButton("Sans montant");
+    alert.addButton("Annuler");
     alert.addButton({
       text: 'Générer',
       handler: data => {
-        console.log( data);
+
+        alert.onWillDismiss(data =>{
+          console.log(this.user[0].Telephone)
+          data.telephone=this.user[0].Telephone;
+          data.codeClient=this.user[0].CodeClient;
+          data.wallet="perfectpay";
+    
+    
+          this.navCtrl.push(QrcodePage,{"data":data})
+    
+          
+          console.log(data)
+        })
+  
+  
+  
+        
+        console.log(data)
 
     
         
       }
     });
-    alert.onWillDismiss(data =>{
-      console.log(this.user[0].Telephone)
-      data.telephone=this.user[0].Telephone;
-      data.codeClient=this.user[0].CodeClient;
-      data.wallet="perfectpay"
-
-
-      this.navCtrl.push(QrcodePage,{"data":data})
-
-      
-      console.log(data)
-    })
     alert.present().then(() => {
       this.testRadioOpen = true;
     });
@@ -152,44 +156,7 @@ export class HomeGimacPage {
       this.testRadioOpen = true;
     });
   }
- /*  payMethod() { 
-    let alert = this.alerCtrl.create();
-    alert.setTitle("Méthode de paiement");
 
-    alert.addInput({
-      type: 'radio',
-      label: 'Paypal',
-      value: 'green',
-      checked: true
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Credit card',
-      value: 'blue'
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Mobile money',
-      value: 'green'
-    });
-
-    alert.addButton('Cancel');
-    alert.addButton({
-      text: 'Ok',
-      handler: data => {
-        console.log('Radio data:------------------');
-        console.log('Radio data:', data);
-        this.testRadioOpen = false;
-        this.testRadioResult = data;
-      }
-    });
-
-    alert.present().then(() => {
-      this.testRadioOpen = true;
-    });
-  } */
 
   creditCard() {
     let alert = this.alerCtrl.create();

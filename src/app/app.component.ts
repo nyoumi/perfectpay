@@ -66,7 +66,17 @@ export class MyApp {
      this.user=infos; 
     });   
      this.services.daoGetHaveUsed().then(infos=>{
-       console.log(infos)
+ /*       if(!infos){
+         this.services.daoAddNotifications(    {
+          "titre":"Bienvenue",
+          "message": "Bienvenue sur PerfectPay.  Vous pouvez commecner à effectuer vos opérations. ",
+          "date":"18/12/2021 12:30",
+          "status":"unread"
+        }
+        )
+         
+       } */
+       
       this.secretStatus=infos; }); 
  }
  disconnect(){
@@ -85,8 +95,8 @@ export class MyApp {
         '/home': HomePage,
         '/history': HistoryPage,
         '/gimac-history': GimacHistoryPage,
-        '/transfert/:phoneNumber/:amount/:reason': HistoryPage,
-        '/payment/:merchantNumber/:amount/:wallet': GimacPaymentPage,
+        '/transfert/:phoneNumber/:montant/:reason': HistoryPage,
+        '/payment/:codeClient/:montant/:wallet': GimacPaymentPage,
 
 
       }).subscribe((match) => {
@@ -94,6 +104,7 @@ export class MyApp {
         // match.$args - the args passed in the link
         // match.$link - the full link data
         console.log('Successfully matched route', match);
+        //this.nav.push(match.$route, match.$args)
       },
       (nomatch) => {
         // nomatch.$link - the full link data

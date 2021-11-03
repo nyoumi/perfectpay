@@ -15,6 +15,8 @@ private scanSub;
 private amount;
 private qrdata: string;
   telephone: any;
+  codeClient: any;
+  wallet: any;
 
 
 
@@ -25,12 +27,13 @@ private qrdata: string;
     public loadingController: LoadingController) {
       //this.qrdata=this.navParams.get("data");
       const datas=this.navParams.get("data");
-      this.amount=datas.amount
-      this.telephone=datas.amount
+      this.amount=datas.montant
+      this.telephone=datas.telephone
+      this.codeClient=datas.codeClient
+      this.wallet=datas.wallet
       
       this.qrdata=JSON.stringify(datas)
       console.log(this.qrdata)
-     
       
   }
 
@@ -38,11 +41,16 @@ private qrdata: string;
  
  
   share(){
+    console.log(this.codeClient)
+    console.log(this.telephone)
+    console.log(this.amount)
+    
+
     var canvas = document.getElementsByTagName('canvas')[0]  as HTMLCanvasElement;
     console.log(document.getElementsByTagName('canvas'))
     var dataURL = canvas.toDataURL();
     console.log(dataURL)
-    this.socialSharing.share('Qr code de '+ this.telephone, 'QR CODE',dataURL ).then(() => {
+    this.socialSharing.share( "QR code de "+this.telephone, 'QR CODE',dataURL,"perfectpay.cm/payment/"+this.codeClient+"/"+this.amount+"/"+this.wallet ).then(() => {
       console.log("dddd")
     }).catch(( error)=> {
       console.log(error)

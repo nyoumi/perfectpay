@@ -1,10 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, IonicPageModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { HistoryPage } from '../pages/history/history';
 
 import { LoginPage } from '../pages/login/login';
 
@@ -35,18 +34,19 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { QrcodePage } from '../pages/qrcode/qrcode';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Deeplinks } from '@ionic-native/deeplinks';
+import { NFC, Ndef } from '@ionic-native/nfc';
+
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    HistoryPage,
     LoginPage,
     RegisterPage,
     PerfectTransfertPage ,  
     PerfectPaymentPage,
     PerfectRetraitPage,
-    QrcodePage
+    QrcodePage,
 
 
   ],
@@ -56,8 +56,8 @@ import { Deeplinks } from '@ionic-native/deeplinks';
     HttpModule,
     GimacModule,
     NgxQRCodeModule,
-    QRCodeModule
-    
+    QRCodeModule,
+
 
 
   ],
@@ -70,8 +70,9 @@ import { Deeplinks } from '@ionic-native/deeplinks';
     PerfectTransfertPage,
     PerfectPaymentPage ,
     PerfectRetraitPage,
-    HistoryPage,
-    QrcodePage
+    QrcodePage,
+    
+    
 
   ],
   providers: [
@@ -87,7 +88,10 @@ import { Deeplinks } from '@ionic-native/deeplinks';
     InAppBrowser,
     QRScanner,
     SocialSharing,
-    Deeplinks
+    Deeplinks,
+    NFC,
+    Ndef
+    
     
   ]
 })

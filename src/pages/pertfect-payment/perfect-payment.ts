@@ -5,6 +5,7 @@ import { Services } from '../../services/services';
 import { LoginPage } from '../login/login';
 import { PayementService } from '../../services/payement.service';
 import { NFC, Ndef } from '@ionic-native/nfc';
+import { AppAvailability } from '@ionic-native/app-availability';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class PerfectPaymentPage {
   service;
 
 
-  constructor(public navCtrl: NavController,private nfc: NFC, private ndef: Ndef,
+  constructor(public navCtrl: NavController,private nfc: NFC, private ndef: Ndef,private appAvailability:AppAvailability,
     public alerCtrl: AlertController,private params: NavParams,
     public formbuilder: FormBuilder,public services: Services, private payementService:PayementService,
     public loadingController: LoadingController) {
@@ -75,51 +76,9 @@ export class PerfectPaymentPage {
             console.log(result.resultat)
             this.handle(result.resultat[0])
             break;
-          case -1:
-            this.message=result.msg
-            
-            break;
-          case -2:
-            this.message=result.msg
-
-            break;
-          case -3:
-            this.message=result.msg
-
-            break;
-          case -4:
-            this.message=result.msg
-
-            break;
-          case -5:
-            
-            this.message=result.msg
-
-            break;
-          case -6:
-            this.message=result.msg
-
-            break;
-
-          case -7:
-            this.message=result.msg
-
-            break;
-          case -8:
-            this.message=result.msg
-
-            break;
-          case -9:
-            this.message=result.msg
-
-            break;
-          case 0:
-            this.message=result.msg
-
-            break;
-
-                                  
+                   
           default:
+            this.message=result.msg
             break;
         }
 
@@ -179,78 +138,11 @@ export class PerfectPaymentPage {
           alert.setMessage("Votre opération s'est déroulée avec sussès! Vous recevrez un message d'information.");
       
           break;
-        case -1:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-          
-          break;
-        case -2:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -3:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -4:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -5:
-          
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -6:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-
-        case -7:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -8:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -9:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -10:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-          break;    
 
         default:
+          this.message=result.msg
+          alert.setMode("ios");
+          alert.setMessage(result.msg);
           break;
       }
       alert.addButton("OK")
@@ -289,37 +181,44 @@ export class PerfectPaymentPage {
       label: 'Paypal',
       value: 'paypalPayment'
     });
+    alert.addInput({
+      type: 'radio',
+      label: 'carte bancaire',
+      value: 'bankcard'
+    });
 
     alert.addButton("Annuler");
     alert.addButton({
       text: 'Ok',
       handler: data => {
-       // console.log('Radio data:', data);
-       if (data == "perfectpayPayment") {
-        
-        this.enterAmountByMobileMoney(data);
-      }
         this.testRadioOpen = false;
         this.testRadioResult = data;
-        if (data == "paypalPayment") {
-          //this.payementService.makepaypalpayment(datatype);
-          //this.makepaypalpayment(datas,datatype);
-          this.enterAmountByCard(data,datatype);
+        switch (data) {
+          case "perfectpayPayment":
+            this.enterAmountByMobileMoney(data);
+            
+            break;
+          case "paypalPayment":
+            this.enterAmountByCard(data,datatype);
+            
+            break;   
+          case "MTNCredit":
+            this.enterAmountByMobileMoney(data);
+            
+            break;  
+          case "bankcard":
+            this.appAvailability.print(this.montant)
+            this.appAvailability.check(
+              'instagram://').then(res=>{
+                console.log(res)
+              },err=>{
+                console.log("error--------------------------")
+              })
+            
+            break;                     
+          default:
+            break;
         }
-
-        if (data == "MTNCredit") {
-          //this.makemtnpayment(datas);
-          //this.payementService.makemtnpayment(datas);
-          this.enterAmountByMobileMoney(data);
-        }
-
-        if (data == "omCredit") {
-          //this.makeOMpayment();
-          //this.makeOMPayment(datas,datatype);
-          //this.payementService.makeOMPayment(datas,datatype);
-          //this.enterAmountByMobileMoney(data,datatype);
-        }
-        
       }
     });
     alert.present().then(() => {
@@ -402,6 +301,9 @@ export class PerfectPaymentPage {
     });
   } 
 
+  /**
+   * nfc test not functionnal
+   */
   payNFC(){
     this.nfc.addNdefListener(() => {
       console.log('successfully attached ndef listener');

@@ -35,6 +35,7 @@ import { QrcodePage } from '../pages/qrcode/qrcode';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { NFC, Ndef } from '@ionic-native/nfc';
+import { AppAvailability } from '@ionic-native/app-availability';
 
 
 @NgModule({
@@ -90,7 +91,9 @@ import { NFC, Ndef } from '@ionic-native/nfc';
     SocialSharing,
     Deeplinks,
     NFC,
-    Ndef
+    Ndef,
+    AppAvailability
+    
     
     
   ]

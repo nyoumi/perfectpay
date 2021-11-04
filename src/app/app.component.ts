@@ -14,6 +14,7 @@ import { PayementService } from '../services/payement.service';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { GimacHistoryPage } from '../pages/gimac/gimac-history/gimac-history';
 import { GimacPaymentPage } from '../pages/gimac/gimac-payment/gimac-payment';
+import { HistoryPage } from '../pages/history/history';
 
 
 @Component({

@@ -30,11 +30,12 @@
           </ion-select>
         </ion-item>
         <ion-item class="form-item">
-          <ion-input class="text-input" formControlName="montant" type="number"  autocorrect="off" autocapitalize="none" name="montant" placeholder="montant"></ion-input>
+          <ion-input formControlName="code_marchand" class="text-input" type="text" autocorrect="off" autocapitalize="none" name="raison" placeholder="code du marchand"></ion-input>
         </ion-item>
         <ion-item class="form-item">
-          <ion-input formControlName="code_marchand" class="text-input" type="text" autocorrect="off" autocapitalize="none" name="raison" placeholder="code du marchand"></ion-input>
-        </ion-item>  
+          <ion-input class="text-input" formControlName="montant" type="number"  autocorrect="off" autocapitalize="none" name="montant" placeholder="montant"></ion-input>
+        </ion-item>
+   
   
       </ion-list>
     
@@ -45,6 +46,7 @@
       <button ion-button icon-left   block class="login-button"  (tap)="scanCode()"><ion-icon name="qr-scanner"></ion-icon> code QR</button>
   
     </div>
+   
   <!--   <div  text-center>
       <button ion-button icon-left   block class="login-button"  (tap)="generate()"><ion-icon name="qr-scanner"></ion-icon> code QR</button>
   

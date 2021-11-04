@@ -118,11 +118,7 @@ export class Services {
     let action="action=View_liste_encaissements_services";
 
   return new Promise(resolve => {
-<<<<<<< HEAD
     this.http.get("https://" + environment.server +environment.apilink+action+ "&indexe_users="+idClient+"&IndexeService="+idService)
-=======
-    this.http.get("http://" + environment.server + environment.apilink+action+"&indexe_users="+idClient)
->>>>>>> master
       .subscribe(data => {
         //console.log(data._body); 
         //data=JSON.stringify(data).slice(0, -3)

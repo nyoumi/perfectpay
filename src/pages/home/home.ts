@@ -12,7 +12,6 @@ import { QrcodePage } from '../qrcode/qrcode';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -49,6 +48,7 @@ export class HomePage {
     private toastCtrl: ToastController,
     private payementService:PayementService,
     public loadingController: LoadingController) {
+   
 
       Notify.init({
         width: '280px',
@@ -78,7 +78,7 @@ export class HomePage {
         console.log(notifications);
         console.log( this.notifications);
 
-        if(notifications.length){
+        if(notifications  && notifications.length){
           console.log(notifications.length)
           this.notifications=notifications;
           console.log( this.notifications);
@@ -100,7 +100,9 @@ export class HomePage {
       console.log(user)
       if(user)
       this.services.getMerchantServices(this.user[0].Indexe).then((res:any)=>{
+        //serveur instable
         if(typeof res === 'string'){
+          res=res.trim()
           console.log(res)
           res=this.setCharAt(res,res.length-3,"")
           res=JSON.parse(res)
@@ -645,8 +647,7 @@ export class HomePage {
     alert.setMessage("Contactez-nous par Tel: (Std) +237 (2) 33 52 00 02 / +237 (2) 33 52 00 03 <br>Email: info@kakotel.com")
     alert.setMode("ios")
     alert.present()
-
-
+ 
   }
   createSecret(){
     let alert = this.alerCtrl.create({

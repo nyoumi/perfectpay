@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-<<<<<<< HEAD
 import { AlertController, LoadingController, NavController, NavParams } from 'ionic-angular';
-=======
-import { AlertController, IonicPage, LoadingController, NavController } from 'ionic-angular';
->>>>>>> master
 import { FormBuilder} from '@angular/forms';
 import { LoginPage } from '../login/login';
 import { Services } from '../../services/services';
@@ -13,11 +9,7 @@ import { Services } from '../../services/services';
   selector: 'page-history',
   templateUrl: 'history.html'
 })
-@IonicPage(
-  {
-    name: 'HistoryPage' 
-  }
-  )
+
 export class HistoryPage {
   private user:any;
   history: any=[];

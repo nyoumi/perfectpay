@@ -207,7 +207,7 @@ export class PerfectPaymentPage {
             
             break;  
           case "bankcard":
-            this.appAvailability.print(this.montant)
+           // this.appAvailability.print(this.montant)
             this.appAvailability.check(
               'instagram://').then(res=>{
                 console.log(res)

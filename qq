@@ -1,0 +1,267 @@
+[33mcommit e7670a5ea97a5bdb7ecf3d6751b3b8f9110c6d8b[m[33m ([m[1;36mHEAD[m[33m)[m
+Merge: 9948f8c 963ea82
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Fri Nov 12 19:44:55 2021 +0100
+
+    Merge branch 'marchand2'
+
+[33mcommit 9948f8caa808b27f52f4831a8763eb038e681805[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Fri Nov 12 19:44:40 2021 +0100
+
+    nothing
+
+[33mcommit 963ea82f3ab2bff0f3e8dfb575e3863c67c21f02[m[33m ([m[1;31morigin/marchand2[m[33m, [m[1;32mmarchand2[m[33m)[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Fri Nov 12 14:58:26 2021 +0100
+
+    lecteur de cartes plugin
+
+[33mcommit ad17954aa0afae79e9ff670a4b5d2d18f1f30720[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Thu Nov 4 12:41:10 2021 +0100
+
+    save_gilles
+
+[33mcommit 904e0b36b6f85057225a5fcca5ce77799fd48247[m
+Merge: 044732c dc10085
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Wed Nov 3 13:17:36 2021 +0100
+
+    after merged qrcode
+
+[33mcommit dc100854df2180f14d7bd2f82836d46878aaa9a2[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Wed Nov 3 13:09:36 2021 +0100
+
+    qr code
+
+[33mcommit 183bfb9b7158a7caa6b2183f60bcc79d003a6614[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Sun Oct 31 02:55:13 2021 +0100
+
+    deeplink
+
+[33mcommit 728d28d54b9bddaf4f01bead8819705ee1250f05[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Sat Oct 30 21:18:50 2021 +0100
+
+    qr event
+
+[33mcommit 8afba05361737a5d135d67acfd18a8af04f54c01[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Sat Oct 30 16:51:39 2021 +0100
+
+    mmmmm
+
+[33mcommit 904d513c5c2ed07cd3af0cf24cbe85a47120f455[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Sat Oct 30 14:57:01 2021 +0100
+
+    ddddd
+
+[33mcommit 4fc759552428d0d3eb452d5d1581cf0c0592832c[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Sat Oct 30 12:07:17 2021 +0100
+
+    code qr
+
+[33mcommit 044732cf430528e0bb8af4906f822223c849c8dd[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Thu Oct 28 20:20:36 2021 +0100
+
+    test
+
+[33mcommit 580f05b700bc0991ddf5a16e39508e0d6231fa9b[m
+Merge: e5a7db5 142d4fc
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Thu Oct 28 20:19:22 2021 +0100
+
+    erreur
+
+[33mcommit e5a7db5ccf6a249b594b80fd020f11241d32a45a[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Thu Oct 28 20:17:50 2021 +0100
+
+    erreurs
+
+[33mcommit 1601a094422f1117c5b357b6bc10e7b89afee174[m
+Merge: 700befb 9d087e9
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Thu Oct 28 19:58:05 2021 +0100
+
+    after merging
+
+[33mcommit 9d087e9a6740848ac12dc4c9572a7ac7b0a564c3[m[33m ([m[1;32mlist[m[33m)[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Thu Oct 28 19:13:13 2021 +0100
+
+    code qr
+
+[33mcommit 4f865e727ad98326582ec8690203ad0c2eea4346[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Tue Oct 26 19:47:09 2021 +0100
+
+    code qr scanner
+
+[33mcommit 142d4fc6331ef5db599b77b6dd0395ce060cd510[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Tue Oct 26 19:45:35 2021 +0100
+
+    i dont know
+
+[33mcommit 2223a32f21054cafd0dbeb4eacdbdd78ba8e0463[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Tue Oct 26 19:36:59 2021 +0100
+
+    code qr scanner
+
+[33mcommit eacc0950df0af267462f02a77d644b1a3f0604c7[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Tue Oct 26 19:29:07 2021 +0100
+
+    code qr scanner
+
+[33mcommit c9c5c16e49f20ea3f04e2e535c7b309558c753ff[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Fri Sep 24 11:41:08 2021 +0100
+
+    gimac check and make transfert wallet to wallet
+
+[33mcommit 31fac08488efb5adbfd666803f23708d54eae22a[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Fri Sep 24 09:17:30 2021 +0100
+
+    gimac check and make transfert
+
+[33mcommit f256faf3b5377b373d0da8c8ad075faa07f55c01[m
+Author: paul nyoumi <nyoumipaul@yahoo.fr>
+Date:   Thu Sep 23 12:22:11 2021 +0100
+
+    gimac
+
+[33mcommit acfef9d9f3b36f38e1a41051cc385f9e1ee5f951[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Mon Aug 23 10:51:23 2021 +0100
+
+    recharge orange money ok
+
+[33mcommit 8c169da5df5916d5f77d8053d2b1c71afde1f58e[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Mon Aug 23 10:03:25 2021 +0100
+
+    recharge orange money
+
+[33mcommit 8ff72c0cd1fad1d2578087afb22be445e8570ca5[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Tue Aug 17 19:16:11 2021 +0100
+
+    retraits
+
+[33mcommit 700befb935a7e96e8a9010e8e2bc2f896e6b3ed4[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Wed Feb 17 17:47:34 2021 +0100
+
+    paiement mtn
+
+[33mcommit feb3277b69e9bb0824e854c23d88b36251556ddd[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Wed Feb 17 16:16:25 2021 +0100
+
+    mtn paiement
+
+[33mcommit 5ad5d2644651b23dc03dc48bfa141f1cfc05a585[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Wed Feb 17 11:02:35 2021 +0100
+
+    marchands peerfectpay
+
+[33mcommit 29486213f65de7fe3bed246d63154351ca3d650e[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Wed Feb 17 07:15:36 2021 +0100
+
+    payment encaissement
+
+[33mcommit df1858353bf961e23e23e4a98e49bfce7090782f[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Tue Feb 16 17:41:09 2021 +0100
+
+    services marchands2
+
+[33mcommit 4453d5e413c8807e8fae80e2dedcaa7095fc553a[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Tue Feb 16 17:37:18 2021 +0100
+
+    services marchands
+
+[33mcommit ccd818ae558ed087a236bb02118d86b6b09bb53a[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Tue Feb 2 09:38:26 2021 +0100
+
+    mise à jour de sécurité
+
+[33mcommit 92572012b9ed15ff632b73c56c8a7dbe9573f531[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Mon Feb 1 14:26:51 2021 +0100
+
+    en https
+
+[33mcommit f02e0fc6bf623b72045db4b300cae7b65bc89fad[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Sun Jan 17 07:01:14 2021 +0100
+
+    sauvegarde
+
+[33mcommit ac1bbe9084892ace36ab3954e87cf45d43b45d53[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Sat Jan 16 10:18:01 2021 +0100
+
+    last
+
+[33mcommit b25fd1263aa53b6a4e065315e2ca80c33a733d3a[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Fri Jan 15 22:33:31 2021 +0100
+
+    last commi5
+
+[33mcommit 8ec5cd8c517a14ab12e0fba2a1b2ddc6c1d7983b[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Fri Jan 15 19:40:46 2021 +0100
+
+    pushing3
+
+[33mcommit 6ab048b2e8ec3a3d38e3ccd0892d775cadbd6fd2[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Fri Jan 15 16:15:33 2021 +0100
+
+    pushing
+
+[33mcommit 84c71d0641f6d1c360c3438f7ac6d5ac6160c4a3[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Fri Jan 15 14:28:30 2021 +0100
+
+    code secret création
+
+[33mcommit 51f6369c047eb060b799eb586942da205adc84f8[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Mon Jan 11 14:50:10 2021 +0100
+
+    last commit
+
+[33mcommit 81fc10ffe236aa0be9b6ea0504a35dcdb7c329cd[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Sun Dec 6 01:15:47 2020 +0100
+
+    redirection kmertv.iplans.cm
+
+[33mcommit 41b35d2c43b640e5f336d15f758336af1ef1afef[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Thu Nov 5 20:45:52 2020 +0100
+
+    first commit
+
+[33mcommit 2729b46e58ef17eb435a2265799f92bda3b854b4[m
+Author: nyoumi <nyoumipaul@yahoo.fr>
+Date:   Wed Nov 4 19:58:23 2020 +0100
+
+    Initial commit

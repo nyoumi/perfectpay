@@ -50,7 +50,7 @@
   
     </div> --> 
   <div  text-center>
-    <button ion-button   block class="login-button" [disabled]="!formgroup.valid" (tap)="checkPayment()">Payer</button>
+    <button ion-button   block class="login-button" [disabled]="!formgroup.valid || wallet==null" (tap)="checkPayment()">Payer</button>
 
   </div>
   

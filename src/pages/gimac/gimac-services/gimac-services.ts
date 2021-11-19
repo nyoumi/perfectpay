@@ -267,10 +267,11 @@ return new Promise(resolve => {
 } 
 
 checkPayment(transferInfos) {
-  let link="action=chek_marchand_code&"+
-  "Code_client="+transferInfos.CodeClientExpediteur+
+  let link="action=Solde_paiement_Marchand_Mobile&"+
+  "Code_clientExpediteur="+transferInfos.CodeClientExpediteur+
   "&CodeMarchand="+transferInfos.Code_marchand+
-  "&Montant="+transferInfos.Montant;
+  "&Montant="+transferInfos.Montant+
+  "&WalletMarchand="+transferInfos.walletMarchand;
  
 
 return new Promise(resolve => {
@@ -291,9 +292,12 @@ return new Promise(resolve => {
 });
 }
 makePayment(transferInfos,codeSecret) {
-  let link="action=paiement_marchand_mobile&Code_client="+transferInfos.CodeClientExpediteur+
+  let link="action=Valide_paiement_Marchand_Mobile"+
+  "&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+
   "&CodeMarchand="+transferInfos.Code_marchand+
   "&Montant="+transferInfos.Montant+
+  "&WalletMarchand="+transferInfos.walletMarchand+
+  "&ReferenceTransaction=achat_"+transferInfos.CodeClientExpediteur+
   "&CodeSecurite="+codeSecret;
 
 return new Promise(resolve => {

@@ -3,10 +3,9 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule, IonicPageModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 
 import { LoginPage } from '../pages/login/login';
-
+import { HomePage } from '../pages/home/home';
 import { RegisterPage } from '../pages/register/register';
 import { PerfectTransfertPage } from '../pages/pertfect-transfert/perfect-transfert';
 import { PerfectPaymentPage } from '../pages/pertfect-payment/perfect-payment'
@@ -35,6 +34,7 @@ import { QrcodePage } from '../pages/qrcode/qrcode';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { NFC, Ndef } from '@ionic-native/nfc';
+import { AppAvailability } from '@ionic-native/app-availability';
 
 
 @NgModule({
@@ -90,7 +90,9 @@ import { NFC, Ndef } from '@ionic-native/nfc';
     SocialSharing,
     Deeplinks,
     NFC,
-    Ndef
+    Ndef,
+    AppAvailability
+    
     
     
   ]

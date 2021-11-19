@@ -8,15 +8,13 @@ import { PerfectTransfertPage } from '../pages/pertfect-transfert/perfect-transf
 import { LoginPage } from '../pages/login/login';
 import { PerfectPaymentPage } from '../pages/pertfect-payment/perfect-payment';
 import { Services } from '../services/services'; 
-import { HistoryPage } from '../pages/history/history';
-import { ExchangeRatePage } from '../pages/exchange-rate/exchange-rate';
 import { FormBuilder } from '@angular/forms';
 import { PayementService } from '../services/payement.service';
-import { PerfectRetraitPage } from '../pages/pertfect-retrait/perfect-retrait';
 
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { GimacHistoryPage } from '../pages/gimac/gimac-history/gimac-history';
 import { GimacPaymentPage } from '../pages/gimac/gimac-payment/gimac-payment';
+import { HistoryPage } from '../pages/history/history';
 
 
 @Component({
@@ -25,7 +23,7 @@ import { GimacPaymentPage } from '../pages/gimac/gimac-payment/gimac-payment';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any ;
   status:boolean;
   user:any;
 
@@ -38,18 +36,15 @@ export class MyApp {
     public formbuilder: FormBuilder,
     public services: Services, 
     private toastCtrl: ToastController,
-    private payementService:PayementService,
     public loadingController: LoadingController,
      public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Historique', component: HistoryPage },
-      { title: 'Transfert', component: PerfectTransfertPage },
-      { title: "Paiement Marchand", component: PerfectPaymentPage, },
-      { title: "Nouveau Retrait", component:  PerfectRetraitPage },
-
+      { title: 'home', component: HomePage },
+      { title: 'transfert', component: PerfectTransfertPage },
+      { title: "paiement", component: PerfectPaymentPage, },
 /*       { title: "Taux de change", component: ExchangeRatePage },
  */
 

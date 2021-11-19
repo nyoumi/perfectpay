@@ -125,7 +125,8 @@ export class GimacPaymentPage implements OnInit {
     this.transferInfo={
       Code_marchand: this.code_marchand.value,
       Montant:this.montant.value,   
-      CodeClientExpediteur:this.user[0].Telephone
+      CodeClientExpediteur:this.user[0].Telephone,
+      walletMarchand:this.wallet
     }
     
       this.services.checkPayment(this.transferInfo).then((result: any) => {
@@ -134,8 +135,7 @@ export class GimacPaymentPage implements OnInit {
         //console.log(result);
         switch (result.succes) {
           case 1:
-            console.log(result.resultat)
-            this.handle(result.resultat[0])
+            this.handle(result.msg)
             break;
 
                                   
@@ -151,12 +151,8 @@ export class GimacPaymentPage implements OnInit {
   handle( response){
     let alert = this.alerCtrl.create({
       title: 'Confirmation',
-      message: 'Vous êtes sur le point d\'effectuer le paiement suivant:<br/>'+
-      'Marchand:<b>'+response.NomMarchand+'</b><br/>'+ 
-      'Montant:<b>'+response.Montant+' FCFA</b><br/>'+
-      'Frais:<b>'+response.Frais+' FCFA</b><br/>'+ 
-      'Montant Total:<b>'+response.MonantNet+' FCFA</b><br/>'+ 
-      '<b>Veuillez entrer votre code secret pour confirmer</b>',
+      subTitle:"Enter your secret code",
+      message: response,
       inputs: [
         {
           name: 'secret_code',
@@ -180,6 +176,7 @@ export class GimacPaymentPage implements OnInit {
         }
       ]
     });
+    alert.setMode("ios")
     alert.present()
 
     
@@ -192,87 +189,19 @@ export class GimacPaymentPage implements OnInit {
       console.log(result.resultat)
       let alert = this.alerCtrl.create();
       alert.setTitle("Echec de l'opération" );
+      alert.setMode("ios")
+
 
       switch (result.succes) {
         case 1:
 
           alert.setTitle("Opération effectuée avec succès" );
-          alert.setMode("ios");
-          alert.setMessage("Votre opération s'est déroulée avec sussès! Vous recevrez un message d'information.");
+          alert.setMessage(result.msg);
       
           break;
-        case -1:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-          
-          break;
-        case -2:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -3:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -4:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -5:
-          
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -6:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-
-        case -7:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -8:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -9:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-
-
-          break;
-        case -10:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-          break;    
-
         default:
+          this.message=result.msg
+          alert.setMessage(result.msg);
           break;
       }
       alert.addButton("OK")

@@ -76,7 +76,7 @@ export class HomePage {
         console.log(notifications);
         console.log( this.notifications);
 
-        if(notifications.length){
+        if(notifications && notifications.length){
           console.log(notifications.length)
           this.notifications=notifications;
           console.log( this.notifications);

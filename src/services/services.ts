@@ -461,7 +461,7 @@ disconnect() {
     }))); 
   }
   
-  daoAddNotifications(notification) {
+  daoAddNotification(notification) {
     
     localForage.getItem('notifications', function (err, value:string) { 
       let notifications:Array<any>;
@@ -472,6 +472,26 @@ disconnect() {
       }else{
         notifications= new Array();
         notifications.push(notification)
+      }
+      localForage.setItem('notifications',notifications,function (err, value) {
+        if(err) return false;
+        
+      });
+      return true
+
+    })
+   
+  }  
+  daoDeleteNotification(id) {
+    
+    localForage.getItem('notifications', function (err, value: Array<any>) { 
+      let notifications:Array<any>;
+      if(value!=null) {
+        notifications= value
+        notifications=notifications.filter(function (el) {
+          return el.id!=id;
+        })
+        
       }
       localForage.setItem('notifications',notifications,function (err, value) {
         if(err) return false;

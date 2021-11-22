@@ -34,11 +34,14 @@ import { QrcodePage } from '../pages/qrcode/qrcode';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { NFC, Ndef } from '@ionic-native/nfc';
-import { AppAvailability } from '@ionic-native/app-availability';
+import { HistoryPage } from '../pages/history/history';
+import { NotificationPage } from '../pages/notification/notification';
+import { Firebase } from '@ionic-native/firebase';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 
 @NgModule({
-  declarations: [
+  declarations: [   
     MyApp,
     HomePage,
     LoginPage,
@@ -46,10 +49,12 @@ import { AppAvailability } from '@ionic-native/app-availability';
     PerfectTransfertPage ,  
     PerfectPaymentPage,
     PerfectRetraitPage,
+    HistoryPage,
     QrcodePage,
+    NotificationPage  
 
 
-  ],
+  ], 
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
@@ -71,6 +76,9 @@ import { AppAvailability } from '@ionic-native/app-availability';
     PerfectPaymentPage ,
     PerfectRetraitPage,
     QrcodePage,
+    HistoryPage,
+    NotificationPage   
+
     
     
 
@@ -91,8 +99,8 @@ import { AppAvailability } from '@ionic-native/app-availability';
     Deeplinks,
     NFC,
     Ndef,
-    AppAvailability
-    
+    Firebase,
+    LocalNotifications    
     
     
   ]

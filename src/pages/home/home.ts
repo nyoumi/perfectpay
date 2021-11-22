@@ -10,7 +10,7 @@ import { LoginPage } from '../login/login';
 import { HomeGimacPage } from '../gimac/home-gimac/home-gimac';
 import { QrcodePage } from '../qrcode/qrcode';
 
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { NotificationPage } from '../notification/notification';
 
 
 @Component({
@@ -28,15 +28,25 @@ export class HomePage {
       "message": "vous evez reçu un montant de 5000Fcfa de 696844889 le 12/12/2021 à 15h. IDTransaction: re147d5d85c8f ",
       "page":"HistoryPage",
       "date":"18/12/2021 12:30",
-      "status":"unread"
+      "status":"unread",
+      "id":"1"
     },
     {
       "titre":"Tranfert entrant",
       "message": "le 12/12/2021 à 15h. IDTransaction: re147d5d85c8f ",
       "page":"HistoryPage",
       "date":"18/12/2021 12:30",
-      "status":"unread"
-    }
+      "status":"unread",
+      "id":"2"
+    },
+    {
+      "titre":"Tranfert entrant",
+      "message": "vous evez reçu un montant de 5000Fcfa de 696844889 le 12/12/2021 à 15h. IDTransaction: re147d5d85c8f ",
+      "page":"HistoryPage",
+      "date":"18/12/2021 12:30",
+      "status":"read",
+      "id":"3"
+    },
   ];
   private showNotification;
 
@@ -48,29 +58,7 @@ export class HomePage {
     private payementService:PayementService,
     public loadingController: LoadingController) {
 
-      Notify.init({
-        width: '280px',
-        position: 'right-top',
-        distance: '40px',
-        opacity: 1,
-        clickToClose: true,
-        closeButton: true,
-        borderRadius: '10px',
-        useIcon: false,
-
-
-        info: {
-          background: '#fff',
-          textColor: '#000',
-          childClassName: 'notiflix-notify-info',
-          notiflixIconColor: 'rgba(0,0,0,0.2)',
-          fontAwesomeClassName: 'fas fa-info-circle',
-          fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
-          backOverlayColor: 'rgba(38,192,211,0.2)',
-        }
-
-        // ...
-      });
+    
 
       this.services.daoGetNotifications().then((notifications:any)=>{
         console.log(notifications);
@@ -111,21 +99,9 @@ export class HomePage {
     console.log("ffdfd")
   }
   viewNotifications() {
+    this.navCtrl.push(NotificationPage)
     
-    this.notifications.forEach(notification => {
-      let parent=this;
-     setTimeout(() => {
-      Notify.info(notification.message,{
-          clickToClose:true,
-          closeButton:true,
-          position:'right-top',
-          cssAnimation:true,
-          distance: "10px",
-          
-        });
-     }, 200);
-      
-    });
+
     this.notifications=[];
     this.unread=0
     this.services.daoclearNotifications()

@@ -73,6 +73,12 @@ page-history {
     /* display: block; */
     text-align: center;
 }
+.toolbar-title {
+    padding: 0 12px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #ffffff;
+}
 .text-input::-moz-placeholder {
     color: rgba(255, 255, 255, 0.76);
   }
@@ -80,7 +86,12 @@ page-history {
   .text-input:-ms-input-placeholder {
     color: rgba(255, 255, 255, 0.788);
   }
-  
+  ion-row.entry.row:hover {
+    background: #d1a9a9;
+}
+ion-row.entry.row:focus {
+    background: #d1a9a9;
+}
   .text-input::-webkit-input-placeholder {
     color: rgba(255, 255, 255, 0.815);
   }

@@ -196,7 +196,11 @@ return new Promise(resolve => {
   this.http.get("https://" + environment.server + environment.apiGimacLink+link)
   .subscribe(data => {
       //console.log(data._body); 
-      console.log(data.json())
+      try {
+        console.log(data.json())
+      } catch (error) {
+        resolve(data);
+      }
       resolve(data.json());
     }, err => {
       //console.log("Error"); 
@@ -210,6 +214,62 @@ makeTransfertBank(transferInfos,secretCode){
   transferInfos.Code_clientDestinataire+"&Montant="+transferInfos.Montant+"&WalletDestinataire="+transferInfos.WalletDestinataire+"&ReferenceTransaction="+transferInfos.reference+"&CodeSecurite="+secretCode;
  
 
+return new Promise(resolve => {
+  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+  .subscribe(data => {
+      //console.log(data._body); 
+      console.log(data.json())
+      resolve(data.json());
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+
+checkVoucher(transferInfos) {
+
+  this.transferInfos=transferInfos;
+  let link="action=Solde_retrait_sansCarte_Mobile&CodeClient="+environment.perfectPhone+
+  "&CodeAPI="+environment.codeApi+"&Projet=PERFECTPAY&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&Montant="+transferInfos.Montant;
+
+ 
+  if(transferInfos.reference){
+    link=link+"&ReferenceTransaction="+transferInfos.reference
+  }
+  if(transferInfos.Code_clientDestinataire){
+    link=link+"&Code_clientDestinataire="+transferInfos.Code_clientDestinataire
+  }
+  if(transferInfos.Code_clientDestinataire){
+    link=link+"&Code_clientDestinataire="+transferInfos.Code_clientDestinataire
+  }
+return new Promise(resolve => {
+  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+    .subscribe(data => {
+      //console.log(data._body); 
+      let result=-1;
+      try {
+        result=data.json()
+      } catch (error) {
+        
+      }
+      resolve(result);
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+makeVoucher(transferInfos,secretCode){
+  let link="action=Valide_retrait_sansCarte_Mobile&Code_clientExpediteur="+environment.perfectPhone
+  +"&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&Montant="+transferInfos.Montant+"&CodeSecurite="+secretCode;
+ 
+  if(transferInfos.reference){
+    link=link+"&ReferenceTransaction="+transferInfos.reference
+  }
+  if(transferInfos.WalletDestinataire){
+    link=link+"&Code_clientDestinataire="+transferInfos.Code_clientDestinataire
+  }
 return new Promise(resolve => {
   this.http.get("https://" + environment.server + environment.apiGimacLink+link)
   .subscribe(data => {

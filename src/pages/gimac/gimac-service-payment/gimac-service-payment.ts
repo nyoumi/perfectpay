@@ -4,14 +4,12 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
 
-import { NgxQRCodeModule } from "ngx-qrcode2";
-import { GimacScannerPage } from '../gimac-scanner/gimac-scanner';
 import { LoaderController } from '../../../app/LoaderController';
 @Component({
-  selector: 'page-gimac-payment',
-  templateUrl: 'gimac-payment.html'
+  selector: 'page-gimac-service-payment',
+  templateUrl: 'gimac-service-payment.html'
 })
-export class GimacPaymentPage implements OnInit {
+export class GimacServicePaymentPage implements OnInit {
   @Input() open: EventEmitter<any> = new EventEmitter();
 
 
@@ -214,7 +212,4 @@ export class GimacPaymentPage implements OnInit {
     })
   }
    
-  scanCode(){
-   this.navCtrl.push(GimacScannerPage)
-}
 }

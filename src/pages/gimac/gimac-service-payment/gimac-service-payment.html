@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Paiement marchand</ion-title>
+    <ion-title>Paiement de service</ion-title>
     <div class="frontImage"> 
 
     </div>
@@ -15,7 +15,7 @@
     <form (submit)="login()"  [formGroup]="formgroup">
       <div class="form-content">
       <div  text-center >
-        <h6>Paiement </h6>
+        <h6>Paiement de service</h6>
       </div>
       <ion-list>
         <ion-item class="form-item" >
@@ -30,12 +30,11 @@
           </ion-select>
         </ion-item>
         <ion-item class="form-item">
-          <ion-input formControlName="code_marchand" class="text-input" type="text" autocorrect="off" autocapitalize="none" name="raison" placeholder="code du marchand"></ion-input>
-        </ion-item> 
-        <ion-item class="form-item">
           <ion-input class="text-input" formControlName="montant" type="number"  autocorrect="off" autocapitalize="none" name="montant" placeholder="montant"></ion-input>
         </ion-item>
- 
+        <ion-item class="form-item">
+          <ion-input formControlName="code_marchand" class="text-input" type="text" autocorrect="off" autocapitalize="none" name="raison" placeholder="code du marchand"></ion-input>
+        </ion-item>  
   
       </ion-list>
     

@@ -11,6 +11,7 @@ import { HomeGimacPage } from '../gimac/home-gimac/home-gimac';
 import { QrcodePage } from '../qrcode/qrcode';
 
 import { NotificationPage } from '../notification/notification';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 
 @Component({
@@ -50,7 +51,7 @@ export class HomePage {
   ];
   private showNotification;
 
-  constructor(public navCtrl: NavController,public menuCtrl: MenuController,
+  constructor(public navCtrl: NavController,public menuCtrl: MenuController,private localNotifications: LocalNotifications,
     public alerCtrl: AlertController,
     public formbuilder: FormBuilder,
     public services: Services, 
@@ -100,6 +101,15 @@ export class HomePage {
   }
   viewNotifications() {
     this.navCtrl.push(NotificationPage)
+    console.log("dddddddddddd")
+    this.localNotifications.schedule({
+      id: 1,
+      title: 'firebase',
+      text: "data.content",
+      data:{
+        title: "datatitle"
+      }
+    });
     
 
     this.notifications=[];

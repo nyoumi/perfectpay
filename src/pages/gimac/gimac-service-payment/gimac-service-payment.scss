@@ -1,4 +1,4 @@
-page-voucher-history {
+page-gimac-service-payment {
     .scroll-content {
         background: #ffe4c400;
     }
@@ -10,12 +10,6 @@ page-voucher-history {
         font-family: CaviarDreams;
         
     }
-    .toolbar-title {
-        padding: 0 12px;
-        font-size: 1.5rem;
-        font-weight: 500;
-        color: #ffffff;
-    }
     .content-md {
         color: #fff;
         background-image: url('../assets/imgs/fond.jpg');
@@ -23,11 +17,14 @@ page-voucher-history {
         background-repeat: no-repeat;
         
     }
-    ion-row.entry.row:hover {
-        background: #d1a9a9;
-    }
-    ion-row.entry.row:focus {
-        background: #d1a9a9;
+    .frontImage {
+        color: #fff;
+        background-image: url(../assets/imgs/perfectpay.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 30%;
+        margin-left: 10%;
     }
     .content-ios {
         color: #fff;
@@ -71,7 +68,8 @@ page-voucher-history {
 }
 .scroll-content{
     padding-bottom: 0 !important;
-
+    padding-left: 40px !important;
+    padding-right: 40px !important;
 
 }
 .item-input ion-input{
@@ -124,6 +122,12 @@ ion-img.appImage.img-loaded {
  
     background: transparent;
 }
+.toolbar-title {
+    padding: 0 12px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #ffffff;
+}
 .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
     color: #b31c23;
 }
@@ -132,8 +136,8 @@ ion-img.appImage.img-loaded {
 }
 .form-content{
     border: 1px solid #fff;
-    margin-bottom: 16px;
-    padding-top:16px;
+    padding: 16px;
+    margin-bottom: 26px;
 
 }
 .form-item{
@@ -142,20 +146,11 @@ ion-img.appImage.img-loaded {
     margin-bottom: 16px;
     height: 30px;
 }
-
-ion-row.entry.row {
-    padding-top: 6px;
-    padding-bottom: 6px;
-    background: #bbb9b538;
-    border-bottom: 1px solid white;
-}
-.col {
-    padding: 0;
-    border-right: 1px dashed white;
-    text-align: center;
+.header-img{
+    max-width: 40%;
 }
 
-.toolbar-title-md { 
+.toolbar-title-md {
     padding: 0 12px;
     font-size: 2rem;
     font-weight: 500;
@@ -187,8 +182,58 @@ ion-row.entry.row {
 }
 .message-error-text{
     color: #e8aaad;}
-}
-tr {
-    border: 1px solid wheat;
-}
+    ion-select.select {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        color: white;
+        
+    }
+    .select.select-icon {
 
+        margin-right: 2px;
+        left: unset !important;
+    }
+    .select-md .select-icon {
+        position: relative;
+        width: 12px;
+        height: 19px;
+        left: -3px;
+    }
+    .select-placeholder{
+        color: #d0c5c5 !important;
+    }
+ 
+
+    ion-select {
+        .select-icon {
+          .select-icon-inner {
+             color : white !important;
+          }
+        }
+      }
+
+      .advanced{
+        color : white;
+      }
+      
+      .toggle {
+        border: 0 !important;
+        /* padding: 0 !important; */
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        align-items: end;
+        text-align: end;
+    }
+    .toggle-ios{
+        height: -webkit-fill-available;
+        padding: 0 !important;
+
+    }
+    ion-item.validity.item.item-block.item-md.item-range {
+        background: transparent;
+        color: white;
+        padding: 0;
+    }
+}

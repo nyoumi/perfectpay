@@ -9,6 +9,7 @@ import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
 import { GimacVoucherPage } from '../gimac-voucher/gimac-voucher';
 import { QrcodePage } from '../../qrcode/qrcode';
+import { GimacServicePaymentPage } from '../gimac-service-payment/gimac-service-payment';
 
 
 @Component({
@@ -49,6 +50,11 @@ export class HomeGimacPage {
   }
   gotoVoucher(){
     this.navCtrl.push(GimacVoucherPage)
+
+
+  }
+  gotoServicePayment(){
+    this.navCtrl.push(GimacServicePaymentPage)
 
 
   }

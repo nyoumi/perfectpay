@@ -15,7 +15,6 @@ import { Deeplinks } from '@ionic-native/deeplinks';
 import { GimacHistoryPage } from '../pages/gimac/gimac-history/gimac-history';
 import { GimacPaymentPage } from '../pages/gimac/gimac-payment/gimac-payment';
 import { HistoryPage } from '../pages/history/history';
-import { Firebase } from '@ionic-native/firebase';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 
@@ -30,10 +29,11 @@ export class MyApp {
   user:any;
 
 
+
   pages: Array<{title: string, component: any}>;
   secretStatus: boolean=false;
 
-  constructor(public platform: Platform, protected deeplinks: Deeplinks,private firebase: Firebase,private localNotifications: LocalNotifications,
+  constructor(public platform: Platform, protected deeplinks: Deeplinks,private localNotifications: LocalNotifications,
       public alerCtrl: AlertController,
     public formbuilder: FormBuilder,
     public services: Services, 
@@ -108,23 +108,8 @@ export class MyApp {
         console.error('Got a deeplink that didn\'t match', nomatch);
       });
 
-      this.firebase.getToken()
-      .then(token => console.log(`The token is ${token}`)) // save the token server-side and use it to push notifications to this device
-      .catch(error => console.error('Error getting token', error));
-      this.firebase.onNotificationOpen()
-      .subscribe(data =>{
-        console.log(`User opened a notification ${data}`)
-        this.localNotifications.schedule({
-          id: 1,
-          title: 'firebase'+data.title,
-          text: data.content,
-          data:data
-        });
-      }
-        );
+  
 
-      this.firebase.onTokenRefresh()
-      .subscribe((token: string) => console.log(`Got a new token ${token}`));
     });
       /**
      * verifie si c'est la première utilisation

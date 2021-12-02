@@ -171,16 +171,10 @@ export class GimacVoucherPage implements OnInit {
   }
 
   launchcheck(){
-    if(this.showBank){
-      this.checkTransfertBank()
-    }else {
-      (this.showWallet)
-      this.checkTransfertMNO()
-    }
-    
+      this.checkVoucher()
   }
   
-  checkTransfertMNO() {
+  checkVoucher() {
 
     this.message=""
     let loading = this.loadingController.create({ content: "Traitement..."});
@@ -193,7 +187,7 @@ export class GimacVoucherPage implements OnInit {
 
     }
     
-      this.services.checkTransfertMNO(this.transferInfo).then((result: any) => {
+      this.services.checkVoucher(this.transferInfo).then((result: any) => {
            console.log(result)
         loading.dismiss();
         //console.log(result);
@@ -213,37 +207,6 @@ export class GimacVoucherPage implements OnInit {
   
   }
 
-  checkTransfertBank() {
-
-    this.message=""
-    let loading = this.loadingController.create({ content: "Traitement..."});
-    loading.present();
-    this.transferInfo={
-      Code_clientDestinataire: this.account.value,
-      Montant:this.montant.value,   
-      CodeClientExpediteur:this.user[0].Telephone,
-      WalletDestinataire:this.wallet
-
-    }
-    
-      this.services.checkTransfertBank(this.transferInfo).then((result: any) => {
-           console.log(result)
-        loading.dismiss();
-        //console.log(result);
-        switch (result.succes) {
-          case 1:
-            console.log(result.resultat)
-            this.handle(result)
-            break;
-                                  
-          default:
-            this.message=result.msg
-            break;
-        }
-
-    });
-  
-  }
 
 
   handle( response){
@@ -269,12 +232,7 @@ export class GimacVoucherPage implements OnInit {
           handler: data => {
             if(!data.secret_code) return
             console.log(data.secret_code)
-            if(this.showWallet){
-              this.makeTransfertMNO(this.transferInfo,data.secret_code)
-            }else{
-              this.makeTransfertBank(this.transferInfo,data.secret_code)
-            }
-           
+              this.makeVoucher(this.transferInfo,data.secret_code)
           }
         }
       ]
@@ -285,10 +243,10 @@ export class GimacVoucherPage implements OnInit {
     
   }
 
-  makeTransfertMNO(transferInfo,secretCode) {
+  makeVoucher(transferInfo,secretCode) {
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
-    this.services.makeTransfertMNO(transferInfo,secretCode).then((result:any)=>{
+    this.services.makeVoucher(transferInfo,secretCode).then((result:any)=>{
       loading.dismiss()
       console.log(result.resultat)
       let alert = this.alerCtrl.create();

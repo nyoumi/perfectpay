@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     
-    <ion-title>Transfert d'argent Gimac</ion-title>
+    <ion-title>Transfert Gimac</ion-title>
     <div class="frontImage"> 
 
     </div>
@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-segment [(ngModel)]="selectedSegment" (ionChange)="onSegmentChanged($event)">
+  <ion-segment [(ngModel)]="selectedSegment" (ionChange)="onSegmentChanged($event)" padding-bottom>
     <ion-segment-button value="showWallet">
       wallet Mobile
     </ion-segment-button>

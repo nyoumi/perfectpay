@@ -36,7 +36,6 @@ import { Deeplinks } from '@ionic-native/deeplinks';
 import { NFC, Ndef } from '@ionic-native/nfc';
 import { HistoryPage } from '../pages/history/history';
 import { NotificationPage } from '../pages/notification/notification';
-import { Firebase } from '@ionic-native/firebase';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 
@@ -57,7 +56,10 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
   ], 
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,{
+      rippleEffect: false,
+      mode: 'ios'
+    }),
     HttpModule,
     GimacModule,
     NgxQRCodeModule,
@@ -99,7 +101,6 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
     Deeplinks,
     NFC,
     Ndef,
-    Firebase,
     LocalNotifications    
     
     

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "370201602770",
+    "project_id": "perfectpay-61321",
+    "storage_bucket": "perfectpay-61321.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370201602770:android:326da583d61bd3a062db0b",
+        "android_client_info": {
+          "package_name": "pay.perfect.kakotel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "370201602770-4t22mt57cngriiduoq4588ot1d3tb7kg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9wNn03B8_-7I9FkKY7gzUlqEIRbGEAyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "370201602770-4t22mt57cngriiduoq4588ot1d3tb7kg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

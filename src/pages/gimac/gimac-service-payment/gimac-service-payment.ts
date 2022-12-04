@@ -5,6 +5,7 @@ import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
 
 import { LoaderController } from '../../../app/LoaderController';
+import { AlertInputOptions } from 'ionic-angular/umd/components/alert/alert-options';
 @Component({
   selector: 'page-gimac-service-payment',
   templateUrl: 'gimac-service-payment.html'
@@ -14,8 +15,9 @@ export class GimacServicePaymentPage implements OnInit {
 
 
   formgroup: FormGroup; 
-  private code_marchand: AbstractControl;
-  private montant: AbstractControl;
+  private reference_abonne: AbstractControl;
+  private reference_abonnement: AbstractControl;
+  private reference_facture:AbstractControl;
   private message="";
   private user:any;
   transferInfo: any;
@@ -23,12 +25,12 @@ export class GimacServicePaymentPage implements OnInit {
   private defaultpaysWallet={pays_id: '1', libelle_label: 'Cameroun'}
   private paysWallet={pays_id: '1', libelle_label: 'Cameroun'}
 
-  wallets: any;
+  wallets:any[] =[];
  
 
   selectOptions: { title: string; subTitle: string; mode: string; };
   selectOptions2 = {
-    title: "selectionnez type de marchand",
+    title: "selectionnez le service",
     subTitle: 'Select wallet',
     mode: 'ios'
   };
@@ -38,13 +40,7 @@ export class GimacServicePaymentPage implements OnInit {
     public alerCtrl: AlertController,
     public formbuilder: FormBuilder,public services: GimacServices, 
     public loadingController: LoaderController) {
-      this.services.scanner.subscribe(datas => {
-        console.log(datas,"datas")
-        datas=JSON.parse(datas)
-        this.code_marchand.setValue(datas.codeClient)
-        this.montant.setValue(datas.montant)
-
-      });
+   
      
       this.services.daoGetStatus().then(status=>{
         if(status!=true){
@@ -53,20 +49,20 @@ export class GimacServicePaymentPage implements OnInit {
   
        });
       this.formgroup = formbuilder.group({
-        code_marchand: ['', Validators.required],
-        montant: ['', Validators.required],
+        reference_abonnement: ['', Validators.required],
+        reference_abonne: [''],
+        reference_facture:['']
       });
-      this.code_marchand = this.formgroup.controls['code_marchand'];
-      this.montant = this.formgroup.controls['montant'];
+      this.reference_abonnement = this.formgroup.controls['reference_abonnement'];
+      this.reference_abonne = this.formgroup.controls['reference_abonne'];
+      this.reference_facture = this.formgroup.controls['reference_facture'];
+
+      
       this.services.daoGetUser().then(user=>{
         this.user=user;
         console.log(user)
       })
-      const datas=this.navParams.data
-      if(datas){
-        this.montant.setValue(datas.montant)
-        this.code_marchand.setValue(datas.codeClient)
-      }
+      
       this.selectOptions = {
         title: "selectionnez le pays",
         subTitle: 'Select the country',
@@ -74,10 +70,11 @@ export class GimacServicePaymentPage implements OnInit {
       };
   }
   ngOnInit(): void {
-    this.getGimacMNOCountries()
+    this.getGimacCountries()
+    this.onChangeWallet(this.paysWallet.pays_id)
   }
-  getGimacMNOCountries() {
-    this.services.getGimacMNOCountries().then((result: any) => {
+  getGimacCountries() {
+    this.services.getGimacCountries().then((result: any) => {
       console.log(result)
     
     //console.log(result);
@@ -100,7 +97,7 @@ export class GimacServicePaymentPage implements OnInit {
     let loading = this.loadingController.create({ content: "Chargement...",enableBackdropDismiss:false});
     loading.present();
     
-    this.services.getGimacMNOWallets(event).then((result: any) => {
+    this.services.getGimacBillers(event).then((result: any) => {
       loading.dismiss();
       console.log(result)
         switch (result.succes) {
@@ -117,25 +114,55 @@ export class GimacServicePaymentPage implements OnInit {
 
   }
 
-  checkPayment() {
+   inquiryBills() {
 
     this.message=""
     let loading = this.loadingController.create({ content: "Traitement...",enableBackdropDismiss:false});
     loading.present();
     this.transferInfo={
-      Code_marchand: this.code_marchand.value,
-      Montant:this.montant.value,   
+      Service: this.wallets.find(({ code_walet }) => code_walet === this.wallet).service,
+      ReferenceAbonnement:this.reference_abonnement.value,   
+      ReferenceAbonne:this.reference_abonne.value, 
+      ReferenceFacture:this.reference_facture.value,
       CodeClientExpediteur:this.user[0].Telephone,
-      walletMarchand:this.wallet
+      CodeBiller:this.wallet
     }
+    this.handle({});
     
-      this.services.checkPayment(this.transferInfo).then((result: any) => {
+     /*  this.services.billsInquiry(this.transferInfo).then((result: any) => {
+        console.log(result)
+        loading.dismiss();
+        //console.log(result);
+        switch (result.succes) {
+          case 1:
+            this.handle(result.billList)
+            break;
+
+                                  
+          default:
+            this.message=result.msg
+
+            break;
+        }
+
+    }); */
+  
+  }
+
+  checkPayment() {
+
+    this.message=""
+    let loading = this.loadingController.create({ content: "Traitement...",enableBackdropDismiss:false});
+    loading.present();
+   
+    
+      this.services.checkServicePayment(this.transferInfo).then((result: any) => {
            console.log(result)
         loading.dismiss();
         //console.log(result);
         switch (result.succes) {
           case 1:
-            this.handle(result.msg)
+            this.handlePaiement(result)
             break;
 
                                   
@@ -148,11 +175,12 @@ export class GimacServicePaymentPage implements OnInit {
     });
   
   }
-  handle( response){
+
+  handlePaiement(result){
     let alert = this.alerCtrl.create({
       title: 'Confirmation',
       subTitle:"Enter your secret code",
-      message: response,
+      message: result.msg,
       inputs: [
         {
           name: 'secret_code',
@@ -181,10 +209,71 @@ export class GimacServicePaymentPage implements OnInit {
 
     
   }
+
+  handle( response){
+   let factures:AlertInputOptions[]=[];
+   response='[{"billRef":"2500 - 300RWF(1 day)-##7166999731850603770","createTime":1670015318506,"dueTime":1670015318506,"dueAmount":300.0,"currency":"950","status":"U"},{"billRef":"2500 - 1,200RWF(1 week)-##7166999731850603770",'
+   +'"createTime":1670015318506,"dueTime":1670015318506,"dueAmount":1200.0,"currency":"950","status":"U"},{"billRef":"2500 - 3,500RWF(1 month)-##7166999731850603770","createTime":1670015318506,"dueTime":1670015318506,'
+   +'"dueAmount":3500.0,"currency":"950","status":"U"},{"billRef":"4500 - 300RWF(1 day)-##7166999731850603770","createTime":1670015318506,"dueTime":1670015318506,"dueAmount":300.0,"currency":"950","status":"U"},'
+   +'{"billRef":"4500 - 1,200RWF(1 week)-##7166999731850603770","createTime":1670015318506,"dueTime":1670015318506,"dueAmount":1200.0,"currency":"950","status":"U"},{"billRef":"4500 - 3,500RWF(1 month)-##7166999731850603770"'
+   +',"createTime":1670015318506,"dueTime":1670015318506,"dueAmount":3500.0,"currency":"950","status":"U"}]';
+   
+   response=JSON.parse(response);
+   let message="";
+    for (let index = 0; index < response.length; index++) {
+      const element = response[index];
+      factures.push({name:element.billRef,label:"Facture "+(index+1), type:"checkbox",id: element.billRef,value:element
+    }
+    )
+    
+    message= message+"<div class=\"facture\">"+(index+1)+" : Reférence: "+element.billRef+"<br> Montant: "+element.dueAmount+"<br> Date: "+new Date(element.createTime).toLocaleString(["En","Fr"], { day:"2-digit",month:"short",year:"numeric"})+"</div><br>"
+      
+    }
+    let alert = this.alerCtrl.create({
+      title: 'Selectionnez les factures à payer',
+      message: message,
+      inputs: factures,
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          
+        },
+        {
+          text: 'Valider',
+          handler: data => {
+            console.log(data)
+
+            let amount=0;
+            let facture="";
+            for (let index = 0; index < data.length; index++) {
+              const element = data[index];
+              amount=amount+element.dueAmount;
+              facture=facture+element.billRef+","
+            }
+           
+            
+            this.transferInfo.Montant=amount;
+            this.transferInfo.facture=facture
+            this.transferInfo.intent="bill_payment";
+            this.transferInfo.factures=data;
+
+            console.log(facture)
+            this.checkPayment( )
+          }
+        }
+      ],
+      cssClass:"factures"
+    });
+    alert.setMode("ios")
+    alert.present()
+
+    
+  }
   makePayment(transferInfo,secretCode) {
     let loading = this.loadingController.create({ content: "Traitement...",enableBackdropDismiss:false});
     loading.present();
-    this.services.makePayment(transferInfo,secretCode).then((result:any)=>{
+    this.services.makeServicePayment(transferInfo,secretCode).then((result:any)=>{
       loading.dismiss()
       console.log(result.resultat)
       let alert = this.alerCtrl.create();

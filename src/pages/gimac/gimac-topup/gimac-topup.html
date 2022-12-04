@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-navbar>
+    
+    <ion-title>Transfert Gimac</ion-title>
+    <div class="frontImage"> 
+
+    </div>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+  <div >
+    <form   [formGroup]="formgroup">
+      <div class="form-content">
+      <div  text-center >
+        <h6>Achat de crédit téléphonique </h6>
+      </div>
+      
+      <ion-list>
+        <ion-item class="form-item" *ngIf="showWallet">
+          <ion-select [(ngModel)]="paysWallet"  multiple="false" [ngModelOptions]="{standalone: true}" [selectOptions]="selectOptions" placeholder="Pays" (ionChange)="onChangeWallet($event)"> 
+            <ion-option *ngFor="let paysWallet of paysWallets" [selected]="true" value={{paysWallet.pays_id}}>{{paysWallet.libelle_label}}</ion-option> 
+          </ion-select>
+        </ion-item>
+        <ion-item class="form-item"  *ngIf="showBank">
+          <ion-select [(ngModel)]="paysBank"  multiple="false" [ngModelOptions]="{standalone: true}" [selectOptions]="selectOptions" placeholder="Pays" (ionChange)="onChangeBank($event)" > 
+            <ion-option *ngFor="let paysBank of paysBanks" [selected]="true" value={{paysBank.pays_id}} >{{paysBank.libelle_label}}</ion-option> 
+          </ion-select>
+        </ion-item>
+        <ion-item class="form-item" >
+          <ion-select [(ngModel)]="wallet"  multiple="false" [ngModelOptions]="{standalone: true}" [selectOptions]="selectOptions2" [placeholder]='showBank? "Banque" : "Opérateur"' > 
+            <ion-option *ngFor="let wallet of wallets"  value={{wallet.code_walet}}>{{wallet.libelle_walet}} ({{wallet.banque || wallet.mno}})</ion-option> 
+          </ion-select>
+        </ion-item>
+        <ion-item class="form-item">
+          <ion-input class="text-input" formControlName="montant" type="number"  autocorrect="off" autocapitalize="none" name="montant" placeholder="Montant du transfert"></ion-input>
+        </ion-item>
+   
+      </ion-list>
+    
+  </div>
+  <div class="form-content">
+    
+
+      
+      <ion-list>
+  
+        <div  text-center >
+          <h6>Destinataire </h6>
+        </div>
+  
+
+
+        <ion-item class="form-item">
+          <ion-input class="text-input" formControlName="account" type="text" autocorrect="off" autocapitalize="none" name="account" placeholder="Numéro du destinataire"></ion-input>
+        </ion-item>
+
+      </ion-list>
+    </div>
+    </form>
+      
+  <div  text-center>
+    <button ion-button  block class="login-button" [disabled]="!formgroup.valid || !wallet ||  !(paysBank || paysWallet) " (tap)="launchcheck()">Transferer</button>
+
+  </div>
+ 
+  <div  text-center class="message-error-text">
+          
+         
+    <p >{{ message }} </p>
+ 
+</div>
+</div >
+
+  
+ 
+  
+</ion-content>  

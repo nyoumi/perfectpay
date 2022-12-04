@@ -10,7 +10,7 @@ import { LoginPage } from '../../login/login';
 import { GimacVoucherPage } from '../gimac-voucher/gimac-voucher';
 import { QrcodePage } from '../../qrcode/qrcode';
 import { GimacServicePaymentPage } from '../gimac-service-payment/gimac-service-payment';
-
+import { GimacTopupPage } from '../gimac-topup/gimac-topup';
 
 @Component({
   selector: 'page-home-gimac',
@@ -331,15 +331,14 @@ export class HomeGimacPage {
 
 
   }
-  getHistorique(){
-    let alert = this.alerCtrl.create();
-    alert.setTitle("Contact");
-    alert.setSubTitle("Besoin d'aide?")
-    alert.setMessage("Contactez-nous par Tel: (Std) +237 (2) 33 52 00 02 / +237 (2) 33 52 00 03 <br>Email: info@kakotel.com")
-    alert.setMode("ios")
-    alert.present()
+  getHistory(){
+    this.navCtrl.push(GimacHistoryPage)
 
 
+  }
+
+  gotoTopup(){
+    this.navCtrl.push(GimacTopupPage)
   }
  
 }

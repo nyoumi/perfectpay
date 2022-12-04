@@ -65,7 +65,7 @@ export class ParametreService {
       getOnlineDevises() {
         //var xml2js = require('xml2js');
         return new Promise(resolve => {
-          this.http.get("http://" + environment.smsServer + "/rest/api/getDevises")
+          this.http.get("https://" + environment.smsServer + "/rest/api/getDevises")
             .subscribe(data => {
               //console.log(data.json()); 
               localForage.setItem('onlineDevise',data.json());
@@ -85,7 +85,7 @@ export class ParametreService {
     async  isAccountExist(receiverNumber) {
         let retour: any;
             return new Promise(resolve => {
-                this.http.get("http://" + environment.smsServer + "/rest/api/isServiceExist/" + receiverNumber)
+                this.http.get("https://" + environment.smsServer + "/rest/api/isServiceExist/" + receiverNumber)
                     .subscribe(data => {
                         //console.log(data._body); 
                         resolve(data);
@@ -105,13 +105,13 @@ export class ParametreService {
         let senderId: string;
         senderId = this.user.name;
         senderId = senderId.substring(0, 10);
-        console.log("http://" + environment.smsServer + "/rest/api/transfertCredit/" + this.user.idClient + "/" +amount + "/" + senderId + "/" + receiverNumber);
+        console.log("https://" + environment.smsServer + "/rest/api/transfertCredit/" + this.user.idClient + "/" +amount + "/" + senderId + "/" + receiverNumber);
        // let dest = message.numeroDest.replace(/[\(\)\-\s]+/g, '');
         //console.log(dest.replace("+", ""));
 
 
         return new Promise(resolve => {
-            this.http.get("http://" + environment.smsServer + "/rest/api/transfertCredit/" + this.user.idClient + "/" + receiverNumber + "/" + amount *10000)
+            this.http.get("https://" + environment.smsServer + "/rest/api/transfertCredit/" + this.user.idClient + "/" + receiverNumber + "/" + amount *10000)
                 .subscribe(data => {
                     console.log(data._body); 
                     resolve(data._body);
@@ -125,7 +125,7 @@ export class ParametreService {
 
     async  setDevise(devise) {   
         return new Promise(resolve => {
-            this.http.get("http://" + environment.smsServer + "/rest/api/setDevise/" + this.user.idClient + "/" + devise)
+            this.http.get("https://" + environment.smsServer + "/rest/api/setDevise/" + this.user.idClient + "/" + devise)
                 .subscribe(data => {
                     console.log(data._body); 
                     resolve(data._body);
@@ -139,7 +139,7 @@ export class ParametreService {
 
     async  getOnlineDevisesByItem(devise) {   
         return new Promise(resolve => {
-            this.http.get("http://" + environment.smsServer + "/rest/api/getOnlineDevises/"+ devise)
+            this.http.get("https://" + environment.smsServer + "/rest/api/getOnlineDevises/"+ devise)
                 .subscribe(data => {
                     //console.log(data.json()); 
                     resolve(data.json());

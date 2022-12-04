@@ -124,7 +124,7 @@ export class GimacPayementService{
               alert2.setMessage("Opération en cours...");
               alert2.setTitle("Payement");
               alert2.present();
-              let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/mtn-money-recharge/"+data.telephone +"/" +
+              let link=environment.unsecureServer+"/Perfectpay/rest/api/paiement/mtn-money-recharge/"+data.telephone +"/" +
                datas.lemontant+ "/" +
                environment.perfectPhone+ "/" +
                environment.codeApi+ "/" +
@@ -175,7 +175,7 @@ export class GimacPayementService{
                  notif_url:"https://perfectpay.cm"
                         };  
                         
-            let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/orange-money-recharge/"+telephone +"/" +
+            let link=environment.unsecureServer+"/Perfectpay/rest/api/paiement/orange-money-recharge/"+telephone +"/" +
             datas.lemontant+ "/" +
             environment.perfectPhone+ "/" +
             environment.codeApi+ "/" +
@@ -214,7 +214,7 @@ export class GimacPayementService{
               "compteClient":Usertelephone	
             };  
                         
-            let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/orange-money-RechargeOm"
+            let link=environment.unsecureServer+"/Perfectpay/rest/api/paiement/orange-money-RechargeOm"
             
             this.h.post(link,data,{}).map(resp => resp.json()).subscribe(resp=>{
               loading.dismiss()
@@ -236,7 +236,7 @@ export class GimacPayementService{
         }   
         
       verifyCreditPaymentStatus(pay_token:string,datas,codeClient){
-        let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/getStatusRecharge/"+pay_token+"/" +codeClient
+        let link=environment.unsecureServer+"/Perfectpay/rest/api/paiement/getStatusRecharge/"+pay_token+"/" +codeClient
 
             
           this.h.post(link, datas, {}).map(resp => resp.json()).subscribe(resp=>{

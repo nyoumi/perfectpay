@@ -30,8 +30,8 @@ export class GimacPaymentPage implements OnInit {
 
   selectOptions: { title: string; subTitle: string; mode: string; };
   selectOptions2 = {
-    title: "selectionnez type de marchand",
-    subTitle: 'Select wallet',
+    title: "selectionnez le type de marchand",
+    subTitle: 'Select merchant wallet',
     mode: 'ios'
   };
   wallet=null;
@@ -76,10 +76,10 @@ export class GimacPaymentPage implements OnInit {
       };
   }
   ngOnInit(): void {
-    this.getGimacMNOCountries()
+    this.getGimacCountries()
   }
-  getGimacMNOCountries() {
-    this.services.getGimacMNOCountries().then((result: any) => {
+  getGimacCountries() {
+    this.services.getGimacCountries().then((result: any) => {
       console.log(result)
     
     //console.log(result);

@@ -3,21 +3,17 @@ import { AlertController, LoadingController, NavController } from 'ionic-angular
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { GimacServices } from '../gimac-services/gimac-services';
 import { LoginPage } from '../../login/login';
-import { VoucherHistoryPage } from '../voucher-history/voucher-history';
 
 
 
 @Component({
-  selector: 'page-gimac-voucher',
-  templateUrl: 'gimac-voucher.html'
+  selector: 'page-gimac-topup',
+  templateUrl: 'gimac-topup.html'
 })
-export class GimacVoucherPage implements OnInit {
+export class GimacTopupPage implements OnInit {
   formgroup: FormGroup; 
   private account: AbstractControl;
   private montant: AbstractControl;
-  private validity: AbstractControl;
-
-  
   
 
   private message:any=""
@@ -28,7 +24,6 @@ export class GimacVoucherPage implements OnInit {
   private paysBank=false
   private paysWallets=[];
   private paysBanks=[];
-  private advanced:boolean=false;
 
   selectedSegment: any;
   showAll: boolean;
@@ -52,15 +47,10 @@ export class GimacVoucherPage implements OnInit {
 
       this.formgroup = formbuilder.group({
         account: ['',Validators.required], 
-        montant: ['', Validators.compose([
-          Validators.min(100),
-          Validators.required,
-        ])],
-        validity:['0', Validators.required]
+        montant: ['', Validators.required],
       });
       this.account = this.formgroup.controls['account'];
       this.montant = this.formgroup.controls['montant'];
-      this.validity=this.formgroup.controls['validity'];
 
       this.services.daoGetStatus().then(status=>{
         if(status!=true){
@@ -85,7 +75,6 @@ export class GimacVoucherPage implements OnInit {
  
 
   ngOnInit(): void {
-    this.getGimacCountries()
     this.getGimacCountries()
   }
 
@@ -154,10 +143,14 @@ export class GimacVoucherPage implements OnInit {
   }
 
   launchcheck(){
-      this.checkVoucher()
+    
+      (this.showWallet)
+      this.checkTransfertMNO()
+    
+    
   }
   
-  checkVoucher() {
+  checkTransfertMNO() {
 
     this.message=""
     let loading = this.loadingController.create({ content: "Traitement..."});
@@ -170,13 +163,13 @@ export class GimacVoucherPage implements OnInit {
 
     }
     
-      this.services.checkVoucher(this.transferInfo).then((result: any) => {
-           console.log(result)
+      this.services.checkEtopUP(this.transferInfo).then((result: any) => {
+           //console.log(result)
         loading.dismiss();
         //console.log(result);
         switch (result.succes) {
           case 1:
-            console.log(result.resultat)
+            //console.log(result.resultat)
             this.handle(result)
             break;
                                   
@@ -184,12 +177,10 @@ export class GimacVoucherPage implements OnInit {
             this.message=result.msg
             break;
         }
-        if(!result.succes) this.message= "Echec de l'opération. Veuillez Réessayer!"
 
     });
   
   }
-
 
 
   handle( response){
@@ -215,7 +206,9 @@ export class GimacVoucherPage implements OnInit {
           handler: data => {
             if(!data.secret_code) return
             console.log(data.secret_code)
-              this.makeVoucher(this.transferInfo,data.secret_code)
+              this.makeEtopUp(this.transferInfo,data.secret_code)
+            
+           
           }
         }
       ]
@@ -226,34 +219,42 @@ export class GimacVoucherPage implements OnInit {
     
   }
 
-  makeVoucher(transferInfo,secretCode) {
+  makeEtopUp(transferInfo,secretCode) {
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
-    this.services.makeVoucher(transferInfo,secretCode).then((result:any)=>{
+    this.services.makeEtopUp(transferInfo,secretCode).then((result:any)=>{
       loading.dismiss()
-      console.log(result.resultat)
+      //console.log(result.resultat)
       let alert = this.alerCtrl.create();
      
       alert.setMode("ios");
+      if(result){
 
-      switch (result.succes) {
-        case 1:
-
-          alert.setTitle("Opération effectuée avec succès" );
-         
-          alert.setMessage(result.msg);
-          alert.onDidDismiss(data=>{
-            this.navCtrl.pop()
-          })
-                
-          break;                  
-        default:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-          alert.setTitle("Echec de l'opération" );
-          break;
+        switch (result.succes) {
+          case 1:
+  
+            alert.setTitle("Opération effectuée avec succès" );
+           
+            alert.setMessage(result.msg);
+            alert.onDidDismiss(data=>{
+              this.navCtrl.pop()
+            })
+                  
+            break;                  
+          default:
+            this.message=result.msg
+            alert.setMode("ios");
+            alert.setMessage(result.msg);
+            alert.setTitle("Echec de l'opération" );
+            break;
+        }
+      }else{
+        this.message="Erreur liée à votre transaction"
+            alert.setMode("ios");
+            alert.setMessage("Erreur liée à votre transaction");
+            alert.setTitle("Echec de l'opération" );
       }
+
       alert.addButton("OK")
       alert.present();
       alert.onDidDismiss(data=>{
@@ -310,9 +311,5 @@ export class GimacVoucherPage implements OnInit {
     segmentButton.value=="showWallet"?this.showWallet = true:this.showWallet = false;
     if( segmentButton.value!="showBank" && segmentButton.value!="showWallet") this.showBank = true
 
-  }
- 
-  openVoucherHistory(){
-    this.navCtrl.push(VoucherHistoryPage);
   }
 }

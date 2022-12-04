@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from "@angular/core";
 import * as localForage from "localforage";
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs';
 import 'rxjs/add/operator/map';
 import { environment } from "../../../environment/environment";
@@ -26,7 +26,7 @@ export class GimacServices {
   scanner: EventEmitter<number> = new EventEmitter<number>();
 
  
-  private http: any;
+  private http: Http;
   private user: any;
   private status: any; 
   private transferInfos:any;
@@ -52,10 +52,17 @@ scanned(data){
     //var xml2js = require('xml2js');
     let params="action=login_account&login="+email+"&password="+password;
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apiGimacLink + params)
+      this.http.get(environment.server+ environment.apiGimacLink + params)
         .subscribe(data => {
-          console.log(data.json()); 
-          resolve(data.json());
+          try {
+            
+           } catch (error) {
+        resolve(null)
+      
+            console.log(data.json()); 
+            resolve(data.json());
+          }
+
         }, err => {
           console.log("Error"); 
           resolve(err);
@@ -68,10 +75,16 @@ scanned(data){
     let params="action=create_account_update&Nom="+UserInfo.nom+"&Prenom="+UserInfo.Prenom+
     "&Email="+UserInfo.email+"&Telephone="+UserInfo.Telephone+"&Pays="+UserInfo.Pays+"&Ville="+UserInfo.Ville;
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apiGimacLink + params)
+      this.http.get(environment.server+ environment.apiGimacLink + params)
         .subscribe(data => {
-          console.log(data.json()); 
-          resolve(data.json());
+          try {
+            console.log(data.json()); 
+            resolve(data.json());
+           } catch (error) {
+        resolve(null)
+      
+            
+          }
         }, err => {
           console.log("Error");    
           resolve(err);
@@ -81,10 +94,16 @@ scanned(data){
    getRegions() {
     let action="action=show_liste_region";
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apiGimacLink+action)
+      this.http.get(environment.server+ environment.apiGimacLink+action)
         .subscribe(data => {
-          console.log(data.json()); 
-          resolve(data.json());
+          try {
+            console.log(data.json()); 
+            resolve(data.json());
+           } catch (error) {
+        resolve(null)
+      
+            
+          }
         }, err => {
           console.log("Error");    
           resolve(err);
@@ -95,10 +114,16 @@ scanned(data){
   getDepartments() {
     let action="action=show_liste_departement";
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apiGimacLink+action)
+      this.http.get(environment.server+ environment.apiGimacLink+action)
         .subscribe(data => {
-          console.log(data.json()); 
-          resolve(data.json());
+          try {
+            console.log(data.json()); 
+            resolve(data.json());
+           } catch (error) {
+        resolve(null)
+      
+            
+          }
         }, err => {
           console.log("Error");    
           resolve(err);
@@ -110,10 +135,17 @@ scanned(data){
       let action="action=check_solde";
 
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apiGimacLink+action+"&indexe_users="+idClient+"&secret_code="+secretCode)
+      this.http.get(environment.server+ environment.apiGimacLink+action+"&indexe_users="+idClient+"&secret_code="+secretCode)
         .subscribe(data => {
           //console.log(data._body); 
-          resolve(data.json());
+          try {
+            console.log(data.json()); 
+            resolve(data.json());
+           } catch (error) {
+        resolve(null)
+      
+            
+          }
         }, err => {
           //console.log("Error"); 
           resolve(err);
@@ -121,22 +153,53 @@ scanned(data){
     });
   }
   getHistory(idClient) {
-    let action="action=check_transaction_update";
+    let action="action=check_transaction_Gimac";
 
   return new Promise(resolve => {
-    this.http.get("https://" + environment.server + environment.apiGimacLink+action+"&indexe_users="+idClient)
+    this.http.get(environment.server+ environment.apiGimacLink+action+"&indexe_users="+idClient)
       .subscribe(data => {
-        //console.log(data._body); 
-        //data=JSON.stringify(data).slice(0, -3)
-        //console.log(data); 
-        resolve(data.json());
+         
+        try {
+          console.log(data.json()); 
+          resolve(data.json());
+         } catch (error) {
+        resolve(null)
+      
+          
+        }
       }, err => {
-        //console.log("Error"); 
         resolve(err);
       })
   });
 }
-  checkTransfertMNO(transferInfos) {
+checkEtopUP(transferInfos) {
+
+  this.transferInfos=transferInfos;
+  let link="action=Solde_AchatCredit&CodeClient="+environment.perfectPhone+
+  "&CodeAPI="+environment.codeApi+"&Projet=PERFECTPAY&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&PhoneOperateur="+
+  transferInfos.Code_clientDestinataire+"&Montant="+transferInfos.Montant+"&Operateur="+transferInfos.WalletDestinataire;
+return new Promise(resolve => {
+  this.http.get(environment.server+ environment.apiGimacLink+link)
+    .subscribe(data => {
+      //console.log(data._body); 
+      let result=-1;
+      try {
+        result=data.json()
+        resolve(result);
+       } catch (error) {
+      resolve(null)
+    
+        
+      }
+      
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}  
+
+checkTransfertMNO(transferInfos) {
 
     this.transferInfos=transferInfos;
     let link="action=Solde_transfert_walet_MNO&CodeClient="+environment.perfectPhone+
@@ -144,16 +207,19 @@ scanned(data){
     transferInfos.Code_clientDestinataire+"&Montant="+transferInfos.Montant+"&WalletDestinataire="+transferInfos.WalletDestinataire;
 
   return new Promise(resolve => {
-    this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+    this.http.get(environment.server+ environment.apiGimacLink+link)
       .subscribe(data => {
         //console.log(data._body); 
         let result=-1;
         try {
           result=data.json()
-        } catch (error) {
+          resolve(result);
+         } catch (error) {
+        resolve(null)
+      
           
         }
-        resolve(result);
+        
       }, err => {
         //console.log("Error"); 
         resolve(err);
@@ -168,16 +234,19 @@ checkTransfertBank(transferInfos) {
   transferInfos.Code_clientDestinataire+"&Montant="+transferInfos.Montant+"&WalletDestinataire="+transferInfos.WalletDestinataire;
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+  this.http.get(environment.server+ environment.apiGimacLink+link)
     .subscribe(data => {
       //console.log(data._body); 
       let result=-1;
       try {
         result=data.json()
-      } catch (error) {
+        resolve(result);
+       } catch (error) {
+        resolve(null)
+      
         
       }
-      resolve(result);
+      
     }, err => {
       //console.log("Error"); 
       resolve(err);
@@ -193,15 +262,18 @@ makeTransfertMNO(transferInfos,secretCode) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+  this.http.get(environment.server+ environment.apiGimacLink+link)
   .subscribe(data => {
       //console.log(data._body); 
       try {
         console.log(data.json())
-      } catch (error) {
+        resolve(data.json());
+       } catch (error) {
+        resolve(null)
+      
         resolve(data);
       }
-      resolve(data.json());
+     // 
     }, err => {
       //console.log("Error"); 
       resolve(err);
@@ -215,7 +287,7 @@ makeTransfertBank(transferInfos,secretCode){
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+  this.http.get(environment.server+ environment.apiGimacLink+link)
   .subscribe(data => {
       //console.log(data._body); 
       console.log(data.json())
@@ -244,16 +316,19 @@ checkVoucher(transferInfos) {
     link=link+"&Code_clientDestinataire="+transferInfos.Code_clientDestinataire
   }
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+  this.http.get(environment.server+ environment.apiGimacLink+link)
     .subscribe(data => {
       //console.log(data._body); 
       let result=-1;
       try {
         result=data.json()
-      } catch (error) {
+        resolve(result);
+       } catch (error) {
+        resolve(null)
+      
         
       }
-      resolve(result);
+      
     }, err => {
       //console.log("Error"); 
       resolve(err);
@@ -271,11 +346,17 @@ makeVoucher(transferInfos,secretCode){
     link=link+"&Code_clientDestinataire="+transferInfos.Code_clientDestinataire
   }
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+  this.http.get(environment.server+ environment.apiGimacLink+link)
   .subscribe(data => {
       //console.log(data._body); 
-      console.log(data.json())
-      resolve(data.json());
+      try {
+        console.log(data.json()); 
+        resolve(data.json());
+       } catch (error) {
+        resolve(null)
+      
+        
+      }
     }, err => {
       //console.log("Error"); 
       resolve(err);
@@ -290,16 +371,19 @@ checkTransfertOM(transferInfos) {
   transferInfos.account+"&Montant="+transferInfos.montant+"&Raison_transfert="+transferInfos.raison;
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+  this.http.get(environment.server+ environment.apiGimacLink+link)
     .subscribe(data => {
       //console.log(data._body); 
       let result=-1;
       try {
         result=data.json()
-      } catch (error) {
+        resolve(result);
+       } catch (error) {
+        resolve(null)
+      
         
       }
-      resolve(result);
+     
     }, err => {
       //console.log("Error"); 
       resolve(err);
@@ -314,7 +398,7 @@ makeTransfertOM(transferInfos,secretCode) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+  this.http.get(environment.server+ environment.apiGimacLink+link)
   .subscribe(data => {
       //console.log(data._body); 
       console.log(data.json())
@@ -326,6 +410,34 @@ return new Promise(resolve => {
 });
 } 
 
+checkServicePayment(transferInfos) {
+  let link="action=Solde_paiement_Service_Mobile&"+
+  "Code_clientExpediteur="+transferInfos.CodeClientExpediteur+
+  "&LibelleServicePayer="+transferInfos.Service+
+  "&Montant="+transferInfos.Montant;
+ 
+
+return new Promise(resolve => {
+  this.http.get(environment.server+ environment.apiGimacLink+link)
+  .subscribe(data => {
+      //console.log(data._body);
+      let result=-1;
+      try {
+        result=data.json()
+        resolve(result);
+       } catch (error) {
+        resolve(null)
+      
+        
+      } 
+      
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+
 checkPayment(transferInfos) {
   let link="action=Solde_paiement_Marchand_Mobile&"+
   "Code_clientExpediteur="+transferInfos.CodeClientExpediteur+
@@ -335,16 +447,19 @@ checkPayment(transferInfos) {
  
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+  this.http.get(environment.server+ environment.apiGimacLink+link)
   .subscribe(data => {
       //console.log(data._body);
       let result=-1;
       try {
         result=data.json()
-      } catch (error) {
+        resolve(result);
+       } catch (error) {
+        resolve(null)
+      
         
       } 
-      resolve(data.json());
+      
     }, err => {
       //console.log("Error"); 
       resolve(err);
@@ -361,16 +476,18 @@ makePayment(transferInfos,codeSecret) {
   "&CodeSecurite="+codeSecret;
 
 return new Promise(resolve => {
-  this.http.get("https://" + environment.server + environment.apiGimacLink+link)
+  this.http.get(environment.server+ environment.apiGimacLink+link)
   .subscribe(data => {
       //console.log(data._body); 
       let result=-1;
       try {
         result=data.json()
-      } catch (error) {
+        resolve(result);
+       } catch (error) {
+        resolve(null)
+      
         
       }
-      resolve(result);
     }, err => {
       //console.log("Error"); 
       resolve(err);
@@ -378,9 +495,92 @@ return new Promise(resolve => {
 });
 }
 
+makeServicePayment(transferInfos,codeSecret) {
+  let link="action=Valide_paiement_Service_Mobile"+
+  "&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+
+  "&LibelleServicePayer="+transferInfos.Service+
+  "&CodeBiller="+transferInfos.CodeBiller+
+  "&Montant="+transferInfos.Montant+
+  "&NumeroFacture="+transferInfos.facture+
+  "&CodeSecurite="+codeSecret;
+  console.log(transferInfos)
+
+  transferInfos.Code_clientExpediteur=transferInfos.CodeClientExpediteur;
+  transferInfos.LibelleServicePayer=transferInfos.Service;
+  transferInfos.CodeBiller=transferInfos.CodeBiller;
+  transferInfos.Montant=transferInfos.Montant;
+  transferInfos.NumeroFacture=transferInfos.facture;
+  transferInfos.CodeSecurite=codeSecret;
 
 
+  let headers = new Headers();
+ 
 
+ 
+headers.append('Content-Type', '"application/x-www-form-urlencoded"');
+
+let options = new RequestOptions({ headers: headers });
+
+return new Promise(resolve => {
+  this.http.post(environment.server+ environment.apiGimacEntrante, transferInfos,options)
+  .subscribe(data => {
+      //console.log(data._body); 
+      let result=-1;
+      try {
+        result=data.json()
+        resolve(result);
+       } catch (error) {
+        resolve(null)
+      
+        
+      }
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
+
+makeEtopUp(transferInfos,codeSecret) {
+
+  console.log(transferInfos)
+
+  transferInfos.Code_clientExpediteur=transferInfos.CodeClientExpediteur;
+  transferInfos.LibelleServicePayer=transferInfos.Service;
+  transferInfos.CodeBiller=transferInfos.CodeBiller;
+  transferInfos.Montant=transferInfos.Montant;
+  transferInfos.NumeroFacture=transferInfos.facture;
+  transferInfos.CodeSecurite=codeSecret;
+  
+
+
+  let headers = new Headers();
+ 
+
+ 
+headers.append('Content-Type', '"application/x-www-form-urlencoded"');
+
+let options = new RequestOptions({ headers: headers });
+
+return new Promise(resolve => {
+  this.http.post(environment.server+ environment.apiGimacEntrante, transferInfos,options)
+  .subscribe(data => {
+      //console.log(data._body); 
+      let result=-1;
+      try {
+        result=data.json()
+        resolve(result);
+       } catch (error) {
+        resolve(null)
+      
+        
+      }
+    }, err => {
+      //console.log("Error"); 
+      resolve(err);
+    })
+});
+}
 
 disconnect() {
   return new Promise((resolve :any, reject: any) => resolve(localForage.clear())); 
@@ -632,10 +832,10 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
   sendCodeConfirmation(number) {
 
     return new Promise(resolve => {
-      this.http.get("https://" + environment.smsServer + "/rest/api/confirmNumber/" + number)
+      this.http.get("http://" + environment.smsServer + "/rest/api/confirmNumber/" + number)
         .subscribe(data => {
           //console.log(data._body); 
-          resolve(data._body);
+         // resolve(data._body);
         }, err => {
           //console.log("Error: "+Error); 
           console.log("Error11: "+err.toString); 
@@ -650,10 +850,17 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
   getUser(number) {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("https://" + environment.smsServer + "/rest/api/getUser/" + number)
+      this.http.get("http://" + environment.smsServer + "/rest/api/getUser/" + number)
         .subscribe(data => {
           //console.log(data.json()); 
-          resolve(data.json());
+          try {
+            resolve(data.json());
+           } catch (error) {
+        resolve(null)
+      
+            
+          }
+         
         }, err => {
           //console.log("Error"); 
           resolve("Error");                              
@@ -667,10 +874,16 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
     let action="action=checker_si_retrait_en_cours_mobile";
 
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apiGimacLink+action+"&Code_clientExpediteurint="+number)
+      this.http.get(environment.server+ environment.apiGimacLink+action+"&Code_clientExpediteurint="+number)
         .subscribe(data => {
           //console.log(data._body); 
+         try {
           resolve(data.json());
+          } catch (error) {
+        resolve(null)
+      
+           
+         }
         }, err => {
           //console.log("Error"); 
           resolve(err);
@@ -681,12 +894,18 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
     let action="action=validation_retrait_account_perfect_pay_Mobile";
 
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apiGimacLink+action+"&Code_clientExpediteur="+number
+      this.http.get(environment.server+ environment.apiGimacLink+action+"&Code_clientExpediteur="+number
       +"&CodeSecurite="+secretCode
       +"&IdTransaction="+transactionId)
         .subscribe(data => {
           //console.log(data._body); 
-          resolve(data.json());
+          try {
+            resolve(data.json());
+            } catch (error) {
+        resolve(null)
+      
+             
+           }
         }, err => {
           //console.log("Error"); 
           resolve(err);
@@ -701,10 +920,16 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
   saveAndroidMinVersion() {
     //var xml2js = require('xml2js');
     return new Promise(resolve => {
-      this.http.get("https://" + environment.smsServer + "/rest/api/getAndroidMinVersion")
+      this.http.get("http://" + environment.smsServer + "/rest/api/getAndroidMinVersion")
         .subscribe(data => {
           //console.log(data.json()); 
-          resolve(data.json());
+          try {
+            resolve(data.json());
+            } catch (error) {
+        resolve(null)
+      
+             
+           }
         }, err => {
           //console.log("Error"); 
           resolve("Error");
@@ -718,8 +943,13 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
     return new Promise(resolve => {
       this.http.get(environment.getUserOperation + userId)
         .subscribe(data => {
-          console.log(data.json()); 
-          resolve(data.json());
+          try {
+            resolve(data.json());
+            } catch (error) {
+        resolve(null)
+      
+             
+           }
         }, err => {
           //console.log("Error: "+Error); 
           console.log("Error11: "+err.toString); 
@@ -733,7 +963,7 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
     return new Promise(resolve => {
       this.http.get(environment.transfertCreditToMOMO + userId+ "/"+ amount)
         .subscribe(data => {
-          resolve(data._body);
+          resolve(data.json);
         }, err => {
           //console.log("Error: "+Error); 
           console.log("Error11: "+err.toString); 
@@ -748,7 +978,7 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
       this.http.get(environment.setCustomerId + idClient+ "/"+ customerId)
         .subscribe(data => {
           //console.log(data._body); 
-          resolve(data._body);
+          resolve(data.json);
         }, err => {
           //console.log("Error"); 
           resolve("-1");
@@ -762,7 +992,13 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
       this.http.get(environment.pendingPayment + phoneNumber)
         .subscribe(data => {
           //console.log(data.json()); 
-          resolve(data.json());
+          try {
+            resolve(data.json());
+            } catch (error) {
+        resolve(null)
+      
+             
+           }
         }, err => {
           //console.log("Error"); 
           resolve("-1");
@@ -771,30 +1007,18 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
   }
 
 
-
-
-
-
-  getGimacBankCountries(){
-    let action="action=liste_pays_gimac_bacaire";
+  getGimacCountries(){
+    let action="action=liste_pays_gimac";
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apiGimacLink+action)
+      this.http.get(environment.server+ environment.apiGimacLink+action)
         .subscribe(data => {
-          console.log(data.json()); 
-          resolve(data.json());
-        }, err => {
-          console.log("Error");    
-          resolve(err);
-        })
-    });
-  }
-  getGimacMNOCountries(){
-    let action="action=liste_pays_gimac_mno";
-    return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apiGimacLink+action)
-        .subscribe(data => {
-          console.log(data.json()); 
-          resolve(data.json());
+          try {
+            resolve(data.json());
+            } catch (error) {
+        resolve(null)
+      
+             
+           }
         }, err => {
           console.log("Error");    
           resolve(err);
@@ -804,10 +1028,15 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
   getGimacMNOWallets(id_pays){
     let action="action=liste_oparateurs_mno_pays&id_pays=";
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apiGimacLink+action+id_pays)
+      this.http.get(environment.server+ environment.apiGimacLink+action+id_pays)
         .subscribe(data => {
-          console.log(data.json()); 
-          resolve(data.json());
+          try {
+            resolve(data.json());
+            } catch (error) {
+        resolve(null)
+      
+             
+           }
         }, err => {
           console.log("Error");    
           resolve(err);
@@ -817,7 +1046,26 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
   getGimacBankWallets(id_pays){
     let action="action=liste_oparateurs_bancaires_pays&id_pays=";
     return new Promise(resolve => {
-      this.http.get("https://" + environment.server + environment.apiGimacLink+action+id_pays)
+      this.http.get(environment.server+ environment.apiGimacLink+action+id_pays)
+        .subscribe(data => {
+          try {
+            resolve(data.json());
+            } catch (error) {
+        resolve(null)
+      
+             
+           }
+        }, err => {
+          console.log("Error");    
+          resolve(err);
+        })
+    });
+  }
+
+  getGimacBillers(id_pays){
+    let action="action=liste_services_billing_pays&id_pays=";
+    return new Promise(resolve => {
+      this.http.get(environment.server + environment.apiGimacLink+action+id_pays)
         .subscribe(data => {
           console.log(data.json()); 
           resolve(data.json());
@@ -826,5 +1074,33 @@ daoSetRegistered(registered:boolean,phone_number,password,email?,name?,idClient?
           resolve(err);
         })
     });
+  }
+
+  billsInquiry(infos) {
+    let link="action=Consult_List_Facture&"+
+    "Code_clientExpediteur="+infos.CodeClientExpediteur+
+    "&CodeBiller="+infos.CodeBiller+
+    "&ReferenceFacture="+infos.ReferenceFacture+
+    "&ReferenceAbonne="+infos.ReferenceAbonne+
+    "&CodeService="+infos.Service+
+    "&ReferenceAbonnement="+infos.ReferenceAbonnement;
+   
+  
+  return new Promise(resolve => {
+    this.http.get(environment.server + environment.apiGimacLink+link)
+    .subscribe(data => {
+        //console.log(data._body);
+        let result=-1;
+        try {
+          result=data.json()
+        } catch (error) {
+          
+        } 
+        resolve(data.json());
+      }, err => {
+        //console.log("Error"); 
+        resolve(err);
+      })
+  });
   }
 }

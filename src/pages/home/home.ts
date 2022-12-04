@@ -197,13 +197,12 @@ export class HomePage {
   gotoTransfert(){
     this.navCtrl.push(PerfectTransfertPage)
   }
+  
   gotoPayment(){
     this.navCtrl.push(PerfectPaymentPage)
   }
   getHistory(){
     this.navCtrl.push(HistoryPage)
-
-
   }
 
   
@@ -213,10 +212,6 @@ export class HomePage {
     alert.setTitle("Moyen de paiement");
     alert.setSubTitle("Choisir un moyen de paiement pour recharger votre compte")
     alert.setMode("ios")
-
-
-
- 
 
     alert.addInput({
       type: 'radio',

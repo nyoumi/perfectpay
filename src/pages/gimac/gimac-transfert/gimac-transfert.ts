@@ -75,36 +75,18 @@ export class GimacTransfertPage implements OnInit {
  
 
   ngOnInit(): void {
-    this.getGimacBankCountries()
-    this.getGimacMNOCountries()
+    this.getGimacCountries()
   }
 
-  getGimacMNOCountries() {
-    this.services.getGimacMNOCountries().then((result: any) => {
-      console.log(result)
-    
-    //console.log(result);
-    switch (result.succes) {
-     case 1:
-       console.log(result.resultat)
-       this.paysWallets=result.resultat;
-       
-       break;
-                             
-     default:
-       this.message=result.msg
-       break;
-    }
-    
-    });
-  }
-  getGimacBankCountries() {
-    this.services.getGimacBankCountries().then((result: any) => {
+
+  getGimacCountries() {
+    this.services.getGimacCountries().then((result: any) => {
       console.log(result)
    switch (result.succes) {
      case 1:
        console.log(result.resultat)
        this.paysBanks= result.resultat
+       this.paysWallets=result.resultat;
        break;                     
      default:
        this.message=result.msg
@@ -184,12 +166,12 @@ export class GimacTransfertPage implements OnInit {
     }
     
       this.services.checkTransfertMNO(this.transferInfo).then((result: any) => {
-           console.log(result)
+           //console.log(result)
         loading.dismiss();
         //console.log(result);
         switch (result.succes) {
           case 1:
-            console.log(result.resultat)
+            //console.log(result.resultat)
             this.handle(result)
             break;
                                   
@@ -279,29 +261,37 @@ export class GimacTransfertPage implements OnInit {
     loading.present();
     this.services.makeTransfertMNO(transferInfo,secretCode).then((result:any)=>{
       loading.dismiss()
-      console.log(result.resultat)
+      //console.log(result.resultat)
       let alert = this.alerCtrl.create();
      
       alert.setMode("ios");
+      if(result){
 
-      switch (result.succes) {
-        case 1:
-
-          alert.setTitle("Opération effectuée avec succès" );
-         
-          alert.setMessage(result.msg);
-          alert.onDidDismiss(data=>{
-            this.navCtrl.pop()
-          })
-                
-          break;                  
-        default:
-          this.message=result.msg
-          alert.setMode("ios");
-          alert.setMessage(result.msg);
-          alert.setTitle("Echec de l'opération" );
-          break;
+        switch (result.succes) {
+          case 1:
+  
+            alert.setTitle("Opération effectuée avec succès" );
+           
+            alert.setMessage(result.msg);
+            alert.onDidDismiss(data=>{
+              this.navCtrl.pop()
+            })
+                  
+            break;                  
+          default:
+            this.message=result.msg
+            alert.setMode("ios");
+            alert.setMessage(result.msg);
+            alert.setTitle("Echec de l'opération" );
+            break;
+        }
+      }else{
+        this.message="Erreur liée à votre transaction"
+            alert.setMode("ios");
+            alert.setMessage("Erreur liée à votre transaction");
+            alert.setTitle("Echec de l'opération" );
       }
+
       alert.addButton("OK")
       alert.present();
       alert.onDidDismiss(data=>{

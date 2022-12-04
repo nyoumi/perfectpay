@@ -136,7 +136,16 @@ export class GimacHistoryPage {
                   break;
     
       default:
-        message=""
+        message="Date de la transaction: "+entry.DateTransaction+"<br/>"+
+        "Heure de la transaction: "+entry.HeureTransaction+"<br/>"+
+        "Id de la transaction: " +entry.IDTransaction+"<br/>"+
+         "Motif de la transaction: "+entry.MotifTransaction+" </br>"+
+        "Type de transaction: "+entry.Libelle+"<br/>"+
+        "Montant de la transaction: "+entry.Montant+" FCFA<br/>"+
+        "Frais de la transaction: "+entry.Frais+" FCFA<br/>"+
+        "Montant total de la transaction: "+entry.MontantT+" FCFA</br>"+
+        "Nom du destinataire: "+entry.Destinataire+"<br/>"+
+        "Téléphone du destinataire: "+entry.TelephoneDestinataire+"<br/>";
         break;
     }
 

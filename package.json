@@ -36,6 +36,7 @@
     "angularx-qrcode": "^11.0.0",
     "card.io.cordova.mobilesdk": "^2.1.0",
     "com.paypal.cordova.mobilesdk": "^3.5.0",
+    "cordova": "^11.0.0",
     "cordova-android": "9.1.0",
     "cordova-browser": "6.0.0",
     "cordova-plugin-advanced-http": "^3.1.0",

@@ -50,7 +50,7 @@ export class PayementService{
               //valueOf()
               console.log("response idclient "+this.user.idClient);
               console.log("response url "+environment.paypalPayement + data.response.id + "/" + this.user.idClient);
-              this.h.get("http://154.72.148.105:8081/Perfectpay/rest/api/paiement/checkPaypal?paymentId"+data.response.id
+              this.h.get(environment.unsecureServer+"/Perfectpay/rest/api/paiement/checkPaypal?paymentId"+data.response.id
               +"&PayerID="+data.response.id+"&codeClient=" +environment.perfectPhone+"&codeApi="+environment.codeApi+
               "&Projet="+environment.projetPerfectPay+"&moyenTransaction=Paypal&compteClient="
               +"amount="+datas.lemontant)
@@ -123,7 +123,7 @@ export class PayementService{
               alert2.setMessage("Opération en cours...");
               alert2.setTitle("Payement");
               alert2.present();
-              let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/mtn-money-recharge/"+data.telephone +"/" +
+              let link=environment.unsecureServer+"/Perfectpay/rest/api/paiement/mtn-money-recharge/"+data.telephone +"/" +
                datas.lemontant+ "/" +
                environment.perfectPhone+ "/" +
                environment.codeApi+ "/" +
@@ -174,7 +174,7 @@ export class PayementService{
                  notif_url:"https://perfectpay.cm"
                         };  
                         
-            let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/orange-money-recharge/"+telephone +"/" +
+            let link=environment.unsecureServer+"/Perfectpay/rest/api/paiement/orange-money-recharge/"+telephone +"/" +
             datas.lemontant+ "/" +
             environment.perfectPhone+ "/" +
             environment.codeApi+ "/" +
@@ -213,7 +213,7 @@ export class PayementService{
               "compteClient":Usertelephone	
             };  
                         
-            let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/orange-money-RechargeOm"
+            let link=environment.unsecureServer+"/Perfectpay/rest/api/paiement/orange-money-RechargeOm"
             
             this.h.post(link,data,{}).map(resp => resp.json()).subscribe(resp=>{
               loading.dismiss()
@@ -235,7 +235,7 @@ export class PayementService{
         }   
         
       verifyCreditPaymentStatus(pay_token:string,datas,codeClient){
-        let link="http://" +environment.server+":8081/Perfectpay/rest/api/paiement/getStatusRecharge/"+pay_token+"/" +codeClient
+        let link=environment.unsecureServer+"/Perfectpay/rest/api/paiement/getStatusRecharge/"+pay_token+"/" +codeClient
 
             
           this.h.post(link, datas, {}).map(resp => resp.json()).subscribe(resp=>{

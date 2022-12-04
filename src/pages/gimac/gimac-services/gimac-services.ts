@@ -336,7 +336,7 @@ return new Promise(resolve => {
 });
 }
 makeVoucher(transferInfos,secretCode){
-  let link="action=Valide_retrait_sansCarte_Mobile&Code_clientExpediteur="+environment.perfectPhone
+  let link="action=Valide_retrait_sansCarte_Mobile&Code_clientExpediteur="+environment.perfectPhone+"&validite="+transferInfos.validityduration
   +"&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&Montant="+transferInfos.Montant+"&CodeSecurite="+secretCode;
  
   if(transferInfos.reference){

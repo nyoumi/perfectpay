@@ -10,6 +10,7 @@ import { PerfectPaymentPage } from '../pages/pertfect-payment/perfect-payment';
 import { Services } from '../services/services'; 
 import { FormBuilder } from '@angular/forms';
 import { PayementService } from '../services/payement.service';
+import { NotificationPage } from '../pages/notification/notification';
 
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { GimacHistoryPage } from '../pages/gimac/gimac-history/gimac-history';
@@ -44,7 +45,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'home', component: HomePage },
+      { title: 'notifications', component: NotificationPage },
       { title: 'transfert', component: PerfectTransfertPage },
       { title: "paiement", component: PerfectPaymentPage, },
 /*       { title: "Taux de change", component: ExchangeRatePage },

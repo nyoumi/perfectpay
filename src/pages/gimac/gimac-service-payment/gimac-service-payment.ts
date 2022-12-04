@@ -254,7 +254,7 @@ export class GimacServicePaymentPage implements OnInit {
            
             
             this.transferInfo.Montant=amount;
-            this.transferInfo.facture=facture
+            this.transferInfo.facture=facture.replace(/.$/,"")
             this.transferInfo.intent="bill_payment";
             this.transferInfo.factures=data;
 

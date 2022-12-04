@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     
-    <ion-title>Transfert Gimac</ion-title>
+    <ion-title>Achat de crédit téléphonique</ion-title>
     <div class="frontImage"> 
 
     </div>
@@ -18,7 +18,7 @@
       </div>
       
       <ion-list>
-        <ion-item class="form-item" *ngIf="showWallet">
+        <ion-item class="form-item">
           <ion-select [(ngModel)]="paysWallet"  multiple="false" [ngModelOptions]="{standalone: true}" [selectOptions]="selectOptions" placeholder="Pays" (ionChange)="onChangeWallet($event)"> 
             <ion-option *ngFor="let paysWallet of paysWallets" [selected]="true" value={{paysWallet.pays_id}}>{{paysWallet.libelle_label}}</ion-option> 
           </ion-select>
@@ -55,13 +55,35 @@
         <ion-item class="form-item">
           <ion-input class="text-input" formControlName="account" type="text" autocorrect="off" autocapitalize="none" name="account" placeholder="Numéro du destinataire"></ion-input>
         </ion-item>
+      </ion-list>
+    </div>
+    <ion-item class="form-item toggle" no-lines >
+      <ion-label class="advanced">Options avancées</ion-label>
+      <ion-toggle [(ngModel)]="advanced" checked="false" [ngModelOptions]="{standalone: true}" color="success" ></ion-toggle>
+    </ion-item>
+    <div class="form-content" *ngIf="advanced" >
+    
+
+      
+      <ion-list>
+  
+        <div  text-center >
+          <h6>Options Avancées (optionnels) </h6>
+        </div>
+  
+        <ion-item class="form-item">
+          <ion-input class="text-input" formControlName="secondname" type="text" autocorrect="off" autocapitalize="none" name="secondname" placeholder="Nom du destinataire"></ion-input>
+        </ion-item>
+        <ion-item class="form-item">
+          <ion-input class="text-input" formControlName="firstname" type="text" autocorrect="off" autocapitalize="none" name="firstname" placeholder="prénom du destinataire"></ion-input>
+        </ion-item>
 
       </ion-list>
     </div>
     </form>
       
   <div  text-center>
-    <button ion-button  block class="login-button" [disabled]="!formgroup.valid || !wallet ||  !(paysBank || paysWallet) " (tap)="launchcheck()">Transferer</button>
+    <button ion-button  block class="login-button" [disabled]="!formgroup.valid || !wallet ||  !(paysBank || paysWallet) " (tap)="launchcheck()">Valider</button>
 
   </div>
  

@@ -177,7 +177,7 @@ checkEtopUP(transferInfos) {
   this.transferInfos=transferInfos;
   let link="action=Solde_AchatCredit&CodeClient="+environment.perfectPhone+
   "&CodeAPI="+environment.codeApi+"&Projet=PERFECTPAY&Code_clientExpediteur="+transferInfos.CodeClientExpediteur+"&PhoneOperateur="+
-  transferInfos.Code_clientDestinataire+"&Montant="+transferInfos.Montant+"&Operateur="+transferInfos.WalletDestinataire;
+  transferInfos.PhoneOperateur+"&Montant="+transferInfos.Montant+"&Operateur="+transferInfos.Operateur;
 return new Promise(resolve => {
   this.http.get(environment.server+ environment.apiGimacLink+link)
     .subscribe(data => {

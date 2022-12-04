@@ -13,6 +13,8 @@ import { LoginPage } from '../../login/login';
 export class GimacTopupPage implements OnInit {
   formgroup: FormGroup; 
   private account: AbstractControl;
+  private firstname: AbstractControl;
+  private secondname: AbstractControl;
   private montant: AbstractControl;
   
 
@@ -21,20 +23,15 @@ export class GimacTopupPage implements OnInit {
   transferInfo: any;
   private operateur="PerfectPay";
   private paysWallet=false
-  private paysBank=false
   private paysWallets=[];
-  private paysBanks=[];
+  private advanced:boolean=false;
 
-  selectedSegment: any;
-  showAll: boolean;
-  showRead: boolean;
-  showBank: boolean;
-  showWallet: boolean=true;
+
   selectOptions: { title: string; subTitle: string; mode: string; };
   wallets: any;
   selectOptions2 = {
-    title: "selectionnez le wallet du destinataire",
-    subTitle: 'Select wallet',
+    title: "selectionnez l'opérateur du destinataire",
+    subTitle: 'Select operator',
     mode: 'ios'
   };
   wallet=null;
@@ -43,14 +40,17 @@ export class GimacTopupPage implements OnInit {
     public alerCtrl: AlertController,
     public formbuilder: FormBuilder,public services: GimacServices, 
     public loadingController: LoadingController) {
-      this.selectedSegment = "showWallet"; 
 
       this.formgroup = formbuilder.group({
         account: ['',Validators.required], 
+        firstname: [''], 
+        secondname: [''], 
         montant: ['', Validators.required],
       });
       this.account = this.formgroup.controls['account'];
       this.montant = this.formgroup.controls['montant'];
+      this.firstname = this.formgroup.controls['firstname'];
+      this.secondname = this.formgroup.controls['secondname'];
 
       this.services.daoGetStatus().then(status=>{
         if(status!=true){
@@ -85,7 +85,6 @@ export class GimacTopupPage implements OnInit {
    switch (result.succes) {
      case 1:
        console.log(result.resultat)
-       this.paysBanks= result.resultat
        this.paysWallets=result.resultat;
        break;                     
      default:
@@ -117,34 +116,10 @@ export class GimacTopupPage implements OnInit {
     });
 
   }
-  onChangeBank(event){
-    let loading = this.loadingController.create({ content: "chargement...",enableBackdropDismiss:true});
-    loading.present();
-    this.services.getGimacBankWallets(event).then((result: any) => {
-      loading.dismiss();
-      console.log(result)
-    
-    //console.log(result);
-    switch (result.succes) {
-     case 1:
-       console.log(result.resultat)
-       this.wallets=result.resultat;
-       
-       break;
-                             
-     default:
-       this.message=result.msg
-       break;
-    }
-    
-    });
 
-   
-  }
 
   launchcheck(){
     
-      (this.showWallet)
       this.checkTransfertMNO()
     
     
@@ -156,12 +131,17 @@ export class GimacTopupPage implements OnInit {
     let loading = this.loadingController.create({ content: "Traitement..."});
     loading.present();
     this.transferInfo={
-      Code_clientDestinataire: this.account.value,
+      firstname: this.firstname.value,
+      secondname: this.secondname.value,
+      PhoneOperateur: this.account.value,
       Montant:this.montant.value,   
       CodeClientExpediteur:this.user[0].Telephone,
-      WalletDestinataire:this.wallet
+      Operateur:this.wallet,
+      intent: "mobile_reload"
 
     }
+    console.log(this.transferInfo)
+   
     
       this.services.checkEtopUP(this.transferInfo).then((result: any) => {
            //console.log(result)
@@ -304,12 +284,4 @@ export class GimacTopupPage implements OnInit {
     })
   }
 
-  onSegmentChanged(segmentButton: any) {
-    this.wallet=null;
-    this.selectedSegment = segmentButton; 
-    segmentButton.value=="showBank"?this.showBank = true:this.showBank = false;
-    segmentButton.value=="showWallet"?this.showWallet = true:this.showWallet = false;
-    if( segmentButton.value!="showBank" && segmentButton.value!="showWallet") this.showBank = true
-
-  }
 }

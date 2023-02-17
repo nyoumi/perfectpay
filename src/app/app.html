@@ -13,10 +13,11 @@
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
-      </button>
+       </button>
+       <!--
       <button menuClose ion-item (click)="showOngoingRetrait()">
-        Retraits USSD en cours
-      </button>
+        Code PerfectPay USSD
+      </button> -->
       <button menuClose ion-item (click)="secretUpdate()" *ngIf="secretStatus">
         Modifier code secret
       </button>

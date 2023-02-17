@@ -49,7 +49,7 @@ export class GimacServicePaymentPage implements OnInit {
   
        });
       this.formgroup = formbuilder.group({
-        reference_abonnement: ['', Validators.required],
+        reference_abonnement: [''],
         reference_abonne: [''],
         reference_facture:['']
       });
@@ -107,6 +107,7 @@ export class GimacServicePaymentPage implements OnInit {
        break;                  
      default:
        this.message=result.msg
+       this.wallets=[]
        break;
     }
     
@@ -127,9 +128,10 @@ export class GimacServicePaymentPage implements OnInit {
       CodeClientExpediteur:this.user[0].Telephone,
       CodeBiller:this.wallet
     }
-    this.handle({});
+    //loading.dismiss(); //TODO à supprimer
+    //this.handle({}); //TODO à commenter
     
-     /*  this.services.billsInquiry(this.transferInfo).then((result: any) => {
+       this.services.billsInquiry(this.transferInfo).then((result: any) => {
         console.log(result)
         loading.dismiss();
         //console.log(result);
@@ -145,7 +147,7 @@ export class GimacServicePaymentPage implements OnInit {
             break;
         }
 
-    }); */
+    }); 
   
   }
 
@@ -212,13 +214,13 @@ export class GimacServicePaymentPage implements OnInit {
 
   handle( response){
    let factures:AlertInputOptions[]=[];
-   response='[{"billRef":"2500 - 300RWF(1 day)-##7166999731850603770","createTime":1670015318506,"dueTime":1670015318506,"dueAmount":300.0,"currency":"950","status":"U"},{"billRef":"2500 - 1,200RWF(1 week)-##7166999731850603770",'
+   /*response='[{"billRef":"2500 - 300RWF(1 day)-##7166999731850603770","createTime":1670015318506,"dueTime":1670015318506,"dueAmount":300.0,"currency":"950","status":"U"},{"billRef":"2500 - 1,200RWF(1 week)-##7166999731850603770",'
    +'"createTime":1670015318506,"dueTime":1670015318506,"dueAmount":1200.0,"currency":"950","status":"U"},{"billRef":"2500 - 3,500RWF(1 month)-##7166999731850603770","createTime":1670015318506,"dueTime":1670015318506,'
    +'"dueAmount":3500.0,"currency":"950","status":"U"},{"billRef":"4500 - 300RWF(1 day)-##7166999731850603770","createTime":1670015318506,"dueTime":1670015318506,"dueAmount":300.0,"currency":"950","status":"U"},'
    +'{"billRef":"4500 - 1,200RWF(1 week)-##7166999731850603770","createTime":1670015318506,"dueTime":1670015318506,"dueAmount":1200.0,"currency":"950","status":"U"},{"billRef":"4500 - 3,500RWF(1 month)-##7166999731850603770"'
    +',"createTime":1670015318506,"dueTime":1670015318506,"dueAmount":3500.0,"currency":"950","status":"U"}]';
-   
-   response=JSON.parse(response);
+   */
+   //response=JSON.parse(response);
    let message="";
     for (let index = 0; index < response.length; index++) {
       const element = response[index];

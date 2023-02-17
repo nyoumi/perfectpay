@@ -26,7 +26,7 @@
        
         <ion-item class="form-item" >
           <ion-select [(ngModel)]="wallet"  multiple="false" [ngModelOptions]="{standalone: true}" [selectOptions]="selectOptions2" placeholder='Service' > 
-            <ion-option *ngFor="let wallet of wallets"  value={{wallet.code_walet}} selected="wallet.code_walet=='perfectpay'">{{wallet.libelle_walet}}</ion-option> 
+            <ion-option *ngFor="let wallet of wallets"  value={{wallet.code_walet}} selected="wallet.code_walet=='perfectpay'">{{wallet.libelle_walet }}</ion-option> 
           </ion-select>
         </ion-item>
         <ion-item class="form-item">

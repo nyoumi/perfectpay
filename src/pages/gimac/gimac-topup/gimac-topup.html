@@ -23,14 +23,10 @@
             <ion-option *ngFor="let paysWallet of paysWallets" [selected]="true" value={{paysWallet.pays_id}}>{{paysWallet.libelle_label}}</ion-option> 
           </ion-select>
         </ion-item>
-        <ion-item class="form-item"  *ngIf="showBank">
-          <ion-select [(ngModel)]="paysBank"  multiple="false" [ngModelOptions]="{standalone: true}" [selectOptions]="selectOptions" placeholder="Pays" (ionChange)="onChangeBank($event)" > 
-            <ion-option *ngFor="let paysBank of paysBanks" [selected]="true" value={{paysBank.pays_id}} >{{paysBank.libelle_label}}</ion-option> 
-          </ion-select>
-        </ion-item>
+      
         <ion-item class="form-item" >
           <ion-select [(ngModel)]="wallet"  multiple="false" [ngModelOptions]="{standalone: true}" [selectOptions]="selectOptions2" [placeholder]='showBank? "Banque" : "Opérateur"' > 
-            <ion-option *ngFor="let wallet of wallets"  value={{wallet.code_walet}}>{{wallet.libelle_walet}} ({{wallet.banque || wallet.mno}})</ion-option> 
+            <ion-option *ngFor="let wallet of wallets"  value={{wallet.code_walet}}>{{wallet.mno}}</ion-option> 
           </ion-select>
         </ion-item>
         <ion-item class="form-item">
